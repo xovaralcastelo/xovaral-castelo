@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 
@@ -18,11 +18,11 @@ export default function PartnersTeaser() {
             </span>
             <h2 className="text-3xl md:text-4xl font-black text-white mb-4 leading-tight">
               Seu negócio + Xô Varal =<br />
-              <span className="text-yellow">mais visibilidade no Buritis.</span>
+              <span className="text-yellow">mais visibilidade no Castelo.</span>
             </h2>
             <p className="text-white/70 text-base leading-relaxed mb-8 max-w-lg">
               Academias, restaurantes, coworkings, salões, condomínios — se você
-              tem um negócio no Buritis, existe uma parceria aqui esperando por você.
+              tem um negócio no Castelo, existe uma parceria aqui esperando por você.
               Cupons, campanhas conjuntas e exposição de marca para mais de 250 clientes mensais.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">

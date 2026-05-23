@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { AMENITIES, SITE } from '@/lib/constants'
 
@@ -15,7 +15,7 @@ export default function Amenities() {
           <div>
             <span className="badge bg-white/10 text-white border border-white/20 mb-6">
               <span className="w-1.5 h-1.5 bg-yellow rounded-full" />
-              Unidade Buritis
+              Unidade Castelo
             </span>
 
             <h2 className="section-title text-white mb-4">
@@ -26,7 +26,7 @@ export default function Amenities() {
 
             <p className="text-white/75 text-lg leading-relaxed mb-8">
               Enquanto a sua roupa lava ou seca, você descansa, trabalha, estuda ou
-              aproveita o tempo com quem ama. A Xô Varal Buritis foi pensada para
+              aproveita o tempo com quem ama. A Xô Varal Castelo foi pensada para
               ser o lugar mais confortável que uma lavanderia pode ser.
             </p>
 
@@ -63,7 +63,7 @@ export default function Amenities() {
               <span className="text-2xl">📍</span>
               <div>
                 <div className="text-white font-bold text-sm">Rua Maria Heilbuth Surette, 207</div>
-                <div className="text-white/60 text-xs">Buritis, Belo Horizonte — MG | CEP 30575-100</div>
+                <div className="text-white/60 text-xs">Castelo, Belo Horizonte — MG | CEP 30575-100</div>
               </div>
               <a
                 href={SITE.address.googleMapsUrl}

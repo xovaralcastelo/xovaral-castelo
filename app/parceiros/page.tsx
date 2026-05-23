@@ -1,10 +1,10 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import { SITE } from '@/lib/constants'
 
 export const metadata: Metadata = {
-  title: 'Área de Parceiros — Negócios locais no Buritis',
+  title: 'Área de Parceiros — Negócios locais no Castelo',
   description:
-    'Seja parceiro da Xô Varal Buritis. Cupons exclusivos, campanhas conjuntas e visibilidade para mais de 250 clientes mensais no bairro. Cadastre seu negócio.',
+    'Seja parceiro da Xô Varal Castelo. Cupons exclusivos, campanhas conjuntas e visibilidade para mais de 250 clientes mensais no bairro. Cadastre seu negócio.',
 }
 
 const BENEFITS_PARTNER = [
@@ -16,7 +16,7 @@ const BENEFITS_PARTNER = [
   {
     icon: '📣',
     title: 'Menção nas redes',
-    desc: 'Seu negócio mencionado nas redes sociais da Xô Varal Buritis para mais de 1.000 seguidores.',
+    desc: 'Seu negócio mencionado nas redes sociais da Xô Varal Castelo para mais de 1.000 seguidores.',
   },
   {
     icon: '🤝',
@@ -36,7 +36,7 @@ const BENEFITS_PARTNER = [
   {
     icon: '🏆',
     title: 'Comunidade local',
-    desc: 'Faça parte da rede de negócios que fortalece o ecossistema comercial do Buritis.',
+    desc: 'Faça parte da rede de negócios que fortalece o ecossistema comercial do Castelo.',
   },
 ]
 
@@ -68,7 +68,7 @@ export default function ParceirosPage() {
             <span className="text-yellow">Xô Varal = mais visibilidade.</span>
           </h1>
           <p className="text-white/75 text-lg max-w-2xl mx-auto leading-relaxed">
-            A Xô Varal Buritis já atendeu mais de 250 clientes locais. Cada parceria
+            A Xô Varal Castelo já atendeu mais de 250 clientes locais. Cada parceria
             significa mais alcance para você — sem custo de anúncio.
           </p>
         </div>
@@ -111,7 +111,7 @@ export default function ParceirosPage() {
               Quem pode ser parceiro?
             </h2>
             <p className="section-subtitle mx-auto text-center text-gray-500">
-              Qualquer negócio do Buritis ou região com interesse em crescer junto.
+              Qualquer negócio do Castelo ou região com interesse em crescer junto.
             </p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -144,7 +144,7 @@ export default function ParceirosPage() {
           {/* Contact CTA cards */}
           <div className="space-y-4">
             <a
-              href={`${SITE.whatsapp}?text=Olá! Tenho um negócio no Buritis e gostaria de saber mais sobre como ser parceiro da Xô Varal Buritis.`}
+              href={`${SITE.whatsapp}?text=Olá! Tenho um negócio no Castelo e gostaria de saber mais sobre como ser parceiro da Xô Varal Castelo.`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-5 bg-[#f0fdf4] border-2 border-[#25d366]/30 rounded-3xl p-6 hover:border-[#25d366] transition-all hover:-translate-y-0.5 group"
@@ -171,7 +171,7 @@ export default function ParceirosPage() {
                 📸
               </div>
               <div className="flex-1">
-                <div className="font-black text-primary text-lg">Instagram @xovaralburitis</div>
+                <div className="font-black text-primary text-lg">Instagram @xovaralCastelo</div>
                 <div className="text-gray-500 text-sm">Mande DM para conversarmos</div>
               </div>
               <div className="text-pink-500 group-hover:translate-x-1 transition-transform">

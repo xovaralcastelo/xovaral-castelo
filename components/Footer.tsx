@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { SITE } from '@/lib/constants'
 
 export default function Footer() {
@@ -16,11 +16,11 @@ export default function Footer() {
               </div>
               <div>
                 <span className="font-black text-lg text-white leading-none block">Xô Varal</span>
-                <span className="text-orange text-xs font-semibold tracking-widest uppercase">Buritis</span>
+                <span className="text-orange text-xs font-semibold tracking-widest uppercase">Castelo</span>
               </div>
             </div>
             <p className="text-white/60 text-sm leading-relaxed mb-5 max-w-xs">
-              Lavanderia self-service moderna no coração do Buritis. Lave e seque em até 1 hora,
+              Lavanderia self-service moderna no coração do Castelo. Lave e seque em até 1 hora,
               todos os dias das 6h às 23h.
             </p>
             {/* Social */}
@@ -110,7 +110,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/40">
-          <span>© {year} Xô Varal Buritis. Todos os direitos reservados.</span>
+          <span>© {year} Xô Varal Castelo. Todos os direitos reservados.</span>
           <div className="flex gap-4">
             <span>CNPJ em processo de regularização</span>
           </div>

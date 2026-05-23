@@ -1,11 +1,11 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 import { HOW_IT_WORKS, PRICING, SITE } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Como Funciona — Lavanderia Self-Service',
   description:
-    'Entenda como funciona a lavanderia self-service da Xô Varal Buritis. 5 passos simples, pagamento pelo app ou totem, resultado profissional em até 1 hora.',
+    'Entenda como funciona a lavanderia self-service da Xô Varal Castelo. 5 passos simples, pagamento pelo app ou totem, resultado profissional em até 1 hora.',
 }
 
 export default function ComoFuncionaPage() {

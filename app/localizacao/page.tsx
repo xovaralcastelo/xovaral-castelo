@@ -1,19 +1,19 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SITE } from '@/lib/constants'
 
 export const metadata: Metadata = {
-  title: 'Localização — Como chegar à Xô Varal Buritis',
+  title: 'Localização — Como chegar à Xô Varal Castelo',
   description:
-    'Encontre a Xô Varal Buritis em Belo Horizonte. Rua Maria Heilbuth Surette, 207 — Buritis, BH. Estacionamento na porta. Abertos todos os dias das 6h às 23h.',
+    'Encontre a Xô Varal Castelo no Comercial JL Mall — R. Castelo da Beira, 271, Castelo, BH. Abertos todos os dias das 6h às 23h.',
 }
 
 const NEARBY = [
-  { icon: '💪', label: 'Smart Fit Buritis', distance: '~3 min a pé' },
-  { icon: '🎓', label: 'UniBH Campus Buritis', distance: '~5 min a pé' },
-  { icon: '🎓', label: 'UNA Buritis', distance: '~7 min a pé' },
-  { icon: '🛍️', label: 'Shopping Buritis', distance: '~8 min a pé' },
-  { icon: '🥦', label: 'Verdemar', distance: '~4 min a pé' },
+  { icon: '🏬', label: 'Comercial JL Mall', distance: 'Dentro do mall' },
+  { icon: '🛍️', label: 'Shopping del Rey', distance: '~5 min de carro' },
+  { icon: '💪', label: 'Academias da região', distance: 'Bairro Castelo' },
+  { icon: '🏘️', label: 'Bairro Castelo', distance: 'Região central' },
+  { icon: '🚗', label: 'Via Expressa', distance: '~3 min de carro' },
 ]
 
 export default function LocalizacaoPage() {
@@ -25,16 +25,16 @@ export default function LocalizacaoPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center relative z-10">
           <span className="badge bg-sky/20 text-sky border border-sky/30 mb-5">
             <span className="w-1.5 h-1.5 bg-sky rounded-full" />
-            No coração do Buritis
+            No coração do Castelo
           </span>
           <h1 className="text-4xl sm:text-5xl font-black text-white mb-5 leading-tight">
             Como chegar à
             <br />
-            <span className="text-orange">Xô Varal Buritis</span>
+            <span className="text-orange">Xô Varal Castelo</span>
           </h1>
           <p className="text-white/75 text-lg max-w-2xl mx-auto leading-relaxed">
-            Estamos no coração do Buritis, com vaga exclusiva de estacionamento na porta.
-            Pertinho da Smart Fit, UniBH e do Shopping Buritis.
+            Estamos no coração do Castelo, com vaga exclusiva de estacionamento na porta.
+            Pertinho da Smart Fit, UniBH e do Shopping Castelo.
           </p>
         </div>
         <div className="wave-bottom">
@@ -58,7 +58,7 @@ export default function LocalizacaoPage() {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Mapa — Xô Varal Buritis"
+                title="Mapa — Xô Varal Castelo"
               />
             </div>
 
@@ -72,9 +72,10 @@ export default function LocalizacaoPage() {
                 </h2>
                 <div className="space-y-4">
                   <div>
-                    <p className="font-bold text-primary text-base">Rua Maria Heilbuth Surette, 207</p>
-                    <p className="text-gray-500 text-sm">Buritis — Belo Horizonte, MG</p>
-                    <p className="text-gray-400 text-xs">CEP: 30575-100</p>
+                    <p className="text-gray-400 text-xs font-medium">Comercial JL Mall</p>
+                    <p className="font-bold text-primary text-base">R. Castelo da Beira, 271</p>
+                    <p className="text-gray-500 text-sm">Castelo — Belo Horizonte, MG</p>
+                    <p className="text-gray-400 text-xs">CEP: 31330-370</p>
                   </div>
                   <div className="border-t border-gray-200 pt-4 space-y-3">
                     <div className="flex items-center gap-3">
@@ -156,7 +157,7 @@ export default function LocalizacaoPage() {
               O que tem perto
             </h2>
             <p className="section-subtitle mx-auto text-center text-gray-500">
-              No Buritis, você resolve tudo na mesma saída.
+              No Castelo, você resolve tudo na mesma saída.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

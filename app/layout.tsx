@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import { Nunito } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
@@ -13,50 +13,50 @@ const nunito = Nunito({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://buritis.xovaral.com.br'),
+  metadataBase: new URL('https://castelo.xovaral.com'),
   title: {
-    default: 'Xô Varal Buritis | Lavanderia Self-Service no Buritis — BH',
-    template: '%s | Xô Varal Buritis',
+    default: 'Xô Varal Castelo | Lavanderia Self-Service no Castelo — BH',
+    template: '%s | Xô Varal Castelo',
   },
   description:
-    'Lavanderia self-service moderna no Buritis, Belo Horizonte. Lave e seque suas roupas em até 1 hora com máquinas SpeedQueen profissionais. Funcionamos todos os dias das 6h às 23h.',
+    'Lavanderia self-service moderna no Castelo, Belo Horizonte. Lave e seque suas roupas em até 1 hora com máquinas SpeedQueen profissionais. Funcionamos todos os dias das 6h às 23h.',
   keywords: [
-    'lavanderia Buritis',
-    'lavanderia self-service Buritis',
-    'lavanderia automática Buritis',
-    'lavar roupa Buritis',
-    'secar roupa Buritis',
+    'lavanderia Castelo',
+    'lavanderia self-service Castelo',
+    'lavanderia automática Castelo',
+    'lavar roupa Castelo',
+    'secar roupa Castelo',
     'lavanderia perto de mim',
     'lavanderia autosserviço BH',
     'lavanderia para apartamento',
     'lavanderia para edredom',
     'lavanderia rápida Belo Horizonte',
-    'Xô Varal Buritis',
+    'Xô Varal Castelo',
     'lavanderia Belo Horizonte',
   ],
-  authors: [{ name: 'Xô Varal Buritis' }],
-  creator: 'Xô Varal Buritis',
+  authors: [{ name: 'Xô Varal Castelo' }],
+  creator: 'Xô Varal Castelo',
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
-    url: 'https://buritis.xovaral.com.br',
-    title: 'Xô Varal Buritis | Lavanderia Self-Service no Buritis — BH',
+    url: 'https://castelo.xovaral.com',
+    title: 'Xô Varal Castelo | Lavanderia Self-Service no Castelo — BH',
     description:
-      'Lave e seque suas roupas em até 1 hora no Buritis. Ambiente moderno, espaço kids, bistrô, Wi-Fi e Clube de Vantagens.',
-    siteName: 'Xô Varal Buritis',
+      'Lave e seque suas roupas em até 1 hora no Castelo. Ambiente moderno, espaço kids, bistrô, Wi-Fi e Clube de Vantagens.',
+    siteName: 'Xô Varal Castelo',
     images: [
       {
         url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Xô Varal Buritis — Lavanderia Self-Service',
+        alt: 'Xô Varal Castelo — Lavanderia Self-Service',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Xô Varal Buritis | Lavanderia Self-Service',
-    description: 'Lave e seque em até 1h no Buritis. Todos os dias das 6h às 23h.',
+    title: 'Xô Varal Castelo | Lavanderia Self-Service',
+    description: 'Lave e seque em até 1h no Castelo. Todos os dias das 6h às 23h.',
   },
   robots: {
     index: true,
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://buritis.xovaral.com.br',
+    canonical: 'https://castelo.xovaral.com',
   },
 }
 
@@ -124,23 +124,23 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'LaundryOrDryCleaning',
-              name: 'Xô Varal Buritis',
+              name: 'Xô Varal Castelo',
               description:
-                'Lavanderia self-service moderna no Buritis, Belo Horizonte. Máquinas SpeedQueen profissionais, espaço kids, bistrô e Wi-Fi.',
-              url: 'https://buritis.xovaral.com.br',
+                'Lavanderia self-service moderna no Castelo, Belo Horizonte. Máquinas SpeedQueen profissionais, espaço kids, bistrô e Wi-Fi.',
+              url: 'https://castelo.xovaral.com',
               telephone: '+55-31-99332-8775',
               address: {
                 '@type': 'PostalAddress',
-                streetAddress: 'Rua Maria Heilbuth Surette, 207',
+                streetAddress: 'R. Castelo da Beira, 271',
                 addressLocality: 'Belo Horizonte',
                 addressRegion: 'MG',
-                postalCode: '30575-100',
+                postalCode: '31330-370',
                 addressCountry: 'BR',
               },
               geo: {
                 '@type': 'GeoCoordinates',
-                latitude: -19.972,
-                longitude: -43.964,
+                latitude: -19.9477,
+                longitude: -43.9376,
               },
               openingHoursSpecification: [
                 {
@@ -156,7 +156,7 @@ export default function RootLayout({
               priceRange: 'R$ 17–34',
               currenciesAccepted: 'BRL',
               paymentAccepted: 'Cash, Credit Card, Debit Card, Pix',
-              image: 'https://buritis.xovaral.com.br/images/og-image.jpg',
+              image: 'https://castelo.xovaral.com/images/og-image.jpg',
             }),
           }}
         />

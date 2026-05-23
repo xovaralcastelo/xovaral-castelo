@@ -1,11 +1,11 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CLUB_LEVELS, SITE } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Clube de Vantagens — Fidelidade com benefícios reais',
   description:
-    'Faça parte do Clube de Vantagens da Xô Varal Buritis. Quanto mais você usa, mais desconto você ganha — Bronze, Prata e Ouro com até 20% de desconto em todos os ciclos.',
+    'Faça parte do Clube de Vantagens da Xô Varal Castelo. Quanto mais você usa, mais desconto você ganha — Bronze, Prata e Ouro com até 20% de desconto em todos os ciclos.',
 }
 
 export default function ClubeDeVantagensPage() {
@@ -25,7 +25,7 @@ export default function ClubeDeVantagensPage() {
           <h1 className="text-4xl sm:text-5xl font-black text-white mb-5 leading-tight">
             Clube de Vantagens
             <br />
-            <span className="text-primary">Xô Varal Buritis</span>
+            <span className="text-primary">Xô Varal Castelo</span>
           </h1>
           <p className="text-white/80 text-lg max-w-2xl mx-auto leading-relaxed">
             Cada visita conta. Suba de nível, acumule benefícios e ganhe

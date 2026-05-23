@@ -1,6 +1,6 @@
-# Xô Varal Buritis — Website
+﻿# Xô Varal Castelo — Website
 
-Site institucional da unidade Xô Varal Buritis — lavanderia self-service em Belo Horizonte/MG.
+Site institucional da unidade Xô Varal Castelo — lavanderia self-service em Belo Horizonte/MG.
 
 ## Stack
 
@@ -80,4 +80,4 @@ O site já está configurado com:
 - Schema.org `LocalBusiness` com dados completos
 - Open Graph para compartilhamento social
 - URLs amigáveis
-- Foco em buscas locais: "lavanderia Buritis", "lavanderia self-service BH", etc.
+- Foco em buscas locais: "lavanderia Castelo", "lavanderia self-service BH", etc.

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
@@ -64,7 +64,7 @@ export default function Hero() {
           </h1>
 
           <p className="text-white/80 text-lg leading-relaxed mb-8 max-w-xl">
-            Na Xô Varal Buritis, você chega, escolhe a máquina, paga pelo app ou
+            Na Xô Varal Castelo, você chega, escolhe a máquina, paga pelo app ou
             totem, lava, seca e vai embora com tudo pronto.{' '}
             <strong className="text-white">Sem fila, sem burocracia</strong> e sem
             depender de ninguém.

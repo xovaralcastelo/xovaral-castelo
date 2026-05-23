@@ -1,22 +1,24 @@
-export const SITE = {
-  name: 'Xô Varal Buritis',
-  tagline: 'Lavanderia self-service moderna no Buritis',
-  url: 'https://buritis.xovaral.com.br',
+﻿export const SITE = {
+  name: 'Xô Varal Castelo',
+  tagline: 'Lavanderia self-service moderna no Castelo',
+  url: 'https://castelo.xovaral.com',
   phone: '31993328775',
   whatsapp: 'https://wa.me/5531993328775',
-  instagram: 'https://instagram.com/xovaralburitis',
-  facebook: 'https://facebook.com/xovaralburitis',
+  instagram: 'https://instagram.com/xovaralcastelo',
+  facebook: 'https://facebook.com/xovaralcastelo',
   address: {
-    street: 'Rua Maria Heilbuth Surette, 207',
-    neighborhood: 'Buritis',
+    street: 'R. Castelo da Beira, 271',
+    complement: 'Comercial JL Mall',
+    neighborhood: 'Castelo',
     city: 'Belo Horizonte',
     state: 'MG',
-    zip: '30575-100',
-    full: 'Rua Maria Heilbuth Surette, 207 — Buritis, Belo Horizonte/MG',
+    zip: '31330-370',
+    full: 'R. Castelo da Beira, 271 — Castelo, Belo Horizonte/MG',
+    fullWithComplement: 'Comercial JL Mall — R. Castelo da Beira, 271 — Castelo, Belo Horizonte/MG',
     googleMapsUrl:
-      'https://maps.google.com/?q=Rua+Maria+Heilbuth+Surette,207,Buritis,Belo+Horizonte,MG',
+      'https://maps.google.com/?q=R.+Castelo+da+Beira,271,Castelo,Belo+Horizonte,MG',
     googleMapsEmbed:
-      'https://maps.google.com/maps?q=Rua+Maria+Heilbuth+Surette,207,Buritis,Belo+Horizonte,MG&hl=pt-BR&z=16&output=embed',
+      'https://maps.google.com/maps?q=R.+Castelo+da+Beira,271,Castelo,Belo+Horizonte,MG&hl=pt-BR&z=16&output=embed',
   },
   hours: '6h às 23h — todos os dias, inclusive feriados',
   inauguration: '08 de setembro de 2025',
@@ -144,7 +146,7 @@ export const TESTIMONIALS = [
   },
   {
     name: 'Claudia Erminia',
-    role: 'Moradora do Buritis',
+    role: 'Moradora do Castelo',
     text: 'Que ambiente incrível! Vim com minha filha na primeira vez e ela adorou a área kids. Agora é programa nosso de sábado.',
     avatar: 'C',
   },
@@ -162,7 +164,7 @@ export const TESTIMONIALS = [
   },
   {
     name: 'Juliana Ferreira',
-    role: 'Mãe — Buritis',
+    role: 'Mãe — Castelo',
     text: 'Ele brincou. Eu respirei. A roupa lavou. Semana que vem a gente volta, mãe? — foi o que ele me disse saindo.',
     avatar: 'J',
   },
@@ -188,7 +190,7 @@ export const FAQ = [
   {
     question: 'Preciso agendar horário?',
     answer:
-      'Não. A Xô Varal Buritis funciona no modelo self-service: você chega, verifica a disponibilidade das máquinas no app e começa. Sem agendamento, sem fila.',
+      'Não. A Xô Varal Castelo funciona no modelo self-service: você chega, verifica a disponibilidade das máquinas no app e começa. Sem agendamento, sem fila.',
   },
   {
     question: 'Quanto tempo demora?',
@@ -203,7 +205,7 @@ export const FAQ = [
   {
     question: 'A loja tem atendente?',
     answer:
-      'A Xô Varal Buritis é self-service — você opera com total autonomia pelo app ou totem. O ambiente é monitorado e seguro. Em caso de dúvida, o suporte está disponível pelo WhatsApp.',
+      'A Xô Varal Castelo é self-service — você opera com total autonomia pelo app ou totem. O ambiente é monitorado e seguro. Em caso de dúvida, o suporte está disponível pelo WhatsApp.',
   },
   {
     question: 'É seguro para roupas delicadas e de academia?',

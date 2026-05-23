@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { SITE } from '@/lib/constants'
 
@@ -14,7 +14,7 @@ export default function LocationBlock() {
           </span>
           <h2 className="section-title text-primary mb-4">Como chegar</h2>
           <p className="section-subtitle mx-auto text-center text-gray-500">
-            No coração do Buritis, a 3 minutos da Smart Fit e pertinho das faculdades.
+            No coração do Castelo, a 3 minutos da Smart Fit e pertinho das faculdades.
           </p>
         </div>
 
@@ -30,7 +30,7 @@ export default function LocationBlock() {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Localização da Xô Varal Buritis"
+              title="Localização da Xô Varal Castelo"
             />
           </div>
 
@@ -42,12 +42,13 @@ export default function LocationBlock() {
                 <span className="text-xl">📍</span>
                 Endereço
               </h3>
+              <p className="text-gray-500 text-xs font-medium mb-0.5">Comercial JL Mall</p>
               <p className="text-gray-700 font-semibold mb-1">
-                Rua Maria Heilbuth Surette, 207
+                R. Castelo da Beira, 271
               </p>
               <p className="text-gray-500 text-sm mb-4">
-                Buritis — Belo Horizonte, MG<br />
-                CEP: 30575-100
+                Castelo — Belo Horizonte, MG<br />
+                CEP: 31330-370
               </p>
 
               <div className="space-y-3 mb-6">

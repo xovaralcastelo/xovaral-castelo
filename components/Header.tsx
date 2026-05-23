@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
@@ -48,7 +48,7 @@ export default function Header() {
                 scrolled ? 'text-orange' : 'text-orange-light'
               }`}
             >
-              Buritis
+              Castelo
             </span>
           </div>
         </Link>

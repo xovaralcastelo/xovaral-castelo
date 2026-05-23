@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { SITE } from '@/lib/constants'
 
@@ -25,7 +25,7 @@ export default function CTABanner() {
         <h2 className="text-3xl sm:text-5xl font-black text-white mb-4 leading-tight text-balance">
           Pronto para testar a
           <br />
-          <span className="text-orange">Xô Varal Buritis?</span>
+          <span className="text-orange">Xô Varal Castelo?</span>
         </h2>
 
         <p className="text-white/75 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
@@ -56,7 +56,7 @@ export default function CTABanner() {
 
         {/* Bottom note */}
         <p className="mt-10 text-white/40 text-sm">
-          📍 Rua Maria Heilbuth Surette, 207 — Buritis, Belo Horizonte/MG &nbsp;|&nbsp; ⏰ 6h às 23h todos os dias
+          📍 Rua Maria Heilbuth Surette, 207 — Castelo, Belo Horizonte/MG &nbsp;|&nbsp; ⏰ 6h às 23h todos os dias
         </p>
       </div>
     </section>
