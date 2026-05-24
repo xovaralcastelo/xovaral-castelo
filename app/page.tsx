@@ -1,6 +1,7 @@
 import Hero from '@/components/Hero'
 import HowItWorks from '@/components/HowItWorks'
 import WhySection from '@/components/WhySection'
+import GaleriaFotos from '@/components/GaleriaFotos'
 import Amenities from '@/components/Amenities'
 import Pricing from '@/components/Pricing'
 import ClubHighlight from '@/components/ClubHighlight'
@@ -16,6 +17,7 @@ export default function HomePage() {
       <Hero />
       <HowItWorks />
       <WhySection />
+      <GaleriaFotos />
       <Amenities />
       <Pricing />
       <ClubHighlight />

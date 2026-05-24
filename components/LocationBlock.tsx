@@ -1,5 +1,6 @@
 ﻿'use client'
 
+import Image from 'next/image'
 import { SITE } from '@/lib/constants'
 
 export default function LocationBlock() {
@@ -84,12 +85,20 @@ export default function LocationBlock() {
               </div>
             </div>
 
-            {/* Quick hours card */}
-            <div className="bg-primary rounded-2xl p-5 text-center">
-              <div className="text-3xl mb-2">🕐</div>
-              <div className="text-white font-black text-lg">6h às 23h</div>
-              <div className="text-white/70 text-sm mt-1">
-                Todos os dias da semana, inclusive feriados
+            {/* Foto da fachada */}
+            <div className="relative rounded-2xl overflow-hidden h-48 shadow-card">
+              <Image
+                src="/images/fachada-externa.jpg"
+                alt="Fachada da Xô Varal Castelo"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 400px"
+              />
+              <div className="absolute inset-0 bg-primary/40 flex items-end p-4">
+                <div>
+                  <div className="text-white font-black text-base">6h às 23h</div>
+                  <div className="text-white/80 text-xs">Todos os dias, inclusive feriados</div>
+                </div>
               </div>
             </div>
           </div>

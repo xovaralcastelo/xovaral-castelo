@@ -1,4 +1,5 @@
 ﻿import Link from 'next/link'
+import Image from 'next/image'
 import { SITE } from '@/lib/constants'
 
 export default function Footer() {
@@ -11,13 +12,14 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 rounded-xl bg-orange flex items-center justify-center text-white font-black text-lg">
-                X
-              </div>
-              <div>
-                <span className="font-black text-lg text-white leading-none block">Xô Varal</span>
-                <span className="text-orange text-xs font-semibold tracking-widest uppercase">Castelo</span>
-              </div>
+              <Image
+                src="/logo-xovaral.png"
+                alt="Xô Varal"
+                width={120}
+                height={120}
+                className="h-10 w-auto brightness-0 invert"
+              />
+              <span className="text-orange text-xs font-semibold tracking-widest uppercase">Castelo</span>
             </div>
             <p className="text-white/60 text-sm leading-relaxed mb-5 max-w-xs">
               Lavanderia self-service moderna no coração do Castelo. Lave e seque em até 1 hora,

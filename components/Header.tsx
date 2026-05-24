@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { SITE } from '@/lib/constants'
 
 const navLinks = [
@@ -32,25 +33,20 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-9 h-9 rounded-xl bg-orange flex items-center justify-center text-white font-black text-lg shadow-orange transition-transform group-hover:scale-105">
-            X
-          </div>
-          <div>
-            <span
-              className={`font-black text-lg leading-none transition-colors ${
-                scrolled ? 'text-primary' : 'text-white'
-              }`}
-            >
-              Xô Varal
-            </span>
-            <span
-              className={`block text-xs font-semibold tracking-widest uppercase transition-colors ${
-                scrolled ? 'text-orange' : 'text-orange-light'
-              }`}
-            >
-              Castelo
-            </span>
-          </div>
+          <Image
+            src="/logo-xovaral.png"
+            alt="Xô Varal"
+            width={120}
+            height={120}
+            className="h-10 w-auto transition-transform group-hover:scale-105 drop-shadow"
+          />
+          <span
+            className={`font-bold text-sm tracking-widest uppercase transition-colors ${
+              scrolled ? 'text-orange' : 'text-orange-light'
+            }`}
+          >
+            Castelo
+          </span>
         </Link>
 
         {/* Desktop nav */}

@@ -1,6 +1,7 @@
 ﻿'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { SITE } from '@/lib/constants'
 
@@ -114,10 +115,17 @@ export default function Hero() {
         >
           <div className="relative">
             {/* Main card */}
-            <div className="bg-white/10 backdrop-blur-md rounded-4xl p-8 border border-white/20 shadow-2xl">
-              {/* Machine illustration */}
-              <div className="flex justify-center mb-6">
-                <WashingMachineIllustration />
+            <div className="bg-white/10 backdrop-blur-md rounded-4xl p-4 border border-white/20 shadow-2xl">
+              {/* Foto real das máquinas */}
+              <div className="relative w-full h-64 rounded-3xl overflow-hidden mb-4">
+                <Image
+                  src="/images/hero-maquinas-vertical.jpg"
+                  alt="Máquinas SpeedQueen na Xô Varal Castelo"
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
               </div>
 
               {/* Quick info */}
