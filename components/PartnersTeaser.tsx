@@ -1,64 +1,69 @@
-import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import Link from "next/link";
+import { ArrowRight, Handshake, Store, GraduationCap, Dumbbell, Building, Utensils } from "lucide-react";
+import { Container } from "@/components/layout/Container";
+import { Mascot } from "@/components/brand/Mascot";
+
+const PARTNER_TYPES = [
+  { icon: Dumbbell, label: "Academias" },
+  { icon: GraduationCap, label: "Faculdades" },
+  { icon: Building, label: "Condomínios" },
+  { icon: Utensils, label: "Restaurantes" },
+  { icon: Store, label: "Comércio local" },
+];
 
 export default function PartnersTeaser() {
   return (
-    <section className="section-pad bg-white">
-      <div className="container-xl">
-        <div className="royal-gradient rounded-[2rem] p-10 md:p-14 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
-          <div aria-hidden className="absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl opacity-15 bg-xv-cyan" />
-          <div aria-hidden className="absolute bottom-0 left-20 w-40 h-40 rounded-full blur-3xl opacity-10 bg-xv-orange" />
+    <section id="parceiros" className="relative bg-xv-gray-50 py-20 sm:py-28">
+      <Container size="lg">
+        <div className="grid items-center gap-10 rounded-[2rem] bg-white p-8 shadow-sm sm:p-12 lg:grid-cols-[1fr_1.2fr] lg:p-16">
+          <div className="order-2 flex justify-center lg:order-1">
+            <Mascot name="meia" size="xl" />
+          </div>
 
-          {/* Left */}
-          <div className="relative flex-1 text-center md:text-left">
-            <div className="badge-navy mb-5 inline-flex">
-              🤝 Parceiros Locais
+          <div className="order-1 lg:order-2">
+            <div className="inline-flex items-center gap-2 rounded-full bg-xv-cyan-bg px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-xv-cyan">
+              <Handshake size={14} />
+              Para parceiros locais
             </div>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
-              Seu negócio + Xô Varal =
-              <br />
-              <span className="amber-text">mais visibilidade no Castelo.</span>
+            <h2 className="mt-5 text-4xl font-black leading-tight text-xv-navy sm:text-5xl">
+              Conecte seu negócio aos moradores do Castelo.
             </h2>
-            <p className="text-white/70 text-base leading-relaxed mb-8 max-w-lg">
-              Academias, restaurantes, coworkings, salões, condomínios — se você
-              tem um negócio no Castelo, existe uma parceria aqui esperando por você.
-              Cupons, campanhas conjuntas e exposição de marca para mais de 250 clientes mensais.
+            <p className="mt-4 text-xv-gray-700">
+              Academias, faculdades, condomínios, restaurantes e comércio local:
+              ofereça benefícios aos seus clientes e ganhe visibilidade entre
+              centenas de moradores que frequentam a Xô Varal toda semana.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
-              <Link href="/parceiros" className="btn-whatsapp shimmer-btn" style={{ background: 'linear-gradient(90deg, #EE7531, #FBC132)' }}>
+
+            <div className="mt-6 flex flex-wrap gap-2">
+              {PARTNER_TYPES.map((p) => (
+                <span
+                  key={p.label}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-xv-gray-50 px-3 py-1.5 text-xs font-bold text-xv-navy"
+                >
+                  <p.icon size={14} className="text-xv-cyan" />
+                  {p.label}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="/parceiros/cadastro"
+                className="inline-flex items-center gap-2 rounded-full bg-xv-navy px-6 py-3 text-sm font-bold text-white shadow-md transition hover:bg-xv-navy-light"
+              >
                 Quero ser parceiro
                 <ArrowRight size={16} />
               </Link>
-              <Link href="/parceiros" className="btn-ghost">
-                Acessar painel de parceiros
+              <Link
+                href="/parceiros/entrar"
+                className="inline-flex items-center gap-2 rounded-full border-2 border-xv-navy/15 bg-white px-6 py-3 text-sm font-bold text-xv-navy hover:border-xv-navy/40"
+              >
+                Acessar painel
               </Link>
             </div>
           </div>
-
-          {/* Right — perks card */}
-          <div className="relative shrink-0 w-full md:w-72">
-            <div className="bg-white/10 backdrop-blur-sm rounded-[2rem] p-6 border border-white/20">
-              <h3 className="font-bold text-white text-sm mb-4 uppercase tracking-wide">
-                O que você recebe como parceiro:
-              </h3>
-              <ul className="space-y-3">
-                {[
-                  { icon: '🎫', text: 'Cupons exclusivos para seus clientes' },
-                  { icon: '📣', text: 'Menção nas redes sociais da Xô Varal' },
-                  { icon: '🤝', text: 'Campanhas conjuntas no bairro' },
-                  { icon: '🔗', text: 'Link no site e materiais' },
-                  { icon: '📱', text: 'QR code de parceria exclusivo' },
-                ].map((perk) => (
-                  <li key={perk.text} className="text-white/85 text-sm flex items-center gap-2">
-                    <span className="text-base shrink-0">{perk.icon}</span>
-                    <span>{perk.text}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
         </div>
-      </div>
+      </Container>
     </section>
-  )
+  );
 }

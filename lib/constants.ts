@@ -1,8 +1,6 @@
-// ============================================================
-// UNIT — fonte única da verdade para a unidade Castelo
-// ============================================================
 export const UNIT = {
   name:      'Xô Varal Castelo',
+  shortName: 'Castelo',
   unit:      'Castelo',
   tagline:   'Lavanderia self-service moderna no Castelo',
   url:       'https://castelo.xovaral.com',
@@ -10,7 +8,22 @@ export const UNIT = {
   instagram: 'https://instagram.com/xovaralcastelo',
   facebook:  'https://facebook.com/xovaralcastelo',
   phone:     '(31) 9 9332-8775',
-  hours:     { summary: '6h às 23h, todos os dias', full: '6h às 23h — todos os dias, inclusive feriados' },
+  hours: {
+    weekday:  '06:00–23:00',
+    weekend:  '06:00–23:00',
+    holidays: '06:00–23:00',
+    summary:  '6h às 23h, todos os dias, inclusive feriados',
+    full:     '6h às 23h — todos os dias, inclusive feriados',
+  },
+  contact: {
+    whatsapp:        '5531993328775',
+    whatsappDisplay: '(31) 9 9332-8775',
+    instagram:       'xovaralcastelo',
+    instagramUrl:    'https://instagram.com/xovaralcastelo',
+    facebook:        'xovaralcastelo',
+    facebookUrl:     'https://facebook.com/xovaralcastelo',
+    email:           'contato@castelo.xovaral.com.br',
+  },
   address: {
     street:          'R. Castelo da Beira, 271',
     complement:      'Comercial JL Mall',
@@ -18,22 +31,126 @@ export const UNIT = {
     city:            'Belo Horizonte',
     state:           'MG',
     zip:             '31330-370',
+    country:         'BR',
     full:            'R. Castelo da Beira, 271 — Castelo, Belo Horizonte/MG',
     fullComplement:  'Comercial JL Mall — R. Castelo da Beira, 271 — Castelo, BH/MG',
     googleMapsUrl:   'https://maps.google.com/?q=R.+Castelo+da+Beira,271,Castelo,Belo+Horizonte,MG',
     googleMapsEmbed: 'https://maps.google.com/maps?q=R.+Castelo+da+Beira,271,Castelo,Belo+Horizonte,MG&hl=pt-BR&z=16&output=embed',
   },
   pricing: {
-    wash:     { label: 'R$ 17,00', cents: 1700 },
-    dry:      { label: 'R$ 16,99', cents: 1699 },
-    complete: { label: 'R$ 33,99', cents: 3399 },
+    wash:         { amount: 17.0,  label: 'R$ 17,00', capacityKg: 10.5 },
+    dry:          { amount: 16.99, label: 'R$ 16,99', capacityKg: 10.5 },
+    complete:     { amount: 33.99, label: 'R$ 33,99', capacityKg: 10.5 },
     cycleMinutes: 45,
   },
-  equipment: { machines: 3, brand: 'SpeedQueen', capacity: '10,5 kg' },
+  equipment: {
+    machines:  3,
+    brand:     'SpeedQueen',
+    capacity:  '10,5 kg',
+    supplies:  ['OMO', 'Comfort'],
+  },
+  amenities: [
+    'Bistrô com Wi-Fi gratuito',
+    'Área kids',
+    'Ar-condicionado',
+    'TV',
+    'Vaga de estacionamento exclusiva na porta',
+    'Mesa de dobra ampla',
+    'Cabides disponíveis',
+    'Ambiente moderno, limpo e seguro',
+  ],
   inauguration: '08 de setembro de 2025',
-}
+  inaugurated:  '2025-09-08',
+} as const;
 
-// backward compat alias
+export const WHATSAPP_MESSAGES = {
+  home:         'Olá! Vim pelo site da Xô Varal Castelo e quero saber mais.',
+  comoFunciona: 'Olá! Li sobre o autosserviço no site e gostaria de tirar uma dúvida antes da primeira visita.',
+  localizacao:  'Olá! Estou indo conhecer a Xô Varal Castelo hoje. Pode me orientar?',
+  clube:        'Olá! Quero entrar no Clube de Vantagens da Xô Varal Castelo.',
+  parceiros:    'Olá! Tenho interesse em ser parceiro local da Xô Varal Castelo.',
+  generic:      'Olá! Vim pelo site e quero falar com a equipe.',
+} as const;
+
+export const whatsappUrl = (message: keyof typeof WHATSAPP_MESSAGES | string = 'home') => {
+  const text =
+    message in WHATSAPP_MESSAGES
+      ? WHATSAPP_MESSAGES[message as keyof typeof WHATSAPP_MESSAGES]
+      : (message as string);
+  return `https://wa.me/${UNIT.contact.whatsapp}?text=${encodeURIComponent(text)}`;
+};
+
+export const googleMapsRouteUrl = () =>
+  `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(UNIT.address.full)}`;
+
+export const CLUB_LEVELS = [
+  {
+    key:         'bronze',
+    name:        'Bronze',
+    level:       'Bronze',
+    icon:        'Trophy',
+    cyclesMin:   8,
+    cyclesMax:   11,
+    cyclesLabel: '8 a 11 ciclos/mês',
+    discountPct: 5,
+    discount:    '5%',
+    color:       '#CD7F32',
+    colorEnd:    '#8B4513',
+    ringColor:   'rgba(205,127,50,0.4)',
+    bg:          '#FDF4ED',
+    perks: ['5% de desconto em todos os ciclos', 'Acesso ao clube', 'Notificações de promoções'],
+  },
+  {
+    key:         'prata',
+    name:        'Prata',
+    level:       'Prata',
+    icon:        'Medal',
+    cyclesMin:   12,
+    cyclesMax:   19,
+    cyclesLabel: '12 a 19 ciclos/mês',
+    discountPct: 10,
+    discount:    '10%',
+    color:       '#A8A9AD',
+    colorEnd:    '#616161',
+    ringColor:   'rgba(158,158,158,0.4)',
+    bg:          '#F5F5F5',
+    perks: ['10% de desconto em todos os ciclos', 'Tudo do Bronze', 'Prioridade em promoções'],
+  },
+  {
+    key:         'ouro',
+    name:        'Ouro',
+    level:       'Ouro',
+    icon:        'Crown',
+    cyclesMin:   20,
+    cyclesMax:   29,
+    cyclesLabel: '20 a 29 ciclos/mês',
+    discountPct: 15,
+    discount:    '15%',
+    color:       '#FFD700',
+    colorEnd:    '#B8860B',
+    ringColor:   'rgba(255,215,0,0.5)',
+    bg:          '#FFFAE0',
+    highlight:   true,
+    perks: ['15% de desconto em todos os ciclos', 'Tudo do Prata', 'Acesso VIP a benefícios especiais'],
+  },
+  {
+    key:         'diamante',
+    name:        'Diamante',
+    level:       'Diamante',
+    icon:        'Gem',
+    cyclesMin:   30,
+    cyclesMax:   Infinity,
+    cyclesLabel: '30+ ciclos/mês',
+    discountPct: 20,
+    discount:    '20%',
+    color:       '#01B3DC',
+    colorEnd:    '#0097BC',
+    ringColor:   'rgba(1,179,220,0.4)',
+    bg:          '#E5F7FF',
+    perks: ['20% de desconto em todos os ciclos', 'Tudo do Ouro', 'Máximo desconto disponível'],
+  },
+]
+
 export const SITE = {
   name:      UNIT.name,
   tagline:   UNIT.tagline,
@@ -47,84 +164,10 @@ export const SITE = {
     googleMapsUrl:   UNIT.address.googleMapsUrl,
     googleMapsEmbed: UNIT.address.googleMapsEmbed,
   },
-  hours:       UNIT.hours.full,
+  hours:        UNIT.hours.full,
   inauguration: UNIT.inauguration,
 }
 
-export function whatsappUrl(source = 'site') {
-  return `https://wa.me/${UNIT.whatsapp}?text=Olá!+Vim+pelo+site+(${source})`
-}
-
-// ============================================================
-// CLUB_LEVELS — 4 níveis igual ao Buritis
-// ============================================================
-export const CLUB_LEVELS = [
-  {
-    key:        'bronze',
-    level:      'Bronze',
-    icon:       'Trophy',
-    cyclesMin:  8,
-    cyclesMax:  11,
-    cyclesLabel:'8 a 11 ciclos/mês',
-    discountPct: 5,
-    discount:   '5%',
-    color:      '#CD7F32',
-    colorEnd:   '#8B4513',
-    ringColor:  'rgba(205,127,50,0.4)',
-    bg:         '#FDF4ED',
-    perks: ['5% de desconto em todos os ciclos', 'Acesso ao clube', 'Notificações de promoções'],
-  },
-  {
-    key:        'prata',
-    level:      'Prata',
-    icon:       'Medal',
-    cyclesMin:  12,
-    cyclesMax:  19,
-    cyclesLabel:'12 a 19 ciclos/mês',
-    discountPct: 10,
-    discount:   '10%',
-    color:      '#9E9E9E',
-    colorEnd:   '#616161',
-    ringColor:  'rgba(158,158,158,0.4)',
-    bg:         '#F5F5F5',
-    perks: ['10% de desconto em todos os ciclos', 'Tudo do Bronze', 'Prioridade em promoções'],
-  },
-  {
-    key:        'ouro',
-    level:      'Ouro',
-    icon:       'Crown',
-    cyclesMin:  20,
-    cyclesMax:  29,
-    cyclesLabel:'20 a 29 ciclos/mês',
-    discountPct: 15,
-    discount:   '15%',
-    color:      '#D4A013',
-    colorEnd:   '#B8860B',
-    ringColor:  'rgba(255,215,0,0.5)',
-    bg:         '#FFFAE0',
-    highlight:  true,
-    perks: ['15% de desconto em todos os ciclos', 'Tudo do Prata', 'Acesso VIP a benefícios especiais'],
-  },
-  {
-    key:        'diamante',
-    level:      'Diamante',
-    icon:       'Gem',
-    cyclesMin:  30,
-    cyclesMax:  Infinity,
-    cyclesLabel:'30+ ciclos/mês',
-    discountPct: 20,
-    discount:   '20%',
-    color:      '#01B3DC',
-    colorEnd:   '#0097BC',
-    ringColor:  'rgba(1,179,220,0.4)',
-    bg:         '#E5F7FF',
-    perks: ['20% de desconto em todos os ciclos', 'Tudo do Ouro', 'Máximo desconto disponível'],
-  },
-]
-
-// ============================================================
-// PRICING (cards)
-// ============================================================
 export const PRICING = [
   {
     label:       'Lavagem',
@@ -156,9 +199,6 @@ export const PRICING = [
   },
 ]
 
-// ============================================================
-// HOW IT WORKS
-// ============================================================
 export const HOW_IT_WORKS = [
   {
     step:        1,
@@ -194,9 +234,6 @@ export const HOW_IT_WORKS = [
   },
 ]
 
-// ============================================================
-// BENEFITS
-// ============================================================
 export const BENEFITS = [
   { icon: 'Clock',       title: 'Economize tempo',          description: '45 min vs. horas em casa. Resolva a semana de uma vez.' },
   { icon: 'Building2',   title: 'Ideal para apartamentos',  description: 'Sem varal, sem espaço comprometido, sem roupa pendurada.' },
@@ -204,28 +241,22 @@ export const BENEFITS = [
   { icon: 'BedDouble',   title: 'Edredons e cama',          description: '10,5 kg que lava o que a máquina do condomínio não aguenta.' },
   { icon: 'Users',       title: 'Solução pra famílias',     description: 'Volume grande resolvido em uma única visita.' },
   { icon: 'CloudRain',   title: 'Dias chuvosos',            description: 'Secadora resolve em 45 min o que o sol levaria dias.' },
-  { icon: 'FlaskConical','title': 'Insumos profissionais', description: 'OMO e Comfort em dosagem ideal. Não precisa trazer sabão.' },
+  { icon: 'FlaskConical', title: 'Insumos profissionais',   description: 'OMO e Comfort em dosagem ideal. Não precisa trazer sabão.' },
   { icon: 'ShieldCheck', title: 'Total autonomia',          description: 'Você opera. Você controla. Self-service de verdade.' },
 ]
 
-// ============================================================
-// AMENITIES
-// ============================================================
 export const AMENITIES = [
-  { icon: 'Coffee',    label: 'Área de bistrô' },
-  { icon: 'Baby',      label: 'Espaço kids' },
-  { icon: 'Wifi',      label: 'Wi-Fi gratuito' },
-  { icon: 'Tv',        label: 'TV' },
-  { icon: 'AirVent',   label: 'Ar-condicionado' },
-  { icon: 'ParkingCircle', label: 'Estacionamento na porta' },
-  { icon: 'Ruler',     label: 'Mesa de dobrar roupas' },
-  { icon: 'Shirt',     label: 'Cabides disponíveis' },
-  { icon: 'Lock',      label: 'Ambiente seguro' },
+  { icon: 'Coffee',       label: 'Área de bistrô' },
+  { icon: 'Baby',         label: 'Espaço kids' },
+  { icon: 'Wifi',         label: 'Wi-Fi gratuito' },
+  { icon: 'Tv',           label: 'TV' },
+  { icon: 'AirVent',      label: 'Ar-condicionado' },
+  { icon: 'ParkingCircle',label: 'Estacionamento na porta' },
+  { icon: 'Ruler',        label: 'Mesa de dobrar roupas' },
+  { icon: 'Shirt',        label: 'Cabides disponíveis' },
+  { icon: 'Lock',         label: 'Ambiente seguro' },
 ]
 
-// ============================================================
-// TESTIMONIALS
-// ============================================================
 export const TESTIMONIALS = [
   {
     name:   'Claudia Erminia',
@@ -271,9 +302,6 @@ export const TESTIMONIALS = [
   },
 ]
 
-// ============================================================
-// FAQ
-// ============================================================
 export const FAQ = [
   {
     question: 'Preciso levar sabão e amaciante?',
@@ -300,10 +328,6 @@ export const FAQ = [
     answer:   'A Xô Varal Castelo é self-service — você opera com total autonomia pelo app ou totem. O ambiente é monitorado e seguro. Em dúvida, o suporte está no WhatsApp.',
   },
   {
-    question: 'É seguro para roupas delicadas e de academia?',
-    answer:   'Sim. As SpeedQueens permitem selecionar o programa ideal para cada tipo de peça. Tecidos técnicos, roupas delicadas e peças especiais são tratados com cuidado.',
-  },
-  {
     question: 'Como funciona o Clube de Vantagens?',
     answer:   'Quanto mais ciclos você usa no mês, maior o desconto no mês seguinte: Bronze (8-11 ciclos → 5%), Prata (12-19 → 10%), Ouro (20-29 → 15%), Diamante (30+ → 20%).',
   },
@@ -314,5 +338,9 @@ export const FAQ = [
   {
     question: 'Como funciona a secagem?',
     answer:   'Coloque as roupas lavadas na secadora, selecione o ciclo, pague e aguarde. Em ~45 min as roupas saem 100% secas — não "quase secas" como em secadoras domésticas.',
+  },
+  {
+    question: 'Tem vaga pra estacionar?',
+    answer:   'Sim, vaga exclusiva na porta da unidade no Comercial JL Mall. Você não dá voltas procurando lugar.',
   },
 ]

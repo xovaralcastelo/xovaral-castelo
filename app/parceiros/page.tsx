@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import { SITE } from '@/lib/constants'
 
 export const metadata: Metadata = {
@@ -57,22 +57,22 @@ export default function ParceirosPage() {
     <>
       {/* Hero */}
       <section className="gradient-primary pt-28 pb-20 relative overflow-hidden">
-        <div className="absolute top-20 right-10 w-64 h-64 bg-yellow/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-56 h-56 bg-sky/10 rounded-full blur-3xl" />
+        <div className="absolute top-20 right-10 w-64 h-64 bg-xv-yellow/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-56 h-56 bg-xv-cyan/10 rounded-full blur-3xl" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center relative z-10">
-          <div className="inline-flex items-center gap-2 bg-yellow/20 border border-yellow/30 text-yellow rounded-full px-5 py-2 text-sm font-bold mb-6">
+          <div className="inline-flex items-center gap-2 bg-xv-yellow/20 border border-xv-yellow/30 text-xv-yellow rounded-full px-5 py-2 text-sm font-bold mb-6">
             🤝 Parcerias Locais
           </div>
           <h1 className="text-4xl sm:text-5xl font-black text-white mb-5 leading-tight">
             Seu negócio +<br />
-            <span className="text-yellow">Xô Varal = mais visibilidade.</span>
+            <span className="text-xv-yellow">Xô Varal = mais visibilidade.</span>
           </h1>
           <p className="text-white/75 text-lg max-w-2xl mx-auto leading-relaxed">
             A Xô Varal Castelo já atendeu mais de 250 clientes locais. Cada parceria
             significa mais alcance para você — sem custo de anúncio.
           </p>
         </div>
-        <div className="wave-bottom">
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] pointer-events-none">
           <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
             <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#ffffff" />
           </svg>
@@ -83,20 +83,20 @@ export default function ParceirosPage() {
       <section className="py-20 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-14">
-            <h2 className="section-title text-primary mb-4">
+            <h2 className="text-4xl font-black text-xv-navy mb-4">
               O que seu negócio recebe
-          </h2>
-            <p className="section-subtitle mx-auto text-center text-gray-500">
+            </h2>
+            <p className="text-base leading-relaxed text-xv-gray-700 max-w-2xl mx-auto">
               Parceria de verdade — visibilidade, clientes e crescimento conjunto.
             </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {BENEFITS_PARTNER.map((benefit) => (
-              <div key={benefit.title} className="card">
+              <div key={benefit.title} className="relative overflow-hidden rounded-[2rem] bg-white p-6 shadow-card ring-1 ring-xv-gray-200/60">
                 <div className="text-3xl mb-4">{benefit.icon}</div>
-                <h3 className="font-bold text-primary mb-2">{benefit.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{benefit.desc}</p>
+                <h3 className="font-bold text-xv-navy mb-2">{benefit.title}</h3>
+                <p className="text-xv-gray-700 text-sm leading-relaxed">{benefit.desc}</p>
               </div>
             ))}
           </div>
@@ -104,13 +104,13 @@ export default function ParceirosPage() {
       </section>
 
       {/* Who can partner */}
-      <section className="py-16 bg-neutral-light">
+      <section className="py-16 bg-xv-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-10">
-            <h2 className="section-title text-primary mb-4">
+            <h2 className="text-4xl font-black text-xv-navy mb-4">
               Quem pode ser parceiro?
             </h2>
-            <p className="section-subtitle mx-auto text-center text-gray-500">
+            <p className="text-base leading-relaxed text-xv-gray-700 max-w-2xl mx-auto">
               Qualquer negócio do Castelo ou região com interesse em crescer junto.
             </p>
           </div>
@@ -121,27 +121,26 @@ export default function ParceirosPage() {
                 className="bg-white rounded-2xl p-4 flex items-center gap-3 shadow-card hover:-translate-y-0.5 transition-all"
               >
                 <span className="text-2xl">{item.icon}</span>
-                <span className="text-sm font-semibold text-gray-700 leading-tight">{item.label}</span>
+                <span className="text-sm font-semibold text-xv-gray-700 leading-tight">{item.label}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA / Contact form */}
+      {/* CTA / Contact */}
       <section className="py-20 bg-white">
         <div className="max-w-2xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-10">
-            <h2 className="section-title text-primary mb-4">
+            <h2 className="text-4xl font-black text-xv-navy mb-4">
               Quero ser parceiro
             </h2>
-            <p className="section-subtitle mx-auto text-center text-gray-500">
+            <p className="text-base leading-relaxed text-xv-gray-700 max-w-2xl mx-auto">
               Mande uma mensagem no WhatsApp — a gente retorna em até 24 horas
               para alinhar os detalhes da parceria.
             </p>
           </div>
 
-          {/* Contact CTA cards */}
           <div className="space-y-4">
             <a
               href={`${SITE.whatsapp}?text=Olá! Tenho um negócio no Castelo e gostaria de saber mais sobre como ser parceiro da Xô Varal Castelo.`}
@@ -153,8 +152,8 @@ export default function ParceirosPage() {
                 📱
               </div>
               <div className="flex-1">
-                <div className="font-black text-primary text-lg">WhatsApp Direto</div>
-                <div className="text-gray-500 text-sm">Resposta em até 24h — forma mais rápida</div>
+                <div className="font-black text-xv-navy text-lg">WhatsApp Direto</div>
+                <div className="text-xv-gray-700 text-sm">Resposta em até 24h — forma mais rápida</div>
               </div>
               <div className="text-[#25d366] group-hover:translate-x-1 transition-transform">
                 →
@@ -171,8 +170,8 @@ export default function ParceirosPage() {
                 📸
               </div>
               <div className="flex-1">
-                <div className="font-black text-primary text-lg">Instagram @xovaralCastelo</div>
-                <div className="text-gray-500 text-sm">Mande DM para conversarmos</div>
+                <div className="font-black text-xv-navy text-lg">Instagram @xovaralcastelo</div>
+                <div className="text-xv-gray-700 text-sm">Mande DM para conversarmos</div>
               </div>
               <div className="text-pink-500 group-hover:translate-x-1 transition-transform">
                 →
@@ -180,11 +179,10 @@ export default function ParceirosPage() {
             </a>
           </div>
 
-          {/* Future panel note */}
-          <div className="mt-10 bg-primary/5 border border-primary/15 rounded-2xl p-5 text-center">
+          <div className="mt-10 bg-xv-navy/5 border border-xv-navy/15 rounded-2xl p-5 text-center">
             <div className="text-2xl mb-2">🚀</div>
-            <h3 className="font-bold text-primary text-sm mb-1">Painel de Parceiros — em breve</h3>
-            <p className="text-gray-500 text-xs leading-relaxed">
+            <h3 className="font-bold text-xv-navy text-sm mb-1">Painel de Parceiros — em breve</h3>
+            <p className="text-xv-gray-700 text-xs leading-relaxed">
               Em breve você poderá cadastrar seu negócio, acessar métricas, criar cupons e
               gerenciar a parceria diretamente online. Fique atento às atualizações.
             </p>

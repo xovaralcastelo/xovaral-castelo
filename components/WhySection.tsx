@@ -1,79 +1,66 @@
-'use client'
+"use client";
 
+import { motion } from "framer-motion";
 import {
-  Clock, Building2, Wind, BedDouble, Users, CloudRain, FlaskConical, ShieldCheck
-} from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
-import { BENEFITS } from '@/lib/constants'
+  Clock,
+  Award,
+  Wind,
+  Building2,
+  Users,
+  CloudRain,
+  Heart,
+  Sparkles,
+  type LucideIcon,
+} from "lucide-react";
+import { Container } from "@/components/layout/Container";
+import { SELF_SERVICE_BENEFITS } from "@/content/benefits";
 
-const iconMap: Record<string, LucideIcon> = {
-  Clock, Building2, Wind, BedDouble, Users, CloudRain, FlaskConical, ShieldCheck
-}
+const ICON_MAP: Record<string, LucideIcon> = {
+  Clock,
+  Award,
+  Wind,
+  Building2,
+  Users,
+  CloudRain,
+  Heart,
+  Sparkles,
+};
 
 export default function WhySection() {
   return (
-    <section className="section-pad bg-white relative overflow-hidden">
-      <div aria-hidden className="absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl opacity-20 bg-xv-cyan" />
-      <div aria-hidden className="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-3xl opacity-15 bg-xv-orange" />
-
-      <div className="container-xl relative z-10">
-        <div className="text-center mb-16">
-          <div className="badge-orange mb-5 inline-flex">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-xv-orange opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-xv-orange" />
-            </span>
-            Por que usar
-          </div>
-          <h2 className="section-title text-xv-navy mb-4">
-            Por que usar lavanderia{' '}
-            <span className="amber-text">self-service?</span>
+    <section className="relative bg-xv-gray-50 py-20 sm:py-28">
+      <Container size="lg">
+        <div className="max-w-2xl">
+          <span className="text-xs font-bold uppercase tracking-wider text-xv-orange">
+            Por que self-service?
+          </span>
+          <h2 className="mt-3 text-4xl font-black text-xv-navy sm:text-5xl">
+            8 motivos pra trocar a máquina do prédio pela Xô Varal
           </h2>
-          <p className="section-body mx-auto text-center">
-            Não é luxo. É a escolha inteligente de quem valoriza tempo, resultado e qualidade de vida.
-          </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
-          {BENEFITS.map((benefit, idx) => {
-            const Icon = iconMap[benefit.icon]
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {SELF_SERVICE_BENEFITS.map((b, i) => {
+            const Icon = ICON_MAP[b.icon];
             return (
-              <div
-                key={idx}
-                className="card card-hover group p-6 flex flex-col"
+              <motion.div
+                key={b.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.35, delay: (i % 4) * 0.06 }}
+                className="rounded-2xl bg-white p-6 shadow-sm transition hover:shadow-md"
               >
-                {Icon && (
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-xv-cyan-bg group-hover:scale-110 transition-transform duration-300">
-                    <Icon size={22} className="text-xv-cyan" />
-                  </div>
-                )}
-                <h3 className="font-bold text-xv-navy text-base mb-2">{benefit.title}</h3>
-                <p className="text-xv-gray-700 text-sm leading-relaxed">{benefit.description}</p>
-              </div>
-            )
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-xv-orange-bg text-xv-orange">
+                  {Icon && <Icon size={22} />}
+                </div>
+                <h3 className="mt-4 text-base font-black text-xv-navy">{b.title}</h3>
+                <p className="mt-1.5 text-sm text-xv-gray-700">{b.description}</p>
+              </motion.div>
+            );
           })}
         </div>
-
-        {/* Bottom callout */}
-        <div className="rounded-[2rem] p-8 flex flex-col md:flex-row items-center gap-6 royal-gradient shadow-2xl">
-          <div className="text-5xl shrink-0">⚡</div>
-          <div className="flex-1 text-center md:text-left">
-            <h3 className="font-display font-bold text-white text-xl mb-2">
-              Resultado que sua máquina de casa não entrega
-            </h3>
-            <p className="text-white/75 text-sm leading-relaxed">
-              As SpeedQueens são máquinas profissionais de 10,5 kg. Elas lavam mais fundo,
-              secam de verdade e tratam cada tipo de peça do jeito certo — com OMO e Comfort em dosagem ideal.
-            </p>
-          </div>
-          <div className="shrink-0">
-            <div className="bg-white/10 rounded-2xl px-6 py-4 text-center border border-white/20">
-              <div className="font-display text-3xl font-bold text-xv-yellow">10,5 kg</div>
-              <div className="text-white/60 text-xs mt-1">por máquina SpeedQueen</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </Container>
     </section>
-  )
+  );
 }

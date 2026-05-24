@@ -1,11 +1,7 @@
 import Hero from '@/components/Hero'
 import HowItWorks from '@/components/HowItWorks'
-import UnitDifferentials from '@/components/UnitDifferentials'
-import Pricing from '@/components/Pricing'
-import WhatToBring from '@/components/WhatToBring'
-import GaleriaFotos from '@/components/GaleriaFotos'
 import WhySection from '@/components/WhySection'
-import Testimonials from '@/components/Testimonials'
+import UnitDifferentials from '@/components/UnitDifferentials'
 import ClubHighlight from '@/components/ClubHighlight'
 import PartnersTeaser from '@/components/PartnersTeaser'
 import LocationBlock from '@/components/LocationBlock'
@@ -17,16 +13,12 @@ export default function HomePage() {
     <>
       <Hero />
       <HowItWorks />
-      <UnitDifferentials />
-      <Pricing />
-      <WhatToBring />
-      <GaleriaFotos />
       <WhySection />
-      <Testimonials />
+      <UnitDifferentials />
       <ClubHighlight />
       <PartnersTeaser />
       <LocationBlock />
-      <FAQ />
+      <FAQ limit={9} />
       <CTABanner />
     </>
   )
