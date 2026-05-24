@@ -1,41 +1,73 @@
 'use client'
 
-import Link from 'next/link'
+import { MapPin, WashingMachine, Smartphone, Coffee } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import { HOW_IT_WORKS } from '@/lib/constants'
+import Link from 'next/link'
+
+const stepIcons: LucideIcon[] = [MapPin, WashingMachine, Smartphone, Coffee]
 
 export default function HowItWorks() {
   return (
-    <section className="py-20 bg-white" id="como-funciona">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        {/* Header */}
-        <div className="text-center mb-14">
-          <span className="badge bg-sky/10 text-sky mb-4">
-            <span className="w-1.5 h-1.5 bg-sky rounded-full" />
+    <section className="section-pad bg-white overflow-hidden" id="como-funciona">
+      <div className="container-xl">
+        <div className="text-center mb-16">
+          <div className="badge-cyan mb-5 inline-flex">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-xv-cyan opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-xv-cyan" />
+            </span>
             Simples assim
-          </span>
-          <h2 className="section-title text-primary mb-4">
-            Como funciona a Xô Varal?
+          </div>
+          <h2 className="section-title text-xv-navy mb-4">
+            Como funciona a{' '}
+            <span className="amber-text">Xô Varal?</span>
           </h2>
-          <p className="section-subtitle mx-auto text-center text-gray-500">
-            Cinco passos. Sem complicação. Do jeito que precisa ser.
+          <p className="section-body mx-auto text-center">
+            Quatro passos. Sem complicação. Do jeito que precisa ser.
           </p>
         </div>
 
-        {/* Steps */}
         <div className="relative">
-          {/* Connection line — desktop only */}
-          <div className="hidden md:block absolute top-16 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-sky/20 via-sky to-sky/20 z-0" />
+          <div
+            aria-hidden
+            className="hidden lg:block absolute top-14 left-[12.5%] right-[12.5%] h-0.5 z-0"
+            style={{ background: 'linear-gradient(90deg, transparent, rgba(1,179,220,0.4) 20%, rgba(1,179,220,0.8) 50%, rgba(1,179,220,0.4) 80%, transparent)' }}
+          />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 relative z-10">
-            {HOW_IT_WORKS.map((item, idx) => (
-              <StepCard key={item.step} item={item} delay={idx * 100} />
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
+            {HOW_IT_WORKS.map((step, idx) => {
+              const Icon = stepIcons[idx]
+              return (
+                <div key={step.step} className="flex flex-col items-center text-center group">
+                  <div className="relative mb-6">
+                    <div
+                      className="absolute inset-0 rounded-2xl animate-pulse-ring scale-110"
+                      style={{ background: `${step.color}25` }}
+                    />
+                    <div
+                      className="relative w-28 h-28 rounded-2xl flex items-center justify-center shadow-xl group-hover:-translate-y-2 transition-transform duration-300"
+                      style={{ background: step.bg, border: `2px solid ${step.color}40` }}
+                    >
+                      <Icon size={32} style={{ color: step.color }} className="transition-transform duration-300 group-hover:scale-110" />
+                    </div>
+                    <div
+                      className="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center text-sm font-black text-white shadow-lg"
+                      style={{ background: step.color }}
+                    >
+                      {step.step}
+                    </div>
+                  </div>
+                  <h3 className="font-display font-bold text-xv-navy text-lg mb-2">{step.title}</h3>
+                  <p className="text-xv-gray-700 text-sm leading-relaxed">{step.description}</p>
+                </div>
+              )
+            })}
           </div>
         </div>
 
-        {/* CTA */}
         <div className="text-center mt-14">
-          <Link href="/como-funciona" className="btn-outline inline-flex">
+          <Link href="/como-funciona" className="btn-secondary">
             Ver guia completo
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
@@ -44,34 +76,5 @@ export default function HowItWorks() {
         </div>
       </div>
     </section>
-  )
-}
-
-function StepCard({
-  item,
-  delay,
-}: {
-  item: (typeof HOW_IT_WORKS)[0]
-  delay: number
-}) {
-  return (
-    <div
-      className="flex flex-col items-center text-center group"
-      style={{ animationDelay: `${delay}ms` }}
-    >
-      {/* Icon circle */}
-      <div className="relative mb-5">
-        <div className="w-16 h-16 rounded-full bg-primary/5 border-2 border-primary/10 flex items-center justify-center text-3xl group-hover:bg-sky/10 group-hover:border-sky/30 transition-all duration-300 group-hover:scale-110">
-          {item.icon}
-        </div>
-        {/* Step number badge */}
-        <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-orange text-white text-xs font-black flex items-center justify-center shadow-orange">
-          {item.step}
-        </div>
-      </div>
-
-      <h3 className="font-bold text-primary text-base mb-2">{item.title}</h3>
-      <p className="text-gray-500 text-sm leading-relaxed">{item.description}</p>
-    </div>
   )
 }

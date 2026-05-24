@@ -2,151 +2,211 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ================================================
+   CSS CUSTOM PROPERTIES
+   ================================================ */
 :root {
-  --color-primary: #253163;
-  --color-orange: #ee7531;
-  --color-sky: #01b3dc;
-  --color-yellow: #fbc132;
+  --xv-navy:   #253163;
+  --xv-orange: #EE7531;
+  --xv-cyan:   #01B3DC;
+  --xv-yellow: #FBC132;
 }
 
+/* ================================================
+   BASE
+   ================================================ */
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
+  html { scroll-behavior: smooth; }
 
   body {
-    @apply text-primary font-sans antialiased;
-    background-color: #ffffff;
+    @apply font-sans antialiased text-xv-text bg-white;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-bold tracking-tight text-primary;
+  h1, h2, h3, h4 {
+    @apply font-display font-bold;
   }
 }
 
+/* ================================================
+   COMPONENTS
+   ================================================ */
 @layer components {
+
+  /* ----- Botões ----- */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 bg-orange text-white font-bold px-6 py-3 rounded-full transition-all duration-300 hover:bg-orange-dark hover:shadow-orange hover:-translate-y-0.5 active:scale-95 text-sm md:text-base;
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-xv-orange px-7 py-3.5 text-sm font-bold text-white shadow-orange-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:scale-95;
+  }
+
+  .btn-whatsapp {
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-7 py-3.5 text-sm font-bold text-white shadow-xl transition-all duration-300 hover:-translate-y-0.5 active:scale-95;
+    background: linear-gradient(90deg, #25D366, #1FBA57);
+    box-shadow: 0 20px 40px -10px rgba(34,197,94,0.5);
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 bg-white text-primary font-bold px-6 py-3 rounded-full border-2 border-white transition-all duration-300 hover:bg-primary hover:text-white hover:-translate-y-0.5 active:scale-95 text-sm md:text-base;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-xv-navy shadow-lg ring-1 ring-xv-navy/10 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:scale-95;
   }
 
-  .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 bg-transparent text-primary font-bold px-6 py-3 rounded-full border-2 border-primary transition-all duration-300 hover:bg-primary hover:text-white hover:-translate-y-0.5 active:scale-95 text-sm md:text-base;
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-white/40 px-7 py-3.5 text-sm font-bold text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/10 active:scale-95;
+    background: rgba(255,255,255,0.08);
   }
 
-  .section-title {
-    @apply text-3xl md:text-4xl font-bold leading-tight;
+  /* ----- Badges com dot pulsante ----- */
+  .badge-orange {
+    @apply inline-flex items-center gap-2 rounded-full bg-xv-orange-bg px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-xv-orange ring-1 ring-xv-orange/30;
+  }
+  .badge-cyan {
+    @apply inline-flex items-center gap-2 rounded-full bg-xv-cyan-bg px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-xv-cyan ring-1 ring-xv-cyan/30;
+  }
+  .badge-navy {
+    @apply inline-flex items-center gap-2 rounded-full bg-xv-cyan/20 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-xv-cyan ring-1 ring-xv-cyan/40 backdrop-blur-sm;
+  }
+  .badge-yellow {
+    @apply inline-flex items-center gap-2 rounded-full bg-xv-yellow-bg px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-xv-yellow ring-1 ring-xv-yellow/30;
   }
 
-  .section-subtitle {
-    @apply text-base md:text-lg text-gray-600 leading-relaxed max-w-2xl;
-  }
-
+  /* ----- Cards ----- */
   .card {
-    @apply bg-white rounded-3xl p-6 shadow-card transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1;
+    @apply relative overflow-hidden rounded-[2rem] bg-white p-6 shadow-2xl ring-1 ring-xv-gray-200/60 transition-all duration-300;
+  }
+  .card-hover {
+    @apply hover:-translate-y-2 hover:shadow-[0_25px_60px_-15px_rgba(37,49,99,0.2)];
   }
 
-  .badge {
-    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide;
+  /* ----- Section layout ----- */
+  .section-pad {
+    @apply py-20 sm:py-28;
+  }
+  .container-xl {
+    @apply max-w-7xl mx-auto px-4 sm:px-6;
   }
 
+  /* ----- Label de seção (substitui .badge genérico) ----- */
+  .section-label {
+    @apply text-xs font-bold uppercase tracking-widest;
+  }
+  .section-title {
+    @apply font-display text-4xl sm:text-5xl font-bold leading-tight;
+  }
+  .section-body {
+    @apply text-base leading-relaxed text-xv-gray-700 max-w-2xl;
+  }
+
+  /* ----- WhatsApp link (compat) ----- */
   .whatsapp-link {
-    @apply inline-flex items-center gap-2 bg-[#25d366] text-white font-bold px-6 py-3 rounded-full transition-all duration-300 hover:bg-[#1da851] hover:shadow-lg hover:-translate-y-0.5;
+    @apply btn-whatsapp;
+  }
+
+  /* ----- Shimmer overlay ----- */
+  .shimmer-btn {
+    @apply relative overflow-hidden;
+  }
+  .shimmer-btn::before {
+    content: '';
+    @apply absolute inset-0 transition-transform duration-700;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transform: translateX(-100%);
+  }
+  .shimmer-btn:hover::before {
+    transform: translateX(100%);
   }
 }
 
+/* ================================================
+   UTILITIES
+   ================================================ */
 @layer utilities {
+
+  /* Gradientes */
+  .royal-gradient {
+    background: linear-gradient(135deg, #0A1942 0%, #15326C 35%, #1E4A9F 65%, #0F5BBA 100%);
+  }
+
   .gradient-primary {
     background: linear-gradient(135deg, #253163 0%, #1a2347 100%);
   }
 
-  .gradient-orange {
-    background: linear-gradient(135deg, #ee7531 0%, #f5913e 100%);
+  /* Mesh radial (sobreposição em fundo escuro) */
+  .mesh-radial {
+    background-image:
+      radial-gradient(at 85% 15%, rgba(1,179,220,0.5)  0px, transparent 50%),
+      radial-gradient(at 15% 85%, rgba(238,117,49,0.4) 0px, transparent 50%),
+      radial-gradient(at 50% 50%, rgba(251,193,50,0.1) 0px, transparent 60%);
   }
 
-  .gradient-sky {
-    background: linear-gradient(135deg, #01b3dc 0%, #33c4e4 100%);
+  /* Textos gradiente */
+  .amber-text {
+    background: linear-gradient(90deg, #FBC132 0%, #FFB020 50%, #EE7531 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 2px 8px rgba(255,176,32,0.4));
   }
 
-  .text-balance {
-    text-wrap: balance;
+  .white-cyan-text {
+    background: linear-gradient(90deg, #ffffff 0%, #E0FFFF 50%, #01B3DC 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  /* Glows */
+  .glow-orange { box-shadow: 0 0 60px 10px rgba(238,117,49,0.5);  }
+  .glow-cyan   { box-shadow: 0 0 60px 10px rgba(1,179,220,0.4);   }
+  .glow-yellow { box-shadow: 0 0 60px 10px rgba(251,193,50,0.4);  }
+
+  /* Linha cyan topo (decoração fundo escuro) */
+  .cyan-top-line::before {
+    content: '';
+    @apply absolute inset-x-0 top-0 h-px;
+    background: linear-gradient(90deg, transparent, rgba(1,179,220,0.8), transparent);
   }
 
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
+  /* Pill inline em fundo escuro */
+  .pill-cyan {
+    @apply rounded-md bg-xv-cyan/20 px-1.5 py-0.5 font-black text-xv-cyan ring-1 ring-xv-cyan/30;
   }
+
+  /* Trust pills */
+  .trust-pill {
+    @apply inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-xs font-bold text-white/90 ring-1 ring-white/20 backdrop-blur-sm;
+  }
+
+  /* Scrollbar */
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+
+  .text-balance { text-wrap: balance; }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f2f2f2;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #253163;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #ee7531;
-}
-
-/* Wave divider */
-.wave-bottom {
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-}
-
-.wave-bottom svg {
-  display: block;
-  width: 100%;
-}
-
-/* Animations */
-@keyframes float {
+/* ================================================
+   KEYFRAMES (fora do @layer pra compatibilidade)
+   ================================================ */
+@keyframes float-y {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-12px); }
+  50%       { transform: translateY(-10px); }
 }
-
-@keyframes floatSlow {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-8px) rotate(5deg); }
-}
-
 @keyframes pulse-ring {
-  0% { transform: scale(0.8); opacity: 0.8; }
-  50% { transform: scale(1.1); opacity: 0.4; }
-  100% { transform: scale(0.8); opacity: 0.8; }
+  0%, 100% { transform: scale(1);    opacity: 0.5; }
+  50%       { transform: scale(1.45); opacity: 0;   }
+}
+@keyframes ping-dot {
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes spin-reverse {
+  from { transform: rotate(360deg); }
+  to   { transform: rotate(0deg); }
 }
 
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
-
-.animate-float-slow {
-  animation: floatSlow 6s ease-in-out infinite;
-}
-
-.animate-float-delay {
-  animation: float 4s ease-in-out infinite 2s;
-}
-
-.animate-pulse-ring {
-  animation: pulse-ring 2s ease-in-out infinite;
-}
+/* ================================================
+   SCROLLBAR GLOBAL
+   ================================================ */
+::-webkit-scrollbar        { width: 8px; }
+::-webkit-scrollbar-track  { background: #F2F2F2; }
+::-webkit-scrollbar-thumb  { background: #253163; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #EE7531; }

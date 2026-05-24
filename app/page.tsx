@@ -1,11 +1,12 @@
 import Hero from '@/components/Hero'
 import HowItWorks from '@/components/HowItWorks'
-import WhySection from '@/components/WhySection'
-import GaleriaFotos from '@/components/GaleriaFotos'
-import Amenities from '@/components/Amenities'
+import UnitDifferentials from '@/components/UnitDifferentials'
 import Pricing from '@/components/Pricing'
-import ClubHighlight from '@/components/ClubHighlight'
+import WhatToBring from '@/components/WhatToBring'
+import GaleriaFotos from '@/components/GaleriaFotos'
+import WhySection from '@/components/WhySection'
 import Testimonials from '@/components/Testimonials'
+import ClubHighlight from '@/components/ClubHighlight'
 import PartnersTeaser from '@/components/PartnersTeaser'
 import LocationBlock from '@/components/LocationBlock'
 import FAQ from '@/components/FAQ'
@@ -16,12 +17,13 @@ export default function HomePage() {
     <>
       <Hero />
       <HowItWorks />
-      <WhySection />
-      <GaleriaFotos />
-      <Amenities />
+      <UnitDifferentials />
       <Pricing />
-      <ClubHighlight />
+      <WhatToBring />
+      <GaleriaFotos />
+      <WhySection />
       <Testimonials />
+      <ClubHighlight />
       <PartnersTeaser />
       <LocationBlock />
       <FAQ />

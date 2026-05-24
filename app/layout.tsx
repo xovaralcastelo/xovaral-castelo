@@ -1,5 +1,5 @@
 ﻿import type { Metadata } from 'next'
-import { Nunito } from 'next/font/google'
+import { Nunito, Fredoka } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -9,6 +9,13 @@ const nunito = Nunito({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700', '800', '900'],
   variable: '--font-nunito',
+  display: 'swap',
+})
+
+const fredoka = Fredoka({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-fredoka',
   display: 'swap',
 })
 
@@ -80,7 +87,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-BR" className={nunito.variable}>
+    <html lang="pt-BR" className={`${nunito.variable} ${fredoka.variable}`}>
       <head>
         {/* Google Analytics 4 — substituir GA_ID pelo ID real (ex: G-XXXXXXXXXX) */}
         {process.env.NEXT_PUBLIC_GA_ID && process.env.NEXT_PUBLIC_GA_ID !== 'G-XXXXXXXXXX' && (
