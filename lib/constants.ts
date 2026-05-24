@@ -139,9 +139,9 @@ export const AMENITIES = [
 
 export const TESTIMONIALS = [
   {
-    name: 'Ryan',
-    role: 'Seller há 5 anos',
-    text: 'Em 30 dias instalei os dashboards e descobri que 60% dos meus anúncios davam prejuízo. Cortei, faturamento subiu 40%.',
+    name: 'Rafael Moura',
+    role: 'Morador do Castelo',
+    text: 'Moro em apartamento e nunca tive solução boa pra lavagem. Aqui em 45 minutos sai tudo limpo e seco. Venho toda semana.',
     avatar: 'R',
   },
   {
