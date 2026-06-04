@@ -1,116 +1,142 @@
-import Image from 'next/image'
+"use client";
+
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { Container } from "@/components/layout/Container";
 
 const traga = [
-  { icon: '👕', label: 'Suas roupas' },
-  { icon: '🛏️', label: 'Roupas de cama e banho' },
-  { icon: '🧥', label: 'Edredons e cobertores' },
-  { icon: '👟', label: 'Tênis e roupas de academia' },
-]
+  "Suas roupas, roupas de cama, edredons ou toalhas",
+  "Seu celular (pra pagar pelo app, opcional)",
+  "Uma sacola ou cesto pra transportar",
+];
 
 const naoTraga = [
-  { icon: '🫧', label: 'Sabão ou detergente' },
-  { icon: '🌸', label: 'Amaciante' },
-  { icon: '📅', label: 'Agendamento prévio' },
-  { icon: '💳', label: 'Dinheiro (aceitamos Pix, débito e crédito)' },
-]
+  "Sabão em pó ou líquido — já incluído",
+  "Amaciante — OMO e Comfort já estão no ciclo",
+  "Alvejante ou qualquer produto extra",
+  "Agendamento ou reserva prévia",
+];
 
 export default function WhatToBring() {
   return (
-    <section className="section-pad bg-white">
-      <div className="container-xl">
-        <div className="text-center mb-14">
-          <div className="badge-orange mb-5 inline-flex">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-xv-orange opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-xv-orange" />
-            </span>
-            Antes de vir
-          </div>
-          <h2 className="section-title text-xv-navy mb-4">
-            O que trazer —{' '}
-            <span className="amber-text">e o que não precisa</span>
-          </h2>
-          <p className="section-body mx-auto text-center">
-            Tudo que você precisa trazer cabe em uma sacola. O resto a gente já tem pra você.
-          </p>
-        </div>
+    <section
+      id="o-que-trazer"
+      className="py-20 sm:py-28"
+      style={{ background: "linear-gradient(180deg, #E5F7FF 0%, #F0FAFE 50%, #E5F7FF 100%)" }}
+    >
+      <Container size="lg">
+        {/* Mascot + floating pills header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.5 }}
+          className="relative flex flex-col items-center mb-12"
+        >
+          <div className="flex items-center gap-8 mb-6">
+            <div className="hidden sm:flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-md text-sm font-bold text-xv-navy">
+              <span className="h-2 w-2 rounded-full bg-xv-orange animate-pulse" />
+              SPOILER:
+            </div>
 
-        <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-          {/* Traga */}
-          <div className="card p-6">
+            <Image
+              src="/mascotes/estrela-t.png"
+              alt="Luma, mascote da Xô Varal"
+              width={160}
+              height={160}
+              className="drop-shadow-2xl"
+              style={{ transform: "rotate(7deg)" }}
+            />
+
+            <div className="hidden sm:flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-md text-sm font-bold text-xv-navy">
+              <span className="h-2 w-2 rounded-full bg-xv-cyan animate-pulse" />
+              BEM MENOS DO QUE IMAGINA
+            </div>
+          </div>
+
+          <span className="text-xs font-bold uppercase tracking-wider text-xv-cyan">
+            Antes de vir
+          </span>
+          <h2 className="mt-3 text-4xl font-black text-xv-navy sm:text-5xl text-center">
+            O que preciso{" "}
+            <span className="relative inline-block">
+              <span className="relative z-10">levar?</span>
+              <svg
+                className="absolute -bottom-1 left-0 z-0 w-full text-xv-cyan"
+                viewBox="0 0 120 8"
+                preserveAspectRatio="none"
+                aria-hidden
+              >
+                <path
+                  d="M0 6 Q30 1 60 4 T120 3"
+                  stroke="currentColor"
+                  strokeWidth="5"
+                  fill="none"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </span>
+          </h2>
+          <p className="mt-4 text-xv-gray-700 text-center max-w-xl">
+            Sem complicação. Você traz pouca coisa — o resto fica por nossa conta.
+          </p>
+        </motion.div>
+
+        {/* Cards */}
+        <div className="grid gap-6 md:grid-cols-2 max-w-3xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.4 }}
+            className="rounded-[2rem] bg-white p-6 shadow-card ring-1 ring-green-100"
+            style={{ boxShadow: "0 8px 40px -8px rgba(34,197,94,0.25)" }}
+          >
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 rounded-xl bg-xv-cyan-bg flex items-center justify-center text-xl">
-                ✅
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl text-white text-xl" style={{ background: "linear-gradient(135deg, #22c55e, #16a34a)" }}>
+                🛍️
               </div>
-              <h3 className="font-display font-bold text-xv-navy text-lg">Traga apenas</h3>
+              <h3 className="text-lg font-black text-xv-navy">Traga apenas</h3>
             </div>
             <ul className="space-y-3">
               {traga.map((item) => (
-                <li key={item.label} className="flex items-center gap-3 text-sm text-xv-gray-700">
-                  <span className="w-8 h-8 rounded-lg bg-xv-cyan-bg flex items-center justify-center shrink-0 text-base">
-                    {item.icon}
-                  </span>
-                  {item.label}
+                <li key={item} className="flex items-start gap-3 text-sm text-xv-gray-700">
+                  <svg className="mt-0.5 flex-shrink-0 h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  {item}
                 </li>
               ))}
             </ul>
-            <div className="mt-5 pt-4 border-t border-xv-gray-200/60">
-              <p className="text-xv-cyan font-bold text-xs">
-                10,5 kg de capacidade por máquina — traz tudo de uma vez!
-              </p>
-            </div>
-          </div>
+          </motion.div>
 
-          {/* Não precisa trazer */}
-          <div className="card p-6 bg-xv-orange-bg border border-xv-orange/20">
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.4, delay: 0.08 }}
+            className="rounded-[2rem] bg-white p-6 shadow-card ring-1 ring-red-100"
+            style={{ boxShadow: "0 8px 40px -8px rgba(239,68,68,0.2)" }}
+          >
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 rounded-xl bg-xv-orange/15 flex items-center justify-center text-xl">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl text-white text-xl" style={{ background: "linear-gradient(135deg, #ef4444, #dc2626)" }}>
                 🚫
               </div>
-              <h3 className="font-display font-bold text-xv-navy text-lg">Não precisa trazer</h3>
+              <h3 className="text-lg font-black text-xv-navy">Não precisa trazer</h3>
             </div>
             <ul className="space-y-3">
               {naoTraga.map((item) => (
-                <li key={item.label} className="flex items-center gap-3 text-sm text-xv-gray-700">
-                  <span className="w-8 h-8 rounded-lg bg-xv-orange/15 flex items-center justify-center shrink-0 text-base">
-                    {item.icon}
-                  </span>
-                  {item.label}
+                <li key={item} className="flex items-start gap-3 text-sm text-xv-gray-700">
+                  <svg className="mt-0.5 flex-shrink-0 h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                  {item}
                 </li>
               ))}
             </ul>
-            <div className="mt-5 pt-4 border-t border-xv-orange/20">
-              <p className="text-xv-orange font-bold text-xs">
-                OMO + Comfort profissional já inclusos em cada ciclo!
-              </p>
-            </div>
-          </div>
+          </motion.div>
         </div>
-
-        {/* Mascote strip */}
-        <div className="mt-10 max-w-3xl mx-auto">
-          <div className="royal-gradient rounded-[2rem] p-6 flex items-center gap-6">
-            <div className="animate-float shrink-0">
-              <Image
-                src="/mascotes/estrela.png"
-                alt="Mascote Estrela — Xô Varal"
-                width={80}
-                height={80}
-                className="drop-shadow-xl"
-              />
-            </div>
-            <div>
-              <p className="font-display font-bold text-white text-lg mb-1">
-                Chegou? É só colocar as roupas e relaxar!
-              </p>
-              <p className="text-white/70 text-sm">
-                Selecione a máquina, pague pelo app ou totem e em ~45 min tudo fica pronto.
-                A gente cuida do resto.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      </Container>
     </section>
-  )
+  );
 }

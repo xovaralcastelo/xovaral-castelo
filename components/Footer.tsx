@@ -1,26 +1,22 @@
 import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Clock, MessageCircle } from "lucide-react";
+import { Container } from "@/components/layout/Container";
 import { UNIT, whatsappUrl } from "@/lib/constants";
 
 export default function Footer() {
   return (
     <footer className="bg-xv-navy text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
+      <Container size="xl" className="py-14">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-3 lg:grid-cols-4">
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-2">
-              <Image
-                src="/logo-xovaral.png"
-                alt="Xô Varal"
-                width={120}
-                height={40}
-                className="h-10 w-auto brightness-0 invert"
-              />
-              <span className="text-xs font-bold tracking-widest uppercase text-xv-orange">
-                Castelo
-              </span>
-            </div>
+            <Image
+              src="/logo-xovaral.png"
+              alt="Xô Varal Castelo"
+              width={180}
+              height={180}
+              className="h-20 w-auto"
+            />
             <p className="mt-4 text-sm text-white/70">
               Lavanderia self-service moderna no Castelo. Faz parte da rede Xô Varal.
             </p>
@@ -133,11 +129,20 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row">
-          <p>© {new Date().getFullYear()} {UNIT.name}. Todos os direitos reservados.</p>
-          <p>Parte da rede Xô Varal · Belo Horizonte/MG</p>
+        <div className="mt-12 border-t border-white/10 pt-6 space-y-4">
+          {/* Links legais */}
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-white/40">
+            <Link href="/politica-de-privacidade" className="hover:text-white/70 transition">Política de Privacidade</Link>
+            <Link href="/politica-de-cookies" className="hover:text-white/70 transition">Política de Cookies</Link>
+            <Link href="/regulamento-do-clube" className="hover:text-white/70 transition">Regulamento do Clube</Link>
+            <Link href="/termo-de-parceria" className="hover:text-white/70 transition">Termo de Parceria</Link>
+          </div>
+          <div className="flex flex-col items-center justify-between gap-2 text-xs text-white/50 sm:flex-row">
+            <p>© {new Date().getFullYear()} {UNIT.name}. Todos os direitos reservados.</p>
+            <p>Parte da rede Xô Varal · Belo Horizonte/MG</p>
+          </div>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }

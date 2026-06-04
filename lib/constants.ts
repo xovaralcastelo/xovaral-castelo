@@ -70,6 +70,7 @@ export const WHATSAPP_MESSAGES = {
   clube:        'Olá! Quero entrar no Clube de Vantagens da Xô Varal Castelo.',
   parceiros:    'Olá! Tenho interesse em ser parceiro local da Xô Varal Castelo.',
   generic:      'Olá! Vim pelo site e quero falar com a equipe.',
+  pricing:      'Olá! Vim pelo site da Xô Varal Castelo e tenho uma dúvida sobre os preços.',
 } as const;
 
 export const whatsappUrl = (message: keyof typeof WHATSAPP_MESSAGES | string = 'home') => {

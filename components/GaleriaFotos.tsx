@@ -1,40 +1,55 @@
-import Image from 'next/image'
+"use client";
 
-const fotos = [
-  { src: '/images/hero-maquinas-frente.jpg',     alt: '3 máquinas SpeedQueen — Xô Varal Castelo',      span: 'md:col-span-2 md:row-span-2' },
-  { src: '/images/ambiente-bistro.jpg',           alt: 'Área de bistrô com mesas e cadeiras',            span: '' },
-  { src: '/images/fachada-externa.jpg',           alt: 'Fachada externa da Xô Varal Castelo',            span: '' },
-  { src: '/images/ambiente-geral.jpg',            alt: 'Ambiente interno geral',                         span: '' },
-  { src: '/images/ambiente-mesa-dobrar.jpg',      alt: 'Mesa de dobrar roupas',                          span: '' },
-  { src: '/images/fachada-criancas.jpg',          alt: 'Espaço kids com crianças',                       span: 'md:col-span-2' },
-]
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { Container } from "@/components/layout/Container";
+import { Mascot } from "@/components/brand/Mascot";
+
+const FOTOS = [
+  { src: "/images/previas-2.jpg",  alt: "Interior da Xô Varal Castelo — máquinas SpeedQueen", span: "md:col-span-2 md:row-span-2" },
+  { src: "/images/previas-6.jpg",  alt: "Área de bistrô com Wi-Fi", span: "" },
+  { src: "/images/previas-8.jpg",  alt: "Ambiente aconchegante da lavanderia", span: "" },
+  { src: "/images/previas-12.jpg", alt: "Espaço kids — área para crianças", span: "" },
+  { src: "/images/previas-16.jpg", alt: "Máquinas SpeedQueen profissionais", span: "" },
+  { src: "/images/previas-21.jpg", alt: "Fachada da Xô Varal Castelo", span: "md:col-span-2" },
+];
 
 export default function GaleriaFotos() {
   return (
-    <section className="section-pad bg-xv-gray-50" id="galeria">
-      <div className="container-xl">
-        <div className="text-center mb-12">
-          <div className="badge-cyan mb-5 inline-flex">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-xv-cyan opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-xv-cyan" />
+    <section id="galeria" className="bg-white py-20 sm:py-28">
+      <Container size="lg">
+        <div className="grid items-end gap-8 md:grid-cols-[1fr_auto]">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="text-xs font-bold uppercase tracking-wider text-xv-cyan">
+              Conheça a loja
             </span>
-            Conheça a loja
+            <h2 className="mt-3 text-4xl font-black text-xv-navy sm:text-5xl">
+              Um ambiente feito{" "}
+              <span className="text-xv-orange">pra você</span>
+            </h2>
+            <p className="mt-4 max-w-xl text-xv-gray-700">
+              Moderno, climatizado e aconchegante. Venha lavar roupa num lugar onde dá prazer esperar.
+            </p>
+          </motion.div>
+          <div className="hidden md:block">
+            <Mascot name="meia" size="lg" />
           </div>
-          <h2 className="section-title text-xv-navy mb-4">
-            Um ambiente feito{' '}
-            <span className="amber-text">pra você</span>
-          </h2>
-          <p className="section-body mx-auto text-center">
-            Moderno, climatizado e aconchegante. Venha lavar roupa num lugar onde dá prazer esperar.
-          </p>
         </div>
 
         {/* Bento grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[220px]">
-          {fotos.map((foto) => (
-            <div
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px]">
+          {FOTOS.map((foto, i) => (
+            <motion.div
               key={foto.src}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.35, delay: (i % 4) * 0.06 }}
               className={`relative rounded-[2rem] overflow-hidden shadow-card group ${foto.span}`}
             >
               <Image
@@ -47,10 +62,10 @@ export default function GaleriaFotos() {
               <div className="absolute inset-0 bg-gradient-to-t from-xv-navy/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                 <span className="text-white text-xs font-bold">{foto.alt}</span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
-  )
+  );
 }

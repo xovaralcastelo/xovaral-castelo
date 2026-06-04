@@ -3,13 +3,14 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingBag, UserCircle } from "lucide-react";
+import { Container } from "@/components/layout/Container";
 import { whatsappUrl } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
   { href: "/como-funciona", label: "Como funciona" },
-  { href: "/clube-de-vantagens", label: "Clube" },
+  { href: "/clube-de-vantagens", label: "Vantagens" },
   { href: "/parceiros", label: "Parceiros" },
   { href: "/localizacao", label: "Localização" },
   { href: "/faq", label: "Dúvidas" },
@@ -35,22 +36,17 @@ export default function Header() {
           : "bg-transparent"
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <Container size="xl">
         <div className="flex h-16 items-center justify-between gap-6 sm:h-20">
           <Link href="/" aria-label="Xô Varal Castelo">
-            <div className="flex items-center gap-2">
-              <Image
-                src="/logo-xovaral.png"
-                alt="Xô Varal"
-                width={120}
-                height={40}
-                className="h-9 w-auto"
-                priority
-              />
-              <span className="text-xs font-bold tracking-widest uppercase text-xv-orange">
-                Castelo
-              </span>
-            </div>
+            <Image
+              src="/logo-xovaral.png"
+              alt="Xô Varal Castelo"
+              width={160}
+              height={160}
+              className="h-12 w-auto sm:h-14"
+              priority
+            />
           </Link>
 
           <nav className="hidden items-center gap-1 lg:flex">
@@ -66,20 +62,22 @@ export default function Header() {
           </nav>
 
           <div className="hidden items-center gap-2 lg:flex">
-            <Link
-              href="/clube-de-vantagens/entrar"
-              className="rounded-full px-4 py-2 text-sm font-bold text-xv-navy hover:bg-xv-gray-50"
-            >
-              Entrar
-            </Link>
             <a
               href={whatsappUrl("home")}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full bg-xv-orange px-5 py-2.5 text-sm font-bold text-white shadow-md transition hover:bg-xv-orange-light"
+              className="inline-flex items-center gap-2 rounded-full bg-xv-orange px-5 py-2.5 text-sm font-bold text-white shadow-md transition hover:bg-xv-orange-light"
             >
-              WhatsApp
+              <ShoppingBag size={15} />
+              Loja Xô Varal
             </a>
+            <Link
+              href="/clube-de-vantagens/entrar"
+              className="inline-flex items-center gap-2 rounded-full bg-xv-navy px-5 py-2.5 text-sm font-bold text-white shadow-md transition hover:bg-xv-navy-light"
+            >
+              <UserCircle size={15} />
+              Área cliente
+            </Link>
           </div>
 
           <button
@@ -106,26 +104,26 @@ export default function Header() {
                 </Link>
               ))}
               <div className="mt-2 flex gap-2">
-                <Link
-                  href="/clube-de-vantagens/entrar"
-                  className="flex-1 rounded-full border-2 border-xv-navy/15 px-4 py-2.5 text-center text-sm font-bold text-xv-navy"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  Entrar
-                </Link>
                 <a
                   href={whatsappUrl("home")}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 rounded-full bg-xv-orange px-4 py-2.5 text-center text-sm font-bold text-white"
                 >
-                  WhatsApp
+                  Loja Xô Varal
                 </a>
+                <Link
+                  href="/clube-de-vantagens/entrar"
+                  className="flex-1 rounded-full bg-xv-navy px-4 py-2.5 text-center text-sm font-bold text-white"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Área cliente
+                </Link>
               </div>
             </nav>
           </div>
         )}
-      </div>
+      </Container>
     </header>
   );
 }
