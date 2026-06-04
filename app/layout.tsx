@@ -4,6 +4,7 @@ import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import FloatingButtons from '@/components/FloatingButtons'
+import { HeaderAuthSlot } from '@/components/HeaderAuthSlot'
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -169,7 +170,10 @@ export default function RootLayout({
         />
       </head>
       <body className="overflow-x-hidden">
-        <Header />
+        <Header
+          authSlotDesktop={<HeaderAuthSlot variant="desktop" />}
+          authSlotMobile={<HeaderAuthSlot variant="mobile" />}
+        />
         <main>{children}</main>
         <Footer />
         <FloatingButtons />

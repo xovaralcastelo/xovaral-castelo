@@ -1,0 +1,33 @@
+import Link from "next/link";
+import { Gift, ArrowRight } from "lucide-react";
+
+export function LifetimePointsCard({ points }: { points: number }) {
+  return (
+    <div className="rounded-3xl bg-xv-navy p-6 text-white shadow-xl">
+      <div className="flex items-center gap-3">
+        <div className="rounded-full bg-white/10 p-2">
+          <Gift size={20} />
+        </div>
+        <p className="text-xs font-bold uppercase tracking-widest text-white/60">
+          Pontos vitalícios
+        </p>
+      </div>
+
+      <p className="mt-3 font-display text-4xl font-black">
+        {points.toLocaleString("pt-BR")}
+      </p>
+      <p className="mt-1 text-sm text-white/80">
+        Acesse a Loja Xô Varal e confira por quais produtos seus pontos podem
+        ser trocados.
+      </p>
+
+      <Link
+        href="/loja"
+        className="mt-4 inline-flex items-center gap-2 rounded-full bg-xv-orange px-5 py-2.5 text-sm font-bold text-white shadow-orange transition hover:bg-xv-orange-light"
+      >
+        Ir para a Loja Xô Varal
+        <ArrowRight size={16} />
+      </Link>
+    </div>
+  );
+}

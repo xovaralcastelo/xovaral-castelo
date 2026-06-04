@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ShoppingBag, UserCircle } from "lucide-react";
+import { Menu, X, ShoppingBag } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { whatsappUrl } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -16,7 +16,12 @@ const NAV_ITEMS = [
   { href: "/faq", label: "Dúvidas" },
 ];
 
-export default function Header() {
+interface HeaderProps {
+  authSlotDesktop?: ReactNode;
+  authSlotMobile?: ReactNode;
+}
+
+export default function Header({ authSlotDesktop, authSlotMobile }: HeaderProps = {}) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -71,13 +76,7 @@ export default function Header() {
               <ShoppingBag size={15} />
               Loja Xô Varal
             </a>
-            <Link
-              href="/clube-de-vantagens/entrar"
-              className="inline-flex items-center gap-2 rounded-full bg-xv-navy px-5 py-2.5 text-sm font-bold text-white shadow-md transition hover:bg-xv-navy-light"
-            >
-              <UserCircle size={15} />
-              Área cliente
-            </Link>
+            {authSlotDesktop}
           </div>
 
           <button
@@ -103,7 +102,7 @@ export default function Header() {
                   {item.label}
                 </Link>
               ))}
-              <div className="mt-2 flex gap-2">
+              <div className="mt-2 flex gap-2" onClick={() => setMobileOpen(false)}>
                 <a
                   href={whatsappUrl("home")}
                   target="_blank"
@@ -112,13 +111,7 @@ export default function Header() {
                 >
                   Loja Xô Varal
                 </a>
-                <Link
-                  href="/clube-de-vantagens/entrar"
-                  className="flex-1 rounded-full bg-xv-navy px-4 py-2.5 text-center text-sm font-bold text-white"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  Área cliente
-                </Link>
+                {authSlotMobile}
               </div>
             </nav>
           </div>
