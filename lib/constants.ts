@@ -61,6 +61,10 @@ export const UNIT = {
   ],
   inauguration: '08 de setembro de 2025',
   inaugurated:  '2025-09-08',
+  legal: {
+    businessName: 'XO VARAL CASTELO LTDA',
+    cnpj:         '48.166.943/0001-15',
+  },
 } as const;
 
 export const WHATSAPP_MESSAGES = {

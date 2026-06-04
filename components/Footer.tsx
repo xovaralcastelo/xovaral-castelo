@@ -138,7 +138,7 @@ export default function Footer() {
             <Link href="/termo-de-parceria" className="hover:text-white/70 transition">Termo de Parceria</Link>
           </div>
           <div className="flex flex-col items-center justify-between gap-2 text-xs text-white/50 sm:flex-row">
-            <p>© {new Date().getFullYear()} {UNIT.name}. Todos os direitos reservados.</p>
+            <p>© {new Date().getFullYear()} {UNIT.legal.businessName} · CNPJ {UNIT.legal.cnpj}</p>
             <p>Parte da rede Xô Varal · Belo Horizonte/MG</p>
           </div>
         </div>
