@@ -17,17 +17,25 @@ export function LifetimePointsCard({ points }: { points: number }) {
         {points.toLocaleString("pt-BR")}
       </p>
       <p className="mt-1 text-sm text-white/80">
-        Acesse a Loja Xô Varal e confira por quais produtos seus pontos podem
+        Acesse a Store Xô Varal e confira por quais produtos seus pontos podem
         ser trocados.
       </p>
 
-      <Link
-        href="/loja"
-        className="mt-4 inline-flex items-center gap-2 rounded-full bg-xv-orange px-5 py-2.5 text-sm font-bold text-white shadow-orange transition hover:bg-xv-orange-light"
-      >
-        Ir para a Loja Xô Varal
-        <ArrowRight size={16} />
-      </Link>
+      <div className="mt-4 flex flex-wrap gap-2">
+        <Link
+          href="/store"
+          className="inline-flex items-center gap-2 rounded-full bg-xv-orange px-5 py-2.5 text-sm font-bold text-white shadow-orange transition hover:bg-xv-orange-light"
+        >
+          Ir para a Store Xô Varal
+          <ArrowRight size={16} />
+        </Link>
+        <Link
+          href="/minha-conta/resgates"
+          className="inline-flex items-center gap-2 rounded-full bg-white/10 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-white/20"
+        >
+          Meus resgates
+        </Link>
+      </div>
     </div>
   );
 }

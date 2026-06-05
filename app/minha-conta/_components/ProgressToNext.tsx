@@ -25,7 +25,7 @@ export function ProgressToNext({ current, tier, next, missing }: Props) {
             </p>
             <p className="text-sm text-xv-gray-700">
               {current} ciclos este mês. Continue acumulando pontos vitalícios
-              para a Loja.
+              para a Store.
             </p>
           </div>
         </div>

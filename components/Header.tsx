@@ -67,15 +67,13 @@ export default function Header({ authSlotDesktop, authSlotMobile }: HeaderProps 
           </nav>
 
           <div className="hidden items-center gap-2 lg:flex">
-            <a
-              href={whatsappUrl("home")}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/store"
               className="inline-flex items-center gap-2 rounded-full bg-xv-orange px-5 py-2.5 text-sm font-bold text-white shadow-md transition hover:bg-xv-orange-light"
             >
               <ShoppingBag size={15} />
-              Loja Xô Varal
-            </a>
+              Store Xô Varal
+            </Link>
             {authSlotDesktop}
           </div>
 
@@ -103,14 +101,12 @@ export default function Header({ authSlotDesktop, authSlotMobile }: HeaderProps 
                 </Link>
               ))}
               <div className="mt-2 flex gap-2" onClick={() => setMobileOpen(false)}>
-                <a
-                  href={whatsappUrl("home")}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/store"
                   className="flex-1 rounded-full bg-xv-orange px-4 py-2.5 text-center text-sm font-bold text-white"
                 >
-                  Loja Xô Varal
-                </a>
+                  Store Xô Varal
+                </Link>
                 {authSlotMobile}
               </div>
             </nav>

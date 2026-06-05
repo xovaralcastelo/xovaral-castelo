@@ -33,3 +33,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Mascotes backup local (não rastrear)
+public/mascotes/_backup_pre_redesign/
