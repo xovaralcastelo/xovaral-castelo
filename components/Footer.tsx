@@ -114,7 +114,7 @@ export default function Footer() {
               Entre em contato
             </h3>
             <p className="mt-4 text-sm text-white/80">
-              Atendimento todos os dias das 6h às 23h. Resposta no WhatsApp em poucos
+              Loja aberta 24 horas, todos os dias. Atendimento no WhatsApp em poucos
               minutos.
             </p>
             <a

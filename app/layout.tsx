@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     template: '%s | Xô Varal Castelo',
   },
   description:
-    'Lavanderia self-service moderna no Castelo, Belo Horizonte. Lave e seque suas roupas em até 1 hora com máquinas SpeedQueen profissionais. Funcionamos todos os dias das 6h às 23h.',
+    'Lavanderia self-service moderna no Castelo, Belo Horizonte. Lave e seque suas roupas em até 1 hora com máquinas SpeedQueen profissionais. Aberta 24 horas, todos os dias.',
   keywords: [
     'lavanderia Castelo',
     'lavanderia self-service Castelo',

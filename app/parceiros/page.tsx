@@ -1,5 +1,12 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import {
+  Handshake, Ticket, Megaphone, Link2, BarChart3, Trophy,
+  Dumbbell, Pizza, Laptop, Scissors, GraduationCap, Home, ShoppingCart, Coffee, Stethoscope,
+  Smartphone, Camera,
+} from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
+import { DecorativeSparkle } from '@/components/ui/DecorativeSparkle'
 import { SITE, whatsappUrl } from '@/lib/constants'
 
 export const metadata: Metadata = {
@@ -8,25 +15,25 @@ export const metadata: Metadata = {
     'Seja parceiro da Xô Varal Castelo. Cupons exclusivos, campanhas conjuntas e visibilidade para mais de 250 clientes mensais no bairro. Cadastre seu negócio.',
 }
 
-const BENEFITS_PARTNER = [
-  { icon: '🎫', title: 'Cupons exclusivos',   desc: 'Crie cupons personalizados para seus clientes usarem na Xô Varal — e vice-versa.', color: '#EE7531', bg: '#FFF3EA' },
-  { icon: '📣', title: 'Menção nas redes',   desc: 'Seu negócio mencionado nas redes sociais da Xô Varal Castelo para mais de 1.000 seguidores.', color: '#01B3DC', bg: '#E5F7FF' },
-  { icon: '🤝', title: 'Campanhas conjuntas', desc: 'Ações de marketing colaborativo no bairro — alcance maior, custo dividido.', color: '#FBC132', bg: '#FFFAE0' },
-  { icon: '🔗', title: 'Link e QR Code',      desc: 'Seu negócio referenciado no site da Xô Varal com link direto e QR code exclusivo.', color: '#EE7531', bg: '#FFF3EA' },
-  { icon: '📊', title: 'Painel de parceiros', desc: 'Em breve: acesse métricas, cupons ativos e resultados da parceria diretamente online.', color: '#01B3DC', bg: '#E5F7FF' },
-  { icon: '🏆', title: 'Comunidade local',    desc: 'Faça parte da rede de negócios que fortalece o ecossistema comercial do Castelo.', color: '#253163', bg: '#EDF0FF' },
+const BENEFITS_PARTNER: { icon: LucideIcon; title: string; desc: string; color: string; bg: string }[] = [
+  { icon: Ticket,    title: 'Cupons exclusivos',   desc: 'Crie cupons personalizados para seus clientes usarem na Xô Varal — e vice-versa.', color: '#EE7531', bg: '#FFF3EA' },
+  { icon: Megaphone, title: 'Menção nas redes',    desc: 'Seu negócio mencionado nas redes sociais da Xô Varal Castelo para mais de 1.000 seguidores.', color: '#01B3DC', bg: '#E5F7FF' },
+  { icon: Handshake, title: 'Campanhas conjuntas', desc: 'Ações de marketing colaborativo no bairro — alcance maior, custo dividido.', color: '#FBC132', bg: '#FFFAE0' },
+  { icon: Link2,     title: 'Link e QR Code',      desc: 'Seu negócio referenciado no site da Xô Varal com link direto e QR code exclusivo.', color: '#EE7531', bg: '#FFF3EA' },
+  { icon: BarChart3, title: 'Painel de parceiros', desc: 'Em breve: acesse métricas, cupons ativos e resultados da parceria diretamente online.', color: '#01B3DC', bg: '#E5F7FF' },
+  { icon: Trophy,    title: 'Comunidade local',    desc: 'Faça parte da rede de negócios que fortalece o ecossistema comercial do Castelo.', color: '#253163', bg: '#EDF0FF' },
 ]
 
-const WHO_CAN_PARTNER = [
-  { icon: '💪', label: 'Academias e studios' },
-  { icon: '🍕', label: 'Restaurantes e lanchonetes' },
-  { icon: '💻', label: 'Coworkings' },
-  { icon: '💇', label: 'Salões e barbearias' },
-  { icon: '🎓', label: 'Faculdades e cursinhos' },
-  { icon: '🏠', label: 'Imobiliárias' },
-  { icon: '🛒', label: 'Mercados e lojas locais' },
-  { icon: '☕', label: 'Cafeterias e padarias' },
-  { icon: '🏥', label: 'Clínicas e consultórios' },
+const WHO_CAN_PARTNER: { icon: LucideIcon; label: string }[] = [
+  { icon: Dumbbell,       label: 'Academias e studios' },
+  { icon: Pizza,          label: 'Restaurantes e lanchonetes' },
+  { icon: Laptop,         label: 'Coworkings' },
+  { icon: Scissors,       label: 'Salões e barbearias' },
+  { icon: GraduationCap,  label: 'Faculdades e cursinhos' },
+  { icon: Home,           label: 'Imobiliárias' },
+  { icon: ShoppingCart,   label: 'Mercados e lojas locais' },
+  { icon: Coffee,         label: 'Cafeterias e padarias' },
+  { icon: Stethoscope,    label: 'Clínicas e consultórios' },
 ]
 
 export default function ParceirosPage() {
@@ -42,9 +49,9 @@ export default function ParceirosPage() {
         <div className="pointer-events-none absolute bottom-0 left-0 h-64 w-64 rounded-full blur-3xl opacity-15" style={{ background: '#01B3DC' }} />
 
         {/* Sparkles decorativos */}
-        <div className="pointer-events-none absolute right-64 top-12 text-xv-yellow text-4xl opacity-80">✦</div>
-        <div className="pointer-events-none absolute right-48 top-6 text-xv-orange text-xl opacity-60">✦</div>
-        <div className="pointer-events-none absolute left-16 bottom-20 text-xv-cyan text-3xl opacity-40">✦</div>
+        <DecorativeSparkle className="pointer-events-none absolute right-64 top-12 text-xv-yellow opacity-80" size={40} />
+        <DecorativeSparkle className="pointer-events-none absolute right-48 top-6 text-xv-orange opacity-60" size={20} />
+        <DecorativeSparkle className="pointer-events-none absolute left-16 bottom-20 text-xv-cyan opacity-40" size={32} />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="grid lg:grid-cols-2 gap-10 items-center pb-20">
@@ -55,7 +62,7 @@ export default function ParceirosPage() {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-xv-cyan opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-xv-cyan" />
                 </span>
-                🤝 Programa de Parceria Local
+                <Handshake size={13} /> Programa de Parceria Local
               </div>
               <h1 className="font-display text-5xl sm:text-6xl font-bold text-xv-navy leading-[1.05] mb-6">
                 Crescer com o Castelo,{' '}
@@ -67,7 +74,7 @@ export default function ParceirosPage() {
                 </span>
               </h1>
               <p className="text-xv-gray-700 text-lg leading-relaxed max-w-lg mb-8">
-                Seu negócio entra no mapa de centenas de moradores que frequentam a Xô Varal toda semana. A gente oferece benefícios cruzados — você ganha visibilidade e seus clientes ganham vantagem.
+                Seu negócio entra no mapa de mais de 470 clientes ativos que frequentam a Xô Varal toda semana. A gente oferece benefícios cruzados — você ganha visibilidade e seus clientes ganham vantagem.
               </p>
               <div className="flex flex-wrap gap-3">
                 <a
@@ -132,10 +139,10 @@ export default function ParceirosPage() {
                 className="group relative overflow-hidden rounded-[2rem] bg-white p-7 shadow-card ring-1 ring-xv-gray-200/60 hover:-translate-y-1 hover:shadow-card-hover transition-all"
               >
                 <div
-                  className="h-14 w-14 rounded-2xl flex items-center justify-center text-2xl mb-4 shadow-md"
-                  style={{ background: benefit.bg, border: `1.5px solid ${benefit.color}30` }}
+                  className="h-14 w-14 rounded-2xl flex items-center justify-center mb-4 shadow-md"
+                  style={{ background: benefit.bg, border: `1.5px solid ${benefit.color}30`, color: benefit.color }}
                 >
-                  {benefit.icon}
+                  <benefit.icon size={26} strokeWidth={2.2} />
                 </div>
                 <h3 className="font-bold text-xv-navy text-base mb-2">{benefit.title}</h3>
                 <p className="text-xv-gray-700 text-sm leading-relaxed">{benefit.desc}</p>
@@ -158,15 +165,20 @@ export default function ParceirosPage() {
             <p className="mt-3 text-xv-gray-700">Qualquer negócio do Castelo ou região com interesse em crescer junto.</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {WHO_CAN_PARTNER.map((item) => (
+            {WHO_CAN_PARTNER.map((item) => {
+              const Icon = item.icon
+              return (
               <div
                 key={item.label}
                 className="bg-white rounded-2xl p-4 flex items-center gap-3 shadow-card hover:-translate-y-0.5 hover:shadow-card-hover transition-all ring-1 ring-xv-gray-200/60"
               >
-                <span className="text-2xl">{item.icon}</span>
+                <div className="h-10 w-10 rounded-xl bg-xv-cyan-bg text-xv-cyan flex items-center justify-center shrink-0">
+                  <Icon size={20} />
+                </div>
                 <span className="text-sm font-semibold text-xv-gray-700 leading-tight">{item.label}</span>
               </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>
@@ -186,7 +198,7 @@ export default function ParceirosPage() {
               rel="noopener noreferrer"
               className="flex items-center gap-5 bg-[#f0fdf4] border-2 border-[#25d366]/30 rounded-3xl p-6 hover:border-[#25d366] transition-all hover:-translate-y-0.5 group"
             >
-              <div className="w-14 h-14 bg-[#25d366] rounded-2xl flex items-center justify-center text-white text-2xl shrink-0 shadow-lg">📱</div>
+              <div className="w-14 h-14 bg-[#25d366] rounded-2xl flex items-center justify-center text-white shrink-0 shadow-lg"><Smartphone size={24} /></div>
               <div className="flex-1">
                 <div className="font-black text-xv-navy text-lg">WhatsApp Direto</div>
                 <div className="text-xv-gray-700 text-sm">Resposta em até 24h — forma mais rápida</div>
@@ -199,7 +211,7 @@ export default function ParceirosPage() {
               rel="noopener noreferrer"
               className="flex items-center gap-5 bg-[#fdf2f8] border-2 border-pink-200 rounded-3xl p-6 hover:border-pink-400 transition-all hover:-translate-y-0.5 group"
             >
-              <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white text-2xl shrink-0 shadow-lg" style={{ background: 'linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045)' }}>📸</div>
+              <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white shrink-0 shadow-lg" style={{ background: 'linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045)' }}><Camera size={24} /></div>
               <div className="flex-1">
                 <div className="font-black text-xv-navy text-lg">Instagram @xovaralcastelo</div>
                 <div className="text-xv-gray-700 text-sm">Mande DM para conversarmos</div>

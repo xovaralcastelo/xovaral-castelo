@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { MapPin, Clock, MessageCircle, Phone, Navigation } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { UNIT, whatsappUrl, googleMapsRouteUrl } from "@/lib/constants";
@@ -9,17 +10,39 @@ export default function LocationBlock() {
     <section id="localizacao" className="relative bg-white py-20 sm:py-28">
       <Container size="lg">
         <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr]">
-          <div className="overflow-hidden rounded-3xl border border-xv-gray-200 shadow-md">
-            <iframe
-              src={embedSrc}
-              className="aspect-square w-full sm:aspect-video lg:aspect-auto lg:h-full"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title={`Mapa — ${UNIT.name}`}
-              allowFullScreen
-            />
+          {/* Coluna esquerda: foto da fachada + mapa */}
+          <div className="space-y-4">
+            <div className="relative aspect-[16/10] overflow-hidden rounded-3xl shadow-lg ring-1 ring-xv-gray-200/60">
+              <Image
+                src="/images/fachada-externa.jpg"
+                alt="Fachada da Xô Varal Castelo no Comercial JL Mall"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-xv-navy/40 via-transparent to-transparent" />
+              {/* Badge 24h flutuante */}
+              <div className="absolute left-5 bottom-5 inline-flex items-center gap-2 rounded-full bg-xv-orange px-4 py-2 shadow-xl">
+                <Clock size={16} className="text-white" />
+                <span className="text-sm font-bold uppercase tracking-wider text-white">
+                  Aberta 24h · todos os dias
+                </span>
+              </div>
+            </div>
+
+            <div className="overflow-hidden rounded-3xl border border-xv-gray-200 shadow-md">
+              <iframe
+                src={embedSrc}
+                className="aspect-video w-full"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title={`Mapa — ${UNIT.name}`}
+                allowFullScreen
+              />
+            </div>
           </div>
 
+          {/* Coluna direita: info */}
           <div className="flex flex-col">
             <span className="text-xs font-bold uppercase tracking-wider text-xv-orange">
               Visite a unidade
@@ -29,7 +52,7 @@ export default function LocationBlock() {
             </h2>
             <p className="mt-4 text-xv-gray-700">
               No Comercial JL Mall, no coração do Castelo. Vaga exclusiva de estacionamento na porta —
-              você nem precisa procurar onde estacionar.
+              você nem precisa procurar onde estacionar. E o melhor: estamos abertos a qualquer hora.
             </p>
 
             <div className="mt-8 space-y-4 rounded-2xl bg-xv-gray-50 p-6">
@@ -38,7 +61,11 @@ export default function LocationBlock() {
                 label="Endereço"
                 value={`${UNIT.address.street} — ${UNIT.address.neighborhood}, ${UNIT.address.city}/${UNIT.address.state}`}
               />
-              <InfoLine icon={Clock} label="Funcionamento" value={UNIT.hours.summary} />
+              <InfoLine
+                icon={Clock}
+                label="Funcionamento"
+                value="Aberta 24 horas · 7 dias por semana · inclusive feriados"
+              />
               <InfoLine
                 icon={Phone}
                 label="Atendimento"

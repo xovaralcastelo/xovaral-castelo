@@ -1,21 +1,23 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { MapPin, Clock } from 'lucide-react'
+import { MapPin, Clock, Building2, ShoppingBag, Dumbbell, Home, Car, ParkingCircle, Phone } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
+import { DecorativeSparkle } from '@/components/ui/DecorativeSparkle'
 import { UNIT, whatsappUrl } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Localização — Como chegar à Xô Varal Castelo | Xô Varal Castelo',
   description:
-    'Encontre a Xô Varal Castelo no Comercial JL Mall — R. Castelo da Beira, 271, Castelo, BH. Abertos todos os dias das 6h às 23h.',
+    'Encontre a Xô Varal Castelo no Comercial JL Mall — R. Castelo da Beira, 271, Castelo, BH. Aberta 24 horas, todos os dias.',
 }
 
-const NEARBY = [
-  { icon: '🏬', label: 'Comercial JL Mall',   distance: 'Dentro do mall' },
-  { icon: '🛍️', label: 'Shopping del Rey',     distance: '~5 min de carro' },
-  { icon: '💪', label: 'Academias da região', distance: 'Bairro Castelo' },
-  { icon: '🏘️', label: 'Bairro Castelo',       distance: 'Região central' },
-  { icon: '🚗', label: 'Via Expressa',         distance: '~3 min de carro' },
+const NEARBY: { icon: LucideIcon; label: string; distance: string }[] = [
+  { icon: Building2,   label: 'Comercial JL Mall',   distance: 'Dentro do mall' },
+  { icon: ShoppingBag, label: 'Shopping del Rey',    distance: '~5 min de carro' },
+  { icon: Dumbbell,    label: 'Academias da região', distance: 'Bairro Castelo' },
+  { icon: Home,        label: 'Bairro Castelo',      distance: 'Região central' },
+  { icon: Car,         label: 'Via Expressa',        distance: '~3 min de carro' },
 ]
 
 export default function LocalizacaoPage() {
@@ -30,10 +32,10 @@ export default function LocalizacaoPage() {
         <div className="pointer-events-none absolute top-16 right-0 h-80 w-80 rounded-full blur-3xl opacity-25" style={{ background: '#01B3DC' }} />
         <div className="pointer-events-none absolute bottom-0 left-0 h-64 w-64 rounded-full blur-3xl opacity-15" style={{ background: '#EE7531' }} />
 
-        {/* Sparkles */}
-        <div className="pointer-events-none absolute right-72 top-10 text-xv-yellow text-4xl opacity-80">✦</div>
-        <div className="pointer-events-none absolute right-52 top-6 text-xv-orange text-2xl opacity-60">✦</div>
-        <div className="pointer-events-none absolute left-16 bottom-20 text-xv-cyan text-3xl opacity-40">✦</div>
+        {/* Sparkles decorativos */}
+        <DecorativeSparkle className="pointer-events-none absolute right-72 top-10 text-xv-yellow opacity-80" size={40} />
+        <DecorativeSparkle className="pointer-events-none absolute right-52 top-6 text-xv-orange opacity-60" size={22} />
+        <DecorativeSparkle className="pointer-events-none absolute left-16 bottom-20 text-xv-cyan opacity-40" size={32} />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="grid lg:grid-cols-2 gap-10 items-center pb-20">
@@ -148,14 +150,14 @@ export default function LocalizacaoPage() {
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="text-lg shrink-0">🅿️</span>
+                      <ParkingCircle size={16} className="text-xv-cyan shrink-0" />
                       <div>
                         <p className="font-bold text-xv-navy text-sm">Estacionamento</p>
                         <p className="text-xv-gray-700 text-xs">Vaga exclusiva na porta da unidade</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="text-lg shrink-0">📞</span>
+                      <Phone size={16} className="text-xv-cyan shrink-0" />
                       <div>
                         <p className="font-bold text-xv-navy text-sm">WhatsApp</p>
                         <a href={`https://wa.me/${UNIT.whatsapp}`} className="text-[#25d366] text-xs font-semibold hover:underline" target="_blank" rel="noopener noreferrer">
@@ -177,8 +179,8 @@ export default function LocalizacaoPage() {
               </div>
 
               <div className="rounded-2xl p-5 text-center" style={{ background: 'linear-gradient(135deg, #0A1942, #15326C)' }}>
-                <div className="font-display text-3xl font-bold text-xv-yellow">6h às 23h</div>
-                <div className="text-white/60 text-xs mt-1">Todos os dias — incluindo feriados</div>
+                <div className="font-display text-3xl font-bold text-xv-yellow">24 horas</div>
+                <div className="text-white/60 text-xs mt-1">Todos os dias — sempre aberta</div>
               </div>
             </div>
           </div>
@@ -194,15 +196,20 @@ export default function LocalizacaoPage() {
             <p className="mt-3 text-xv-gray-700">No Castelo, você resolve tudo na mesma saída.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {NEARBY.map((item) => (
+            {NEARBY.map((item) => {
+              const Icon = item.icon
+              return (
               <div key={item.label} className="rounded-[2rem] bg-white p-5 flex items-center gap-4 shadow-card hover:-translate-y-0.5 hover:shadow-card-hover transition-all ring-1 ring-xv-gray-200/60">
-                <span className="text-3xl shrink-0">{item.icon}</span>
+                <div className="h-12 w-12 rounded-2xl bg-xv-cyan-bg text-xv-cyan flex items-center justify-center shrink-0">
+                  <Icon size={22} />
+                </div>
                 <div>
                   <div className="font-bold text-xv-navy text-sm">{item.label}</div>
                   <div className="text-xv-gray-500 text-xs">{item.distance}</div>
                 </div>
               </div>
-            ))}
+              )
+            })}
           </div>
           <div className="mt-8 rounded-2xl p-5 text-center" style={{ background: '#e5f7ff', border: '1.5px solid #01B3DC30' }}>
             <p className="text-xv-navy text-sm">
@@ -217,7 +224,7 @@ export default function LocalizacaoPage() {
       <section className="py-16 bg-white">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-4xl font-black text-xv-navy mb-4">Que tal vir <span className="text-xv-orange">agora?</span></h2>
-          <p className="text-xv-gray-700 mb-8">Estamos abertos. Sem agendamento. Das 6h às 23h, todos os dias.</p>
+          <p className="text-xv-gray-700 mb-8">Estamos abertos 24 horas, todos os dias. Sem agendamento, sem espera.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href={UNIT.address.googleMapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full bg-xv-navy px-8 py-4 text-sm font-bold text-white shadow-md transition hover:bg-xv-navy-light">
               Traçar rota agora

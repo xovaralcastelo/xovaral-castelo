@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import FAQ from '@/components/FAQ'
 import CTABanner from '@/components/CTABanner'
+import { DecorativeSparkle } from '@/components/ui/DecorativeSparkle'
 import { whatsappUrl } from '@/lib/constants'
 
 export const metadata: Metadata = {
@@ -22,10 +23,10 @@ export default function FAQPage() {
         <div className="pointer-events-none absolute top-16 right-0 h-72 w-72 rounded-full blur-3xl opacity-20" style={{ background: '#EE7531' }} />
         <div className="pointer-events-none absolute bottom-0 left-0 h-56 w-56 rounded-full blur-3xl opacity-15" style={{ background: '#FBC132' }} />
 
-        {/* Sparkles */}
-        <div className="pointer-events-none absolute right-64 top-10 text-xv-orange text-4xl opacity-70">✦</div>
-        <div className="pointer-events-none absolute right-48 top-6 text-xv-yellow text-2xl opacity-60">✦</div>
-        <div className="pointer-events-none absolute left-16 bottom-20 text-xv-cyan text-3xl opacity-40">✦</div>
+        {/* Sparkles decorativos */}
+        <DecorativeSparkle className="pointer-events-none absolute right-64 top-10 text-xv-orange opacity-70" size={40} />
+        <DecorativeSparkle className="pointer-events-none absolute right-48 top-6 text-xv-yellow opacity-60" size={22} />
+        <DecorativeSparkle className="pointer-events-none absolute left-16 bottom-20 text-xv-cyan opacity-40" size={32} />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="grid lg:grid-cols-2 gap-10 items-center pb-20">

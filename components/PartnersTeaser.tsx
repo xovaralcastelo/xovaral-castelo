@@ -31,7 +31,7 @@ export default function PartnersTeaser() {
             <p className="mt-4 text-xv-gray-700">
               Academias, faculdades, condomínios, restaurantes e comércio local:
               ofereça benefícios aos seus clientes e ganhe visibilidade entre
-              centenas de moradores que frequentam a Xô Varal toda semana.
+              mais de 470 clientes ativos que frequentam a Xô Varal toda semana.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">

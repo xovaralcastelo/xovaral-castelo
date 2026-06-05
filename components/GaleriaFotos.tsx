@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Container } from "@/components/layout/Container";
-import { Mascot } from "@/components/brand/Mascot";
 
 const FOTOS = [
   { src: "/images/previas-2.jpg",  alt: "Interior da Xô Varal Castelo — máquinas SpeedQueen", span: "md:col-span-2 md:row-span-2" },
@@ -26,19 +25,29 @@ export default function GaleriaFotos() {
             transition={{ duration: 0.5 }}
           >
             <span className="text-xs font-bold uppercase tracking-wider text-xv-cyan">
-              Conheça a loja
+              Galeria real
             </span>
             <h2 className="mt-3 text-4xl font-black text-xv-navy sm:text-5xl">
-              Um ambiente feito{" "}
-              <span className="text-xv-orange">pra você</span>
+              Veja como é{" "}
+              <span className="text-xv-orange">por dentro</span>
             </h2>
             <p className="mt-4 max-w-xl text-xv-gray-700">
-              Moderno, climatizado e aconchegante. Venha lavar roupa num lugar onde dá prazer esperar.
+              Fotos reais da unidade do Castelo. Moderno, climatizado e aconchegante — vem dar uma olhada.
             </p>
           </motion.div>
-          <div className="hidden md:block">
-            <Mascot name="meia" size="lg" />
-          </div>
+          <motion.div
+            className="hidden md:block"
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <Image
+              src="/mascotes/pingo.png"
+              alt="Pingo, mascote da Xô Varal"
+              width={180}
+              height={220}
+              className="drop-shadow-xl"
+            />
+          </motion.div>
         </div>
 
         {/* Bento grid */}

@@ -1,4 +1,4 @@
-import { Trophy, Medal, Crown, Gem, type LucideIcon } from "lucide-react";
+import { Trophy, Medal, Crown, Gem, Check, type LucideIcon } from "lucide-react";
 import type { Tier } from "@/lib/loyalty";
 
 const ICONS: Record<string, LucideIcon> = {
@@ -49,9 +49,7 @@ export function TierCard({ tier }: { tier: Tier }) {
             key={perk}
             className="flex items-start gap-2 text-sm text-white/95"
           >
-            <span aria-hidden className="mt-1 text-white/70">
-              ✓
-            </span>
+            <Check size={14} className="mt-0.5 text-white/80 flex-shrink-0" />
             <span>{perk}</span>
           </li>
         ))}

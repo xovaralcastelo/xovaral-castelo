@@ -30,7 +30,7 @@ export default function Hero() {
           >
             <div className="inline-flex items-center gap-2 rounded-full bg-xv-orange-bg px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-xv-orange">
               <span className="h-2 w-2 animate-pulse rounded-full bg-xv-orange" />
-              Aberto agora · 6h às 23h
+              Aberto agora · 24 horas
             </div>
 
             <h1 className="mt-6 text-4xl font-black leading-[1.05] text-xv-navy sm:text-5xl lg:text-6xl">

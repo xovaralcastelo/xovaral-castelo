@@ -56,6 +56,6 @@ export const UNIT_DIFFERENTIALS = [
   { label: "Mesa de dobra ampla", icon: "LayoutGrid" },
   { label: "Cabides disponíveis", icon: "Shirt" },
   { label: "Ambiente moderno e limpo", icon: "Sparkles" },
-  { label: "6h às 23h, todos os dias", icon: "Clock" },
+  { label: "Aberta 24 horas, todos os dias", icon: "Clock" },
   { label: "Pagamento por Pix, cartão e app", icon: "CreditCard" },
 ] as const;

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { ShoppingBag } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 
 const traga = [
@@ -93,8 +94,8 @@ export default function WhatToBring() {
             style={{ boxShadow: "0 8px 40px -8px rgba(34,197,94,0.25)" }}
           >
             <div className="flex items-center gap-3 mb-5">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl text-white text-xl" style={{ background: "linear-gradient(135deg, #22c55e, #16a34a)" }}>
-                🛍️
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl text-white" style={{ background: "linear-gradient(135deg, #22c55e, #16a34a)" }}>
+                <ShoppingBag size={22} />
               </div>
               <h3 className="text-lg font-black text-xv-navy">Traga apenas</h3>
             </div>

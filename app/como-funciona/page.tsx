@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { MapPin, WashingMachine, Smartphone, Coffee, ArrowRight, Settings2, Droplets, Sparkles, Wind } from 'lucide-react'
+import { MapPin, WashingMachine, Smartphone, Coffee, ArrowRight, Settings2, Droplets, Sparkles, Wind, Clock, ShoppingBag } from 'lucide-react'
+import { DecorativeSparkle } from '@/components/ui/DecorativeSparkle'
 import { HOW_IT_WORKS, whatsappUrl, UNIT } from '@/lib/constants'
 
 export const metadata: Metadata = {
@@ -70,9 +71,9 @@ export default function ComoFuncionaPage() {
             {/* Direita: mascote + badge flutuante */}
             <div className="hidden lg:flex justify-center items-center relative">
               {/* Sparkles decorativos */}
-              <div className="pointer-events-none absolute right-16 top-8 text-xv-yellow text-4xl opacity-80">✦</div>
-              <div className="pointer-events-none absolute left-8 top-12 text-xv-orange text-2xl opacity-60">✦</div>
-              <div className="pointer-events-none absolute left-20 bottom-16 text-xv-cyan text-3xl opacity-50">✦</div>
+              <DecorativeSparkle className="pointer-events-none absolute right-16 top-8 text-xv-yellow opacity-80" size={40} />
+              <DecorativeSparkle className="pointer-events-none absolute left-8 top-12 text-xv-orange opacity-60" size={22} />
+              <DecorativeSparkle className="pointer-events-none absolute left-20 bottom-16 text-xv-cyan opacity-50" size={32} />
 
               <div className="relative">
                 <Image
@@ -86,7 +87,7 @@ export default function ComoFuncionaPage() {
                 {/* Badge flutuante */}
                 <div className="absolute -top-4 -right-8 rounded-2xl bg-xv-navy px-5 py-3 shadow-xl animate-float-delay">
                   <div className="text-xs font-bold uppercase tracking-wider text-white/60">Tempo é economia!</div>
-                  <div className="text-white text-lg font-black flex items-center gap-1">⌚ 45 min</div>
+                  <div className="text-white text-lg font-black flex items-center gap-1.5"><Clock size={18} /> 45 min</div>
                 </div>
               </div>
             </div>
@@ -223,7 +224,7 @@ export default function ComoFuncionaPage() {
           <div className="grid sm:grid-cols-2 gap-6">
             <div className="rounded-[2rem] bg-white p-7 shadow-card ring-1 ring-green-100" style={{ boxShadow: '0 8px 40px -8px rgba(34,197,94,0.25)' }}>
               <div className="flex items-center gap-3 mb-5">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl text-white text-xl" style={{ background: 'linear-gradient(135deg, #22c55e, #16a34a)' }}>🛍️</div>
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl text-white" style={{ background: 'linear-gradient(135deg, #22c55e, #16a34a)' }}><ShoppingBag size={22} /></div>
                 <h3 className="text-lg font-black text-xv-navy">Traga apenas</h3>
               </div>
               <ul className="space-y-3">
@@ -257,7 +258,7 @@ export default function ComoFuncionaPage() {
       <section className="py-20 bg-white">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-4xl font-black text-xv-navy mb-4">Pronto para vir pela <span className="text-xv-orange">primeira vez?</span></h2>
-          <p className="text-xv-gray-700 mb-8">Estamos de segunda a segunda, das 6h às 23h. Sem agendamento, sem espera.</p>
+          <p className="text-xv-gray-700 mb-8">A unidade do Castelo fica aberta 24 horas, todos os dias. Sem agendamento, sem espera.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href={whatsappUrl('comoFunciona')} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-8 py-4 text-sm font-bold text-white shadow-lg transition hover:brightness-110">
               Chamar no WhatsApp

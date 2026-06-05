@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   Wifi,
@@ -18,6 +19,27 @@ import { Container } from "@/components/layout/Container";
 import { Mascot } from "@/components/brand/Mascot";
 import { UNIT_DIFFERENTIALS } from "@/content/benefits";
 import { UNIT } from "@/lib/constants";
+
+const HIGHLIGHT_PHOTOS = [
+  {
+    src: "/images/ambiente-bistro.jpg",
+    title: "Bistrô com Wi-Fi",
+    desc: "Trabalhe, descanse ou tome um café enquanto a roupa lava.",
+    icon: Wifi,
+  },
+  {
+    src: "/images/previas-12.jpg",
+    title: "Área kids",
+    desc: "Espaço seguro pra criançada brincar enquanto você resolve a semana.",
+    icon: Baby,
+  },
+  {
+    src: "/images/hero-maquinas-frente.jpg",
+    title: "Equipamentos SpeedQueen",
+    desc: "Máquinas profissionais americanas de 10,5 kg — as melhores do mercado.",
+    icon: Sparkles,
+  },
+];
 
 const ICON_MAP: Record<string, LucideIcon> = {
   Wifi,
@@ -64,7 +86,44 @@ export default function UnitDifferentials() {
           </div>
         </div>
 
-        <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        {/* 3 fotos destacando bistrô, área kids e equipamentos */}
+        <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {HIGHLIGHT_PHOTOS.map((photo, i) => {
+            const Icon = photo.icon;
+            return (
+              <motion.div
+                key={photo.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.45, delay: i * 0.08 }}
+                className="group relative overflow-hidden rounded-3xl ring-1 ring-white/10"
+              >
+                <div className="relative aspect-[4/3]">
+                  <Image
+                    src={photo.src}
+                    alt={photo.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-xv-navy via-xv-navy/40 to-transparent" />
+                </div>
+                <div className="absolute inset-x-0 bottom-0 p-5">
+                  <div className="inline-flex items-center justify-center h-10 w-10 rounded-xl bg-xv-cyan/20 text-xv-cyan ring-1 ring-xv-cyan/30 backdrop-blur-sm mb-3">
+                    <Icon size={18} />
+                  </div>
+                  <h3 className="font-display text-xl font-bold text-white leading-tight">
+                    {photo.title}
+                  </h3>
+                  <p className="mt-1 text-sm text-white/85">{photo.desc}</p>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           {UNIT_DIFFERENTIALS.map((diff, i) => {
             const Icon = ICON_MAP[diff.icon];
             return (
@@ -85,10 +144,10 @@ export default function UnitDifferentials() {
 
         {/* Numbers strip */}
         <div className="mt-16 grid grid-cols-2 gap-4 rounded-3xl bg-white/5 p-6 backdrop-blur-sm sm:grid-cols-4 sm:p-8">
-          <StatBlock value={`${UNIT.equipment.machines}`} label={`Máquinas ${UNIT.equipment.brand}`} sub={UNIT.equipment.capacity} />
+          <StatBlock value="470+" label="Clientes ativos" sub="Frequentando a unidade" />
           <StatBlock value={`${UNIT.pricing.cycleMinutes} min`} label="Por ciclo" sub="Lavagem ou secagem" />
           <StatBlock value={UNIT.pricing.complete.label} label="Ciclo completo" sub="Lavagem + secagem" />
-          <StatBlock value="6h–23h" label="Todos os dias" sub="Inclusive feriados" />
+          <StatBlock value="24h" label="Todos os dias" sub="Aberta sempre" />
         </div>
       </Container>
     </section>
