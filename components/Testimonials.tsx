@@ -29,7 +29,7 @@ export default function Testimonials() {
             O que dizem nossos clientes
           </span>
           <h2 className="mt-3 text-4xl font-black text-xv-navy sm:text-5xl">
-            Mais de <span className="text-xv-orange">250 clientes</span> escolheram a Xô Varal
+            Mais de <span className="text-xv-orange">470 clientes</span> ativos escolheram a Xô Varal
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-xv-gray-700">
             Eles testaram. Voltaram. Ficaram. Essas são as histórias reais de quem já faz parte da nossa rotina.
@@ -39,9 +39,9 @@ export default function Testimonials() {
         {/* Stats */}
         <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
           {[
-            { value: "250+",       label: "clientes atendidos" },
+            { value: "470+",       label: "clientes ativos" },
             { value: "97%",        label: "de satisfação" },
-            { value: "6h–23h",     label: "todos os dias" },
+            { value: "24h",        label: "aberta todos os dias" },
             { value: "SpeedQueen", label: "máquinas profissionais" },
           ].map((stat, i) => (
             <motion.div

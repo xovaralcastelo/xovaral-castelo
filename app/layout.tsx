@@ -64,7 +64,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Xô Varal Castelo | Lavanderia Self-Service',
-    description: 'Lave e seque em até 1h no Castelo. Todos os dias das 6h às 23h.',
+    description: 'Lave e seque em até 1h no Castelo. Aberta 24 horas, todos os dias.',
   },
   robots: {
     index: true,
@@ -157,8 +157,8 @@ export default function RootLayout({
                     'Monday','Tuesday','Wednesday','Thursday',
                     'Friday','Saturday','Sunday',
                   ],
-                  opens: '06:00',
-                  closes: '23:00',
+                  opens: '00:00',
+                  closes: '23:59',
                 },
               ],
               priceRange: 'R$ 17–34',

@@ -12,7 +12,7 @@ import { SITE, whatsappUrl } from '@/lib/constants'
 export const metadata: Metadata = {
   title: 'Parceiros | Xô Varal Castelo',
   description:
-    'Seja parceiro da Xô Varal Castelo. Cupons exclusivos, campanhas conjuntas e visibilidade para mais de 250 clientes mensais no bairro. Cadastre seu negócio.',
+    'Seja parceiro da Xô Varal Castelo. Cupons exclusivos, campanhas conjuntas e visibilidade para mais de 470 clientes ativos no bairro. Cadastre seu negócio.',
 }
 
 const BENEFITS_PARTNER: { icon: LucideIcon; title: string; desc: string; color: string; bg: string }[] = [
