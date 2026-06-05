@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { formatCents, type Product } from "@/lib/types";
-import { Gift, ShoppingBag } from "lucide-react";
+import type { Product } from "@/lib/types";
+import { Gift, ArrowRight } from "lucide-react";
 
 export function ProductCard({ product }: { product: Product }) {
   const outOfStock = product.stock != null && product.stock <= 0;
@@ -38,19 +38,9 @@ export function ProductCard({ product }: { product: Product }) {
           {product.name}
         </h3>
 
-        <div className="mt-4 flex items-center justify-between gap-2 flex-wrap">
-          {product.points_cost ? (
-            <div className="flex items-center gap-1.5 text-sm font-bold text-xv-orange">
-              <Gift size={14} />
-              {product.points_cost} pts
-            </div>
-          ) : null}
-          {product.money_price_cents ? (
-            <div className="flex items-center gap-1.5 text-sm font-bold text-xv-navy">
-              <ShoppingBag size={14} />
-              {formatCents(product.money_price_cents)}
-            </div>
-          ) : null}
+        <div className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-xv-orange">
+          Ver detalhes
+          <ArrowRight size={12} className="transition group-hover:translate-x-0.5" />
         </div>
       </div>
     </Link>

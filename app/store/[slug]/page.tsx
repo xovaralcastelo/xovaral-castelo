@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Package, MapPin } from "lucide-react";
+import { ArrowLeft, Package, MapPin, MessageCircle } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
-import { formatCents, type Product } from "@/lib/types";
-import { RedeemButton } from "./_components/RedeemButton";
-import { BuyViaWhatsApp } from "./_components/BuyViaWhatsApp";
+import { UNIT } from "@/lib/constants";
+import type { Product } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -38,20 +37,10 @@ export default async function ProductDetailPage({ params }: Props) {
     .single<Product>();
   if (error || !product) notFound();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  let balance: number | null = null;
-  if (user) {
-    const { data: cust } = await supabase
-      .from("customers")
-      .select("lifetime_points")
-      .eq("id", user.id)
-      .single<{ lifetime_points: number }>();
-    balance = cust?.lifetime_points ?? 0;
-  }
-
   const outOfStock = product.stock != null && product.stock <= 0;
+
+  const whatsappText = `Olá! Vim pela Store Xô Varal e tenho interesse em:\n\n• ${product.name}\n• Link: https://castelo.xovaral.com/store/${product.slug}\n\nPodem me passar mais informações?`;
+  const whatsappUrl = `https://wa.me/${UNIT.contact.whatsapp}?text=${encodeURIComponent(whatsappText)}`;
 
   return (
     <div
@@ -104,19 +93,14 @@ export default async function ProductDetailPage({ params }: Props) {
 
             <div className="mt-6 flex items-center gap-2 text-xs text-xv-gray-700">
               {product.fulfillment_type === "voucher" ? (
-                <>
-                  <span className="rounded-full bg-xv-cyan/10 text-xv-cyan px-3 py-1 font-bold">
-                    Voucher digital
-                  </span>
-                  <span>Você recebe um código na hora.</span>
-                </>
+                <span className="rounded-full bg-xv-cyan/10 text-xv-cyan px-3 py-1 font-bold">
+                  Voucher digital
+                </span>
               ) : (
-                <>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-xv-orange-bg text-xv-orange px-3 py-1 font-bold">
-                    <MapPin size={12} />
-                    Retirar na loja
-                  </span>
-                </>
+                <span className="inline-flex items-center gap-1 rounded-full bg-xv-orange-bg text-xv-orange px-3 py-1 font-bold">
+                  <MapPin size={12} />
+                  Retirar na loja
+                </span>
               )}
             </div>
 
@@ -125,49 +109,22 @@ export default async function ProductDetailPage({ params }: Props) {
                 Esse produto está temporariamente esgotado. Volte em breve!
               </div>
             ) : (
-              <div className="mt-8 space-y-4">
-                {product.points_cost ? (
-                  <RedeemButton
-                    productId={product.id}
-                    productSlug={product.slug}
-                    pointsCost={product.points_cost}
-                    fulfillmentType={product.fulfillment_type}
-                    userBalance={balance}
-                    isLoggedIn={!!user}
-                    productName={product.name}
-                  />
-                ) : null}
-
-                {product.money_price_cents ? (
-                  <>
-                    {product.points_cost ? (
-                      <div className="flex items-center gap-3 my-2">
-                        <span className="h-px flex-1 bg-xv-gray-200" />
-                        <span className="text-xs font-bold uppercase tracking-wider text-xv-gray-500">
-                          ou
-                        </span>
-                        <span className="h-px flex-1 bg-xv-gray-200" />
-                      </div>
-                    ) : null}
-                    <BuyViaWhatsApp
-                      productName={product.name}
-                      productSlug={product.slug}
-                      priceCents={product.money_price_cents}
-                    />
-                    <p className="text-xs text-xv-gray-500">
-                      Compra via WhatsApp. Combinamos pagamento (Pix/cartão) e
-                      retirada na loja.
-                    </p>
-                  </>
-                ) : null}
+              <div className="mt-8 space-y-3">
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 text-sm font-bold text-white shadow-md hover:brightness-110 transition w-full sm:w-auto"
+                >
+                  <MessageCircle size={16} />
+                  Tenho interesse — chamar no WhatsApp
+                </a>
+                <p className="text-xs text-xv-gray-500">
+                  Em breve você poderá trocar pontos ou comprar direto aqui.
+                  Por enquanto, fale com a equipe pra alinhar condições.
+                </p>
               </div>
             )}
-
-            {product.stock != null && !outOfStock ? (
-              <p className="mt-4 text-xs text-xv-gray-500">
-                Restam <strong>{product.stock}</strong> em estoque.
-              </p>
-            ) : null}
           </div>
         </div>
       </div>

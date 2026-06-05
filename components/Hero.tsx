@@ -29,8 +29,42 @@ export default function Hero() {
             transition={{ duration: 0.6 }}
           >
             <div className="inline-flex items-center gap-2 rounded-full bg-xv-orange-bg px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-xv-orange">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-xv-orange" />
+              <span
+                className="relative flex h-2.5 w-2.5"
+              >
+                <span
+                  className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
+                  style={{ backgroundColor: "#39FF14" }}
+                />
+                <span
+                  className="relative inline-flex h-2.5 w-2.5 rounded-full shadow-[0_0_8px_rgba(57,255,20,0.8)]"
+                  style={{ backgroundColor: "#39FF14" }}
+                />
+              </span>
               Aberto agora · 24 horas
+            </div>
+
+            {/* Foto mobile — só aparece em telas pequenas (desktop usa a Photo lateral) */}
+            <div className="mt-6 relative h-56 w-full overflow-hidden rounded-3xl shadow-xl lg:hidden">
+              <Image
+                src="/images/previas-2.jpg"
+                alt="Interior da Xô Varal Castelo"
+                fill
+                className="object-cover"
+                priority
+                sizes="100vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-xv-navy/50 via-transparent to-transparent" />
+              <div className="absolute left-4 bottom-4 right-4 flex items-end justify-between gap-3">
+                <div className="rounded-2xl bg-xv-navy/90 backdrop-blur-sm px-4 py-2.5 shadow-xl">
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-white/60">Por etapa</div>
+                  <div className="text-base font-black text-white">45 min</div>
+                </div>
+                <div className="rounded-2xl bg-xv-orange px-4 py-2.5 shadow-xl">
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-white/80">Ciclo completo</div>
+                  <div className="text-base font-black text-white">R$ 33,99</div>
+                </div>
+              </div>
             </div>
 
             <h1 className="mt-6 text-4xl font-black leading-[1.05] text-xv-navy sm:text-5xl lg:text-6xl">

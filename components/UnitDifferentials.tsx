@@ -28,7 +28,7 @@ const HIGHLIGHT_PHOTOS = [
     icon: Wifi,
   },
   {
-    src: "/images/previas-12.jpg",
+    src: "/images/area-kids.jpg",
     title: "Área kids",
     desc: "Espaço seguro pra criançada brincar enquanto você resolve a semana.",
     icon: Baby,
