@@ -11,6 +11,8 @@ import { TierCard } from "./_components/TierCard";
 import { ProgressToNext } from "./_components/ProgressToNext";
 import { LifetimePointsCard } from "./_components/LifetimePointsCard";
 import { SignOutButton } from "./_components/SignOutButton";
+import { CpfLinkCard } from "./_components/CpfLinkCard";
+import { maskCpf } from "@/lib/lavsync";
 
 export const metadata: Metadata = {
   title: "Minha conta — Clube de Vantagens | Xô Varal Castelo",
@@ -27,6 +29,7 @@ type Customer = {
   email: string | null;
   avatar_url: string | null;
   lifetime_points: number;
+  cpf: string | null;
   joined_at: string;
 };
 
@@ -132,9 +135,14 @@ export default async function MinhaContaPage() {
 
         <LifetimePointsCard points={lifetimePoints} />
 
+        <CpfLinkCard
+          maskedCpf={customer?.cpf ? maskCpf(customer.cpf) : null}
+        />
+
         <p className="text-center text-xs text-xv-gray-500">
-          Seus ciclos do mês são creditados pela equipe Xô Varal após cada uso.
-          Dúvidas? Fale com a gente no WhatsApp.
+          {customer?.cpf
+            ? "Ciclos e pontos entram automaticamente após cada compra. Dúvidas? Fale com a gente no WhatsApp."
+            : "Seus ciclos do mês são creditados pela equipe Xô Varal após cada uso. Dúvidas? Fale com a gente no WhatsApp."}
         </p>
       </div>
     </div>
