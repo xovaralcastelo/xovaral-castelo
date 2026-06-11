@@ -79,3 +79,95 @@ export function formatCents(cents: number | null): string {
     currency: "BRL",
   });
 }
+
+// ============================================================
+// PARTNERS
+// ============================================================
+export type PartnerCategory =
+  | "academia" | "restaurante" | "condominio" | "faculdade"
+  | "salao"    | "servico"     | "comercio"   | "outro";
+
+export type PartnerStatus = "active" | "draft" | "archived";
+
+export interface Partner {
+  id: string;
+  slug: string;
+  name: string;
+  category: PartnerCategory;
+  description: string | null;
+  logo_url: string | null;
+  website_url: string | null;
+  whatsapp: string | null;
+  benefit_text: string | null;
+  status: PartnerStatus;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export const PARTNER_CATEGORIES: PartnerCategory[] = [
+  "academia", "restaurante", "condominio", "faculdade",
+  "salao",    "servico",     "comercio",   "outro",
+];
+
+export const PARTNER_STATUSES: PartnerStatus[] = ["active", "draft", "archived"];
+
+// ============================================================
+// TESTIMONIALS
+// ============================================================
+export type TestimonialStatus = "active" | "draft" | "archived";
+
+export interface Testimonial {
+  id: string;
+  name: string;
+  role: string;
+  text: string;
+  avatar_initial: string | null;
+  stars: number;
+  display_order: number;
+  status: TestimonialStatus;
+  created_at: string;
+  updated_at: string;
+}
+
+export const TESTIMONIAL_STATUSES: TestimonialStatus[] = ["active", "draft", "archived"];
+
+// ============================================================
+// CONTENT BLOCKS
+// ============================================================
+export interface ContentBlock {
+  key: string;
+  value: string;
+  updated_at: string;
+  updated_by: string | null;
+}
+
+// ============================================================
+// STAFF (equipe do painel admin)
+// ============================================================
+export type StaffRole = "admin" | "staff";
+export type StaffStatus = "active" | "inactive";
+
+export interface StaffMember {
+  id: string;
+  email: string;
+  name: string;
+  role: StaffRole;
+  permissions: string[];
+  status: StaffStatus;
+  created_at: string;
+  updated_at: string;
+}
+
+export const STAFF_ROLES: StaffRole[] = ["admin", "staff"];
+export const STAFF_STATUSES: StaffStatus[] = ["active", "inactive"];
+
+/** Seções do painel admin que podem ser liberadas por colaborador */
+export const ADMIN_SECTION_OPTIONS = [
+  { key: "content", label: "Conteúdo do site" },
+  { key: "testimonials", label: "Depoimentos" },
+  { key: "partners", label: "Parceiros" },
+  { key: "products", label: "Produtos (Store)" },
+  { key: "customers", label: "Clientes (Clube)" },
+  { key: "redemptions", label: "Resgates" },
+] as const;

@@ -20,26 +20,7 @@ import { Mascot } from "@/components/brand/Mascot";
 import { UNIT_DIFFERENTIALS } from "@/content/benefits";
 import { UNIT } from "@/lib/constants";
 
-const HIGHLIGHT_PHOTOS = [
-  {
-    src: "/images/ambiente-bistro.jpg",
-    title: "Bistrô com Wi-Fi",
-    desc: "Trabalhe, descanse ou tome um café enquanto a roupa lava.",
-    icon: Wifi,
-  },
-  {
-    src: "/images/area-kids.jpg",
-    title: "Área kids",
-    desc: "Espaço seguro pra criançada brincar enquanto você resolve a semana.",
-    icon: Baby,
-  },
-  {
-    src: "/images/hero-maquinas-frente.jpg",
-    title: "Equipamentos SpeedQueen",
-    desc: "Máquinas profissionais americanas de 10,5 kg — as melhores do mercado.",
-    icon: Sparkles,
-  },
-];
+const HIGHLIGHT_ICONS = [Wifi, Baby, Sparkles];
 
 const ICON_MAP: Record<string, LucideIcon> = {
   Wifi,
@@ -54,7 +35,32 @@ const ICON_MAP: Record<string, LucideIcon> = {
   CreditCard,
 };
 
-export default function UnitDifferentials() {
+export default function UnitDifferentials({
+  content,
+}: {
+  content?: Record<string, string>;
+}) {
+  const t = (k: string, d: string) => content?.[k]?.trim() || d;
+  const photos = [
+    {
+      src: t("unit_diff.photo_bistro_url", "/images/ambiente-bistro.jpg"),
+      title: t("unit_diff.photo_bistro_title", "Bistrô com Wi-Fi"),
+      desc: t("unit_diff.photo_bistro_desc", "Trabalhe, descanse ou tome um café enquanto a roupa lava."),
+      icon: HIGHLIGHT_ICONS[0],
+    },
+    {
+      src: t("unit_diff.photo_kids_url", "/images/area-kids.jpg"),
+      title: t("unit_diff.photo_kids_title", "Área kids"),
+      desc: t("unit_diff.photo_kids_desc", "Espaço seguro pra criançada brincar enquanto você resolve a semana."),
+      icon: HIGHLIGHT_ICONS[1],
+    },
+    {
+      src: t("unit_diff.photo_machines_url", "/images/hero-maquinas-frente.jpg"),
+      title: t("unit_diff.photo_machines_title", "Equipamentos SpeedQueen"),
+      desc: t("unit_diff.photo_machines_desc", "Máquinas profissionais americanas de 10,5 kg — as melhores do mercado."),
+      icon: HIGHLIGHT_ICONS[2],
+    },
+  ];
   return (
     <section className="relative overflow-hidden bg-xv-navy py-20 text-white sm:py-28">
       <div
@@ -69,16 +75,18 @@ export default function UnitDifferentials() {
         <div className="grid items-end gap-8 md:grid-cols-2">
           <div>
             <span className="text-xs font-bold uppercase tracking-wider text-xv-cyan">
-              A unidade do Castelo
+              {t("unit_diff.kicker", "A unidade do Castelo")}
             </span>
             <h2 className="mt-3 text-4xl font-black sm:text-5xl">
-              Não é a lavanderia que você imagina.
+              {t("unit_diff.headline_pre", "Não é a lavanderia que você imagina.")}
               <br />
-              É <span className="text-xv-orange">muito melhor</span>.
+              <span className="text-xv-orange">{t("unit_diff.headline_highlight", "É muito melhor.")}</span>
             </h2>
             <p className="mt-4 max-w-xl text-white/80">
-              Pensamos cada detalhe pra você usar o tempo da lavagem como quiser:
-              trabalhar, relaxar, levar as crianças ou simplesmente respirar.
+              {t(
+                "unit_diff.subtitle",
+                "Pensamos cada detalhe pra você usar o tempo da lavagem como quiser: trabalhar, relaxar, levar as crianças ou simplesmente respirar.",
+              )}
             </p>
           </div>
           <div className="hidden justify-end md:flex">
@@ -88,7 +96,7 @@ export default function UnitDifferentials() {
 
         {/* 3 fotos destacando bistrô, área kids e equipamentos */}
         <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {HIGHLIGHT_PHOTOS.map((photo, i) => {
+          {photos.map((photo, i) => {
             const Icon = photo.icon;
             return (
               <motion.div
@@ -144,7 +152,7 @@ export default function UnitDifferentials() {
 
         {/* Numbers strip */}
         <div className="mt-16 grid grid-cols-2 gap-4 rounded-3xl bg-white/5 p-6 backdrop-blur-sm sm:grid-cols-4 sm:p-8">
-          <StatBlock value="470+" label="Clientes ativos" sub="Frequentando a unidade" />
+          <StatBlock value={t("unit_diff.customers_count", "470+")} label={t("unit_diff.customers_label", "Clientes ativos")} sub="Frequentando a unidade" />
           <StatBlock value={`${UNIT.pricing.cycleMinutes} min`} label="Por ciclo" sub="Lavagem ou secagem" />
           <StatBlock value={UNIT.pricing.complete.label} label="Ciclo completo" sub="Lavagem + secagem" />
           <StatBlock value="24h" label="Todos os dias" sub="Aberta sempre" />

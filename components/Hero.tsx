@@ -8,7 +8,9 @@ import { Container } from "@/components/layout/Container";
 import { Mascot } from "@/components/brand/Mascot";
 import { whatsappUrl, googleMapsRouteUrl, UNIT } from "@/lib/constants";
 
-export default function Hero() {
+export default function Hero({ content }: { content?: Record<string, string> }) {
+  const t = (k: string, d: string) => content?.[k]?.trim() || d;
+  const imageUrl = t("hero.image_url", "/images/previas-2.jpg");
   return (
     <section className="relative overflow-hidden bg-mesh pt-10 pb-20 sm:pt-16 sm:pb-28">
       {/* Floating mascots — desktop only */}
@@ -41,13 +43,13 @@ export default function Hero() {
                   style={{ backgroundColor: "#39FF14" }}
                 />
               </span>
-              Aberto agora · 24 horas
+              {t("hero.kicker", "Aberto agora · 24 horas")}
             </div>
 
             {/* Foto mobile — só aparece em telas pequenas (desktop usa a Photo lateral) */}
             <div className="mt-6 relative h-56 w-full overflow-hidden rounded-3xl shadow-xl lg:hidden">
               <Image
-                src="/images/previas-2.jpg"
+                src={imageUrl}
                 alt="Interior da Xô Varal Castelo"
                 fill
                 className="object-cover"
@@ -68,9 +70,9 @@ export default function Hero() {
             </div>
 
             <h1 className="mt-6 text-4xl font-black leading-[1.05] text-xv-navy sm:text-5xl lg:text-6xl">
-              Lave e seque suas roupas em{" "}
+              {t("hero.headline_pre", "Lave e seque suas roupas em")}{" "}
               <span className="relative inline-block">
-                <span className="relative z-10 text-xv-orange">até 1 hora</span>
+                <span className="relative z-10 text-xv-orange">{t("hero.headline_highlight", "até 1 hora")}</span>
                 <svg
                   className="absolute -bottom-1 left-0 z-0 w-full text-xv-yellow"
                   viewBox="0 0 200 10"
@@ -86,13 +88,19 @@ export default function Hero() {
                   />
                 </svg>
               </span>
-              <br className="hidden sm:block" /> com praticidade e conforto.
+              <br className="hidden sm:block" /> {t("hero.headline_post", "com praticidade e conforto.")}
             </h1>
 
             <p className="mt-6 max-w-xl text-lg text-xv-gray-700">
-              Na <strong className="text-xv-navy">{UNIT.name}</strong> você chega, escolhe a
-              máquina, paga pelo app ou totem, e vai embora com tudo pronto.{" "}
-              <span className="text-xv-navy font-semibold">Sem fila. Sem burocracia.</span>
+              {content?.["hero.subtitle"]?.trim() ? (
+                t("hero.subtitle", "")
+              ) : (
+                <>
+                  Na <strong className="text-xv-navy">{UNIT.name}</strong> você chega, escolhe a
+                  máquina, paga pelo app ou totem, e vai embora com tudo pronto.{" "}
+                  <span className="text-xv-navy font-semibold">Sem fila. Sem burocracia.</span>
+                </>
+              )}
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-3">
@@ -152,7 +160,7 @@ export default function Hero() {
           >
             <div className="relative h-[520px] w-full overflow-hidden rounded-3xl shadow-2xl">
               <Image
-                src="/images/previas-2.jpg"
+                src={imageUrl}
                 alt="Interior da Xô Varal Castelo"
                 fill
                 className="object-cover"

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Package, Users, Gift, Plus, type LucideIcon } from "lucide-react";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { requireAdmin, can } from "@/lib/admin";
 
 export const dynamic = "force-dynamic";
 
@@ -24,8 +25,17 @@ async function getCounts() {
   };
 }
 
-export default async function AdminDashboard() {
+interface PageProps {
+  searchParams: { error?: string };
+}
+
+export default async function AdminDashboard({ searchParams }: PageProps) {
+  const { access } = await requireAdmin();
   const counts = await getCounts();
+
+  const showCustomers = can(access, "customers");
+  const showProducts = can(access, "products");
+  const showRedemptions = can(access, "redemptions");
 
   return (
     <div className="space-y-8">
@@ -38,29 +48,45 @@ export default async function AdminDashboard() {
         </p>
       </header>
 
+      {searchParams.error === "sem-permissao" ? (
+        <p
+          role="alert"
+          className="rounded-2xl bg-yellow-50 px-4 py-3 text-sm text-yellow-800 ring-1 ring-yellow-200"
+        >
+          Você não tem permissão para acessar essa área. Fale com um
+          administrador se precisar desse acesso.
+        </p>
+      ) : null}
+
       <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card
-          href="/admin/customers"
-          icon={Users}
-          label="Clientes cadastrados"
-          value={counts.customers}
-          color="#01B3DC"
-        />
-        <Card
-          href="/admin/products"
-          icon={Package}
-          label="Produtos ativos"
-          value={counts.activeProducts}
-          color="#EE7531"
-        />
-        <Card
-          href="/admin/redemptions"
-          icon={Gift}
-          label="Resgates pendentes"
-          value={counts.pendingRedemptions}
-          color="#FBC132"
-          highlight={counts.pendingRedemptions > 0}
-        />
+        {showCustomers ? (
+          <Card
+            href="/admin/customers"
+            icon={Users}
+            label="Clientes cadastrados"
+            value={counts.customers}
+            color="#01B3DC"
+          />
+        ) : null}
+        {showProducts ? (
+          <Card
+            href="/admin/products"
+            icon={Package}
+            label="Produtos ativos"
+            value={counts.activeProducts}
+            color="#EE7531"
+          />
+        ) : null}
+        {showRedemptions ? (
+          <Card
+            href="/admin/redemptions"
+            icon={Gift}
+            label="Resgates pendentes"
+            value={counts.pendingRedemptions}
+            color="#FBC132"
+            highlight={counts.pendingRedemptions > 0}
+          />
+        ) : null}
       </section>
 
       <section className="bg-white rounded-2xl p-6 shadow-sm ring-1 ring-xv-gray-200/60">
@@ -68,25 +94,31 @@ export default async function AdminDashboard() {
           Atalhos
         </h2>
         <div className="flex flex-wrap gap-2">
-          <Link
-            href="/admin/products/new"
-            className="inline-flex items-center gap-2 rounded-full bg-xv-navy px-4 py-2 text-sm font-bold text-white hover:bg-xv-navy-light"
-          >
-            <Plus size={14} />
-            Novo produto
-          </Link>
-          <Link
-            href="/admin/customers"
-            className="inline-flex items-center gap-2 rounded-full bg-xv-gray-100 px-4 py-2 text-sm font-bold text-xv-navy hover:bg-xv-gray-200"
-          >
-            Creditar ciclos/pontos
-          </Link>
-          <Link
-            href="/admin/redemptions"
-            className="inline-flex items-center gap-2 rounded-full bg-xv-gray-100 px-4 py-2 text-sm font-bold text-xv-navy hover:bg-xv-gray-200"
-          >
-            Fila de resgates
-          </Link>
+          {showProducts ? (
+            <Link
+              href="/admin/products/new"
+              className="inline-flex items-center gap-2 rounded-full bg-xv-navy px-4 py-2 text-sm font-bold text-white hover:bg-xv-navy-light"
+            >
+              <Plus size={14} />
+              Novo produto
+            </Link>
+          ) : null}
+          {showCustomers ? (
+            <Link
+              href="/admin/customers"
+              className="inline-flex items-center gap-2 rounded-full bg-xv-gray-100 px-4 py-2 text-sm font-bold text-xv-navy hover:bg-xv-gray-200"
+            >
+              Creditar ciclos/pontos
+            </Link>
+          ) : null}
+          {showRedemptions ? (
+            <Link
+              href="/admin/redemptions"
+              className="inline-flex items-center gap-2 rounded-full bg-xv-gray-100 px-4 py-2 text-sm font-bold text-xv-navy hover:bg-xv-gray-200"
+            >
+              Fila de resgates
+            </Link>
+          ) : null}
         </div>
       </section>
     </div>

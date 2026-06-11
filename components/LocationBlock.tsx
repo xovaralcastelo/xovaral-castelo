@@ -3,7 +3,12 @@ import { MapPin, Clock, MessageCircle, Phone, Navigation } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { UNIT, whatsappUrl, googleMapsRouteUrl } from "@/lib/constants";
 
-export default function LocationBlock() {
+export default function LocationBlock({
+  content,
+}: {
+  content?: Record<string, string>;
+}) {
+  const t = (k: string, d: string) => content?.[k]?.trim() || d;
   const embedSrc = UNIT.address.googleMapsEmbed;
 
   return (
@@ -14,7 +19,7 @@ export default function LocationBlock() {
           <div className="space-y-4">
             <div className="relative aspect-[16/10] overflow-hidden rounded-3xl shadow-lg ring-1 ring-xv-gray-200/60">
               <Image
-                src="/images/fachada-externa.jpg"
+                src={t("location.fachada_url", "/images/fachada-externa.jpg")}
                 alt="Fachada da Xô Varal Castelo no Comercial JL Mall"
                 fill
                 className="object-cover"
@@ -25,7 +30,7 @@ export default function LocationBlock() {
               <div className="absolute left-5 bottom-5 inline-flex items-center gap-2 rounded-full bg-xv-orange px-4 py-2 shadow-xl">
                 <Clock size={16} className="text-white" />
                 <span className="text-sm font-bold uppercase tracking-wider text-white">
-                  Aberta 24h · todos os dias
+                  {t("location.badge_24h", "Aberta 24h · todos os dias")}
                 </span>
               </div>
             </div>
@@ -45,14 +50,16 @@ export default function LocationBlock() {
           {/* Coluna direita: info */}
           <div className="flex flex-col">
             <span className="text-xs font-bold uppercase tracking-wider text-xv-orange">
-              Visite a unidade
+              {t("location.kicker", "Visite a unidade")}
             </span>
             <h2 className="mt-3 text-4xl font-black leading-tight text-xv-navy sm:text-5xl">
-              Estamos pertinho de você.
+              {t("location.headline", "Estamos pertinho de você.")}
             </h2>
             <p className="mt-4 text-xv-gray-700">
-              No Comercial JL Mall, no coração do Castelo. Vaga exclusiva de estacionamento na porta —
-              você nem precisa procurar onde estacionar. E o melhor: estamos abertos a qualquer hora.
+              {t(
+                "location.subtitle",
+                "No Comercial JL Mall, no coração do Castelo. Vaga exclusiva de estacionamento na porta — você nem precisa procurar onde estacionar. E o melhor: estamos abertos a qualquer hora.",
+              )}
             </p>
 
             <div className="mt-8 space-y-4 rounded-2xl bg-xv-gray-50 p-6">

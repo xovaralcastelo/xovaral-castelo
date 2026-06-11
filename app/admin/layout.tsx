@@ -1,6 +1,17 @@
 import Link from "next/link";
-import { LayoutDashboard, Package, Users, Gift, ExternalLink } from "lucide-react";
-import { requireAdmin } from "@/lib/admin";
+import {
+  LayoutDashboard,
+  Package,
+  Users,
+  Gift,
+  ExternalLink,
+  FileText,
+  MessageSquareQuote,
+  Handshake,
+  Settings,
+  type LucideIcon,
+} from "lucide-react";
+import { requireAdmin, can, type AdminPermission } from "@/lib/admin";
 
 export const dynamic = "force-dynamic";
 export const metadata = {
@@ -8,11 +19,15 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-const NAV = [
-  { href: "/admin", label: "Painel", icon: LayoutDashboard },
-  { href: "/admin/products", label: "Produtos", icon: Package },
-  { href: "/admin/customers", label: "Clientes", icon: Users },
-  { href: "/admin/redemptions", label: "Resgates", icon: Gift },
+const NAV: { href: string; label: string; icon: LucideIcon; section: AdminPermission | null }[] = [
+  { href: "/admin", label: "Painel", icon: LayoutDashboard, section: null },
+  { href: "/admin/content", label: "Conteúdo do site", icon: FileText, section: "content" },
+  { href: "/admin/testimonials", label: "Depoimentos", icon: MessageSquareQuote, section: "testimonials" },
+  { href: "/admin/partners", label: "Parceiros", icon: Handshake, section: "partners" },
+  { href: "/admin/products", label: "Produtos", icon: Package, section: "products" },
+  { href: "/admin/customers", label: "Clientes", icon: Users, section: "customers" },
+  { href: "/admin/redemptions", label: "Resgates", icon: Gift, section: "redemptions" },
+  { href: "/admin/settings", label: "Configurações", icon: Settings, section: "settings" },
 ];
 
 export default async function AdminLayout({
@@ -20,7 +35,11 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = await requireAdmin();
+  const { user, access } = await requireAdmin();
+
+  const nav = NAV.filter(
+    (item) => item.section === null || can(access, item.section),
+  );
 
   return (
     <div className="min-h-screen bg-xv-gray-50">
@@ -32,7 +51,7 @@ export default async function AdminLayout({
           Admin · Xô Varal
         </Link>
 
-        {NAV.map(({ href, label, icon: Icon }) => (
+        {nav.map(({ href, label, icon: Icon }) => (
           <Link
             key={href}
             href={href}
@@ -61,8 +80,11 @@ export default async function AdminLayout({
           </form>
         </div>
 
-        <div className="mt-auto text-xs text-white/40 break-all">
-          {user.email}
+        <div className="mt-auto text-xs text-white/40">
+          <p className="break-all">{user.email}</p>
+          <p className="mt-1 font-bold uppercase tracking-wider text-white/30">
+            {access.role === "admin" ? "Administrador" : "Colaborador"}
+          </p>
         </div>
       </aside>
       <main className="ml-60 p-8">{children}</main>

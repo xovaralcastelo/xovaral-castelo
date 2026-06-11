@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, Gift } from "lucide-react";
 import { useEffect, useRef } from "react";
+import type { Partner } from "@/lib/types";
 
 const PARTNER_SLOTS = [
   { emoji: "💪", name: "Academia", type: "Fitness & Saúde", color: "#E5F7FF", border: "#01B3DC" },
@@ -15,8 +16,21 @@ const PARTNER_SLOTS = [
   { emoji: "🏠", name: "Imobiliária", type: "Moradia", color: "#FFF3EA", border: "#EE7531" },
 ];
 
-export default function PartnersCarousel() {
+const CATEGORY_LABELS: Record<string, string> = {
+  academia: "Academia", restaurante: "Restaurante", condominio: "Condomínio",
+  faculdade: "Faculdade", salao: "Beleza & Estética", servico: "Serviço",
+  comercio: "Comércio", outro: "Parceiro",
+};
+
+const PALETTE = [
+  { color: "#E5F7FF", border: "#01B3DC" },
+  { color: "#FFF3EA", border: "#EE7531" },
+  { color: "#FFFAE0", border: "#FBC132" },
+];
+
+export default function PartnersCarousel({ partners }: { partners?: Partner[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const hasReal = !!partners && partners.length > 0;
 
   useEffect(() => {
     const track = trackRef.current;
@@ -33,7 +47,39 @@ export default function PartnersCarousel() {
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  const cards = [...PARTNER_SLOTS, ...PARTNER_SLOTS];
+  type Card = {
+    key: string;
+    emoji?: string;
+    logoUrl?: string | null;
+    name: string;
+    sub: string;
+    badge: string;
+    color: string;
+    border: string;
+  };
+  const baseCards: Card[] = hasReal
+    ? partners!.map((p, i) => {
+        const pal = PALETTE[i % PALETTE.length];
+        return {
+          key: p.id,
+          logoUrl: p.logo_url,
+          name: p.name,
+          sub: CATEGORY_LABELS[p.category] ?? "Parceiro",
+          badge: p.benefit_text || "Parceiro",
+          color: pal.color,
+          border: pal.border,
+        };
+      })
+    : PARTNER_SLOTS.map((s, i) => ({
+        key: `slot-${i}`,
+        emoji: s.emoji,
+        name: s.name,
+        sub: s.type,
+        badge: "Seja parceiro",
+        color: s.color,
+        border: s.border,
+      }));
+  const cards = [...baseCards, ...baseCards];
 
   return (
     <section id="parceiros-carrossel" className="bg-xv-gray-50 py-16 overflow-hidden">
@@ -66,20 +112,27 @@ export default function PartnersCarousel() {
         <div ref={trackRef} className="flex gap-4 w-max will-change-transform">
           {cards.map((p, i) => (
             <div
-              key={i}
+              key={`${p.key}-${i}`}
               className="flex-shrink-0 w-52 rounded-[1.5rem] p-5 flex flex-col items-center text-center"
               style={{ backgroundColor: p.color, border: `2px solid ${p.border}30` }}
             >
               <div
-                className="h-16 w-16 rounded-2xl flex items-center justify-center text-3xl mb-3 shadow-sm"
-                style={{ backgroundColor: p.color, border: `1.5px solid ${p.border}50` }}
+                className="h-16 w-16 rounded-2xl flex items-center justify-center text-3xl mb-3 shadow-sm overflow-hidden bg-white"
+                style={{ border: `1.5px solid ${p.border}50` }}
               >
-                {p.emoji}
+                {p.logoUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={p.logoUrl} alt={p.name} className="h-full w-full object-contain" />
+                ) : (
+                  <span style={{ backgroundColor: p.color }} className="flex h-full w-full items-center justify-center">
+                    {p.emoji}
+                  </span>
+                )}
               </div>
               <div className="font-black text-xv-navy text-sm">{p.name}</div>
-              <div className="text-xv-gray-500 text-xs mt-0.5">{p.type}</div>
+              <div className="text-xv-gray-500 text-xs mt-0.5">{p.sub}</div>
               <div className="mt-3 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider" style={{ backgroundColor: p.border + "20", color: p.border }}>
-                Seja parceiro
+                {p.badge}
               </div>
             </div>
           ))}

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { TESTIMONIALS } from "@/lib/constants";
 import { Container } from "@/components/layout/Container";
+import type { Testimonial } from "@/lib/types";
 
 const avatarColors = ["#253163", "#EE7531", "#01B3DC", "#FBC132", "#1E4A9F", "#EE7531"];
 
@@ -14,7 +15,40 @@ function Star() {
   );
 }
 
-export default function Testimonials() {
+interface TestimonialView {
+  name: string;
+  role: string;
+  text: string;
+  avatar: string;
+  stars: number;
+}
+
+const FALLBACK_VIEW: TestimonialView[] = TESTIMONIALS.map((t) => ({
+  name: t.name,
+  role: t.role,
+  text: t.text,
+  avatar: t.avatar,
+  stars: t.stars,
+}));
+
+export default function Testimonials({
+  items,
+  content,
+}: {
+  items?: Testimonial[];
+  content?: Record<string, string>;
+}) {
+  const list: TestimonialView[] =
+    items && items.length > 0
+      ? items.map((t) => ({
+          name: t.name,
+          role: t.role,
+          text: t.text,
+          avatar: t.avatar_initial?.trim() || t.name.charAt(0).toUpperCase(),
+          stars: t.stars,
+        }))
+      : FALLBACK_VIEW;
+  const customersCount = content?.["unit_diff.customers_count"]?.trim() || "470+";
   return (
     <section id="depoimentos" className="bg-xv-gray-50 py-20 sm:py-28">
       <Container size="lg">
@@ -39,7 +73,7 @@ export default function Testimonials() {
         {/* Stats */}
         <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
           {[
-            { value: "470+",       label: "clientes ativos" },
+            { value: customersCount, label: "clientes ativos" },
             { value: "97%",        label: "de satisfação" },
             { value: "24h",        label: "aberta todos os dias" },
             { value: "SpeedQueen", label: "máquinas profissionais" },
@@ -60,7 +94,7 @@ export default function Testimonials() {
 
         {/* Review cards */}
         <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {TESTIMONIALS.map((t, idx) => (
+          {list.map((t, idx) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 20 }}

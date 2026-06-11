@@ -12,22 +12,32 @@ import PartnersTeaser from "@/components/PartnersTeaser";
 import LocationBlock from "@/components/LocationBlock";
 import FAQ from "@/components/FAQ";
 import CTABanner from "@/components/CTABanner";
+import { getContentMap } from "@/lib/content";
+import { getActiveTestimonials, getActivePartners } from "@/lib/data";
 
-export default function HomePage() {
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const [c, testimonials, partners] = await Promise.all([
+    getContentMap(),
+    getActiveTestimonials(),
+    getActivePartners(),
+  ]);
+
   return (
     <>
-      <Hero />
+      <Hero content={c} />
       <HowItWorks />
       <Pricing />
       <WhatToBring />
       <WhySection />
-      <UnitDifferentials />
+      <UnitDifferentials content={c} />
       <GaleriaFotos />
-      <Testimonials />
-      <ClubHighlight />
-      <PartnersCarousel />
+      <Testimonials items={testimonials} content={c} />
+      <ClubHighlight content={c} />
+      <PartnersCarousel partners={partners} />
       <PartnersTeaser />
-      <LocationBlock />
+      <LocationBlock content={c} />
       <FAQ limit={9} />
       <CTABanner />
     </>

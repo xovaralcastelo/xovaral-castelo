@@ -6,8 +6,18 @@ import {
   Smartphone, Camera,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import { ExternalLink, MessageCircle } from 'lucide-react'
 import { DecorativeSparkle } from '@/components/ui/DecorativeSparkle'
 import { SITE, whatsappUrl } from '@/lib/constants'
+import { getActivePartners } from '@/lib/data'
+
+export const dynamic = 'force-dynamic'
+
+const PARTNER_CATEGORY_LABELS: Record<string, string> = {
+  academia: 'Academia', restaurante: 'Restaurante', condominio: 'Condomínio',
+  faculdade: 'Faculdade', salao: 'Beleza & Estética', servico: 'Serviço',
+  comercio: 'Comércio', outro: 'Parceiro',
+}
 
 export const metadata: Metadata = {
   title: 'Parceiros | Xô Varal Castelo',
@@ -36,7 +46,9 @@ const WHO_CAN_PARTNER: { icon: LucideIcon; label: string }[] = [
   { icon: Stethoscope,    label: 'Clínicas e consultórios' },
 ]
 
-export default function ParceirosPage() {
+export default async function ParceirosPage() {
+  const partners = await getActivePartners()
+
   return (
     <>
       {/* Hero — fundo claro com mascote */}
@@ -155,6 +167,79 @@ export default function ParceirosPage() {
           </div>
         </div>
       </section>
+
+      {/* Nossos parceiros — listagem dinâmica (só aparece se houver parceiros ativos) */}
+      {partners.length > 0 && (
+        <section className="py-20 sm:py-24 bg-white">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6">
+            <div className="text-center mb-12">
+              <span className="text-xs font-bold uppercase tracking-wider text-xv-cyan">Rede de parceiros</span>
+              <h2 className="mt-3 text-4xl font-black text-xv-navy sm:text-5xl">Quem já é parceiro</h2>
+              <p className="mt-3 text-xv-gray-700 max-w-xl mx-auto">
+                Negócios do Castelo que oferecem vantagens para os clientes da Xô Varal.
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {partners.map((p) => (
+                <div
+                  key={p.id}
+                  className="flex flex-col rounded-[2rem] bg-white p-6 shadow-card ring-1 ring-xv-gray-200/60 hover:-translate-y-1 hover:shadow-card-hover transition-all"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="h-14 w-14 rounded-2xl overflow-hidden bg-xv-gray-50 ring-1 ring-xv-gray-200 flex items-center justify-center shrink-0">
+                      {p.logo_url ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={p.logo_url} alt={p.name} className="h-full w-full object-contain" />
+                      ) : (
+                        <span className="text-xl font-black text-xv-navy">{p.name.charAt(0)}</span>
+                      )}
+                    </div>
+                    <div>
+                      <h3 className="font-black text-xv-navy leading-tight">{p.name}</h3>
+                      <span className="text-xs font-bold uppercase tracking-wider text-xv-cyan">
+                        {PARTNER_CATEGORY_LABELS[p.category] ?? p.category}
+                      </span>
+                    </div>
+                  </div>
+
+                  {p.description && (
+                    <p className="mt-4 text-sm text-xv-gray-700 leading-relaxed">{p.description}</p>
+                  )}
+
+                  {p.benefit_text && (
+                    <div className="mt-4 rounded-xl bg-xv-orange-bg px-4 py-2.5 text-sm font-bold text-xv-orange ring-1 ring-xv-orange/20">
+                      🎁 {p.benefit_text}
+                    </div>
+                  )}
+
+                  <div className="mt-auto pt-5 flex flex-wrap gap-2">
+                    {p.website_url && (
+                      <a
+                        href={p.website_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 rounded-full bg-xv-navy px-4 py-2 text-xs font-bold text-white hover:bg-xv-navy-light"
+                      >
+                        <ExternalLink size={13} /> Site
+                      </a>
+                    )}
+                    {p.whatsapp && (
+                      <a
+                        href={`https://wa.me/55${p.whatsapp.replace(/\D/g, '')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 rounded-full bg-[#25D366] px-4 py-2 text-xs font-bold text-white hover:brightness-110"
+                      >
+                        <MessageCircle size={13} /> WhatsApp
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Quem pode ser parceiro */}
       <section className="py-20 sm:py-24" style={{ background: 'linear-gradient(180deg, #f5f7fa 0%, #fff8f2 100%)' }}>

@@ -15,7 +15,12 @@ const TIER_EXTRA_PERKS: Record<string, boolean> = {
   diamante: true,
 };
 
-export default function ClubHighlight() {
+export default function ClubHighlight({
+  content,
+}: {
+  content?: Record<string, string>;
+}) {
+  const t = (k: string, d: string) => content?.[k]?.trim() || d;
   return (
     <section
       id="clube"
@@ -71,11 +76,11 @@ export default function ClubHighlight() {
               </span>
             </h3>
             <p className="text-white/80 text-lg leading-relaxed max-w-lg">
-              Quanto mais você usa,{" "}
+              {t("club_highlight.tagline_prefix", "Quanto mais você usa,")}{" "}
               <span className="bg-xv-cyan/20 ring-1 ring-xv-cyan/40 text-xv-cyan px-2 py-0.5 rounded-md font-bold">
-                mais vantagens
+                {t("club_highlight.tagline_highlight", "mais vantagens")}
               </span>{" "}
-              você ganha!
+              {t("club_highlight.tagline_suffix", "você ganha!")}
             </p>
           </div>
 
