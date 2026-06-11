@@ -12,6 +12,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import type {
   StaffRole,
   StaffStatus,
+  PartnerPromoStatus,
   ProductCategory,
   ProductFulfillmentType,
   ProductStatus,
@@ -25,6 +26,7 @@ import {
   TESTIMONIAL_STATUSES,
   STAFF_ROLES,
   STAFF_STATUSES,
+  PARTNER_PROMO_STATUSES,
 } from "@/lib/types";
 import { ALL_SCHEMA_KEYS } from "@/lib/content-schema";
 
@@ -677,5 +679,81 @@ export async function deletePartnerApplication(
     .eq("id", id);
   if (error) return { ok: false, error: error.message };
   revalidatePath("/admin/partners/applications");
+  return { ok: true };
+}
+
+// ============================================================
+// PARTNER PROMOS (banners do Clube de Benefícios)
+// ============================================================
+
+function parsePromoInput(formData: FormData) {
+  const slug = String(formData.get("slug") ?? "").trim().toLowerCase();
+  const title = String(formData.get("title") ?? "").trim();
+  const partner_name = String(formData.get("partner_name") ?? "").trim();
+  const banner_url = String(formData.get("banner_url") ?? "").trim();
+  const summary = String(formData.get("summary") ?? "").trim() || null;
+  const details = String(formData.get("details") ?? "").trim() || null;
+  const conditions = String(formData.get("conditions") ?? "").trim() || null;
+  const cta_label = String(formData.get("cta_label") ?? "").trim() || null;
+  const cta_url = String(formData.get("cta_url") ?? "").trim() || null;
+  const status = String(formData.get("status") ?? "draft") as PartnerPromoStatus;
+  const display_order = Number(formData.get("display_order") ?? 0) || 0;
+  return {
+    slug, title, partner_name, banner_url, summary, details,
+    conditions, cta_label, cta_url, status, display_order,
+  };
+}
+
+function validatePromo(p: ReturnType<typeof parsePromoInput>): string | null {
+  if (!p.slug || !/^[a-z0-9-]+$/.test(p.slug))
+    return "Slug deve conter apenas letras minúsculas, números e hífens.";
+  if (!p.title) return "Título é obrigatório.";
+  if (!p.partner_name) return "Nome do parceiro é obrigatório.";
+  if (!p.banner_url) return "Imagem do banner é obrigatória.";
+  if (!PARTNER_PROMO_STATUSES.includes(p.status)) return "Status inválido.";
+  return null;
+}
+
+export async function createPromo(formData: FormData): Promise<ActionResult> {
+  await requireAdmin("partners");
+  const data = parsePromoInput(formData);
+  const err = validatePromo(data);
+  if (err) return { ok: false, error: err };
+  const sb = createAdminClient();
+  const { error } = await sb.from("partner_promos").insert(data);
+  if (error) return { ok: false, error: error.message };
+  revalidatePath("/admin/partners/promos");
+  revalidatePath("/clube-de-vantagens");
+  revalidatePath("/promocoes");
+  redirect("/admin/partners/promos");
+}
+
+export async function updatePromo(
+  id: string,
+  formData: FormData,
+): Promise<ActionResult> {
+  await requireAdmin("partners");
+  const data = parsePromoInput(formData);
+  const err = validatePromo(data);
+  if (err) return { ok: false, error: err };
+  const sb = createAdminClient();
+  const { error } = await sb.from("partner_promos").update(data).eq("id", id);
+  if (error) return { ok: false, error: error.message };
+  revalidatePath("/admin/partners/promos");
+  revalidatePath(`/admin/partners/promos/${id}/edit`);
+  revalidatePath("/clube-de-vantagens");
+  revalidatePath("/promocoes");
+  revalidatePath(`/promocoes/${data.slug}`);
+  return { ok: true };
+}
+
+export async function deletePromo(id: string): Promise<ActionResult> {
+  await requireAdmin("partners");
+  const sb = createAdminClient();
+  const { error } = await sb.from("partner_promos").delete().eq("id", id);
+  if (error) return { ok: false, error: error.message };
+  revalidatePath("/admin/partners/promos");
+  revalidatePath("/clube-de-vantagens");
+  revalidatePath("/promocoes");
   return { ok: true };
 }

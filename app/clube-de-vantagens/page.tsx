@@ -8,6 +8,7 @@ import {
 import type { LucideIcon } from 'lucide-react'
 import { CLUB_LEVELS } from '@/lib/constants'
 import { DecorativeSparkle } from '@/components/ui/DecorativeSparkle'
+import { PromosShowcase } from '@/components/PromosShowcase'
 
 export const metadata: Metadata = {
   title: 'Clube de Vantagens | Xô Varal Castelo',
@@ -229,6 +230,9 @@ export default function ClubeDeVantagensPage() {
           </div>
         </div>
       </section>
+
+      {/* Clube de Benefícios — promoções dos parceiros */}
+      <PromosShowcase />
 
       {/* CTA final */}
       <section className="py-16 bg-xv-gray-50">

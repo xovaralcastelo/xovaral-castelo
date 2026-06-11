@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 interface Props {
-  active: "partners" | "applications";
+  active: "partners" | "applications" | "promos";
   pendingCount: number;
 }
 
@@ -13,6 +13,7 @@ export function PartnersTabs({ active, pendingCount }: Props) {
       href: "/admin/partners/applications",
       label: "Solicitações",
     },
+    { key: "promos", href: "/admin/partners/promos", label: "Promoções" },
   ] as const;
 
   return (

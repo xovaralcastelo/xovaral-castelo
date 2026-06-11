@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { TESTIMONIALS } from "@/lib/constants";
-import type { Partner, Testimonial } from "@/lib/types";
+import type { Partner, PartnerPromo, Testimonial } from "@/lib/types";
 
 /**
  * Fetchers de conteúdo dinâmico (Supabase) com fallback para os dados
@@ -47,5 +47,38 @@ export async function getActivePartners(): Promise<Partner[]> {
     return data as Partner[];
   } catch {
     return [];
+  }
+}
+
+export async function getActivePromos(): Promise<PartnerPromo[]> {
+  try {
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .from("partner_promos")
+      .select("*")
+      .eq("status", "active")
+      .order("display_order", { ascending: true });
+    if (error || !data) return [];
+    return data as PartnerPromo[];
+  } catch {
+    return [];
+  }
+}
+
+export async function getPromoBySlug(
+  slug: string,
+): Promise<PartnerPromo | null> {
+  try {
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .from("partner_promos")
+      .select("*")
+      .eq("slug", slug)
+      .eq("status", "active")
+      .maybeSingle();
+    if (error || !data) return null;
+    return data as PartnerPromo;
+  } catch {
+    return null;
   }
 }

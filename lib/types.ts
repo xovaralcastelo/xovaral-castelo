@@ -204,3 +204,31 @@ export const PARTNER_CATEGORY_LABELS: Record<PartnerCategory, string> = {
   comercio: "Comércio",
   outro: "Outro",
 };
+
+// ============================================================
+// PARTNER PROMOS (banners de promoção do Clube de Benefícios)
+// ============================================================
+export type PartnerPromoStatus = "active" | "draft" | "archived";
+
+export interface PartnerPromo {
+  id: string;
+  slug: string;
+  title: string;
+  partner_name: string;
+  banner_url: string;
+  summary: string | null;
+  details: string | null;
+  conditions: string | null;
+  cta_label: string | null;
+  cta_url: string | null;
+  status: PartnerPromoStatus;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export const PARTNER_PROMO_STATUSES: PartnerPromoStatus[] = [
+  "active",
+  "draft",
+  "archived",
+];
