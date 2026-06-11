@@ -574,3 +574,108 @@ export async function deleteStaffMember(id: string): Promise<ActionResult> {
   revalidatePath("/admin/settings");
   return { ok: true };
 }
+
+// ============================================================
+// PARTNER APPLICATIONS (solicitações de parceria)
+// ============================================================
+
+function slugify(name: string): string {
+  return name
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 60);
+}
+
+export async function approvePartnerApplication(
+  id: string,
+): Promise<ActionResult> {
+  const { user } = await requireAdmin("partners");
+  const sb = createAdminClient();
+
+  const { data: app, error: eFetch } = await sb
+    .from("partner_applications")
+    .select("*")
+    .eq("id", id)
+    .single();
+  if (eFetch) return { ok: false, error: eFetch.message };
+  if (app.status !== "pending")
+    return { ok: false, error: "Essa solicitação já foi avaliada." };
+
+  // Slug único: acrescenta sufixo numérico se já existir
+  const base = slugify(app.business_name) || "parceiro";
+  let slug = base;
+  for (let i = 2; i <= 20; i++) {
+    const { count } = await sb
+      .from("partners")
+      .select("id", { count: "exact", head: true })
+      .eq("slug", slug);
+    if ((count ?? 0) === 0) break;
+    slug = `${base}-${i}`;
+  }
+
+  const { data: partner, error: eInsert } = await sb
+    .from("partners")
+    .insert({
+      slug,
+      name: app.business_name,
+      category: app.category,
+      description: app.message,
+      website_url: app.website_url,
+      whatsapp: app.whatsapp,
+      status: "draft",
+    })
+    .select("id")
+    .single();
+  if (eInsert) return { ok: false, error: eInsert.message };
+
+  const { error: eUpd } = await sb
+    .from("partner_applications")
+    .update({
+      status: "approved",
+      reviewed_by: user.id,
+      reviewed_at: new Date().toISOString(),
+    })
+    .eq("id", id);
+  if (eUpd) return { ok: false, error: eUpd.message };
+
+  revalidatePath("/admin/partners");
+  revalidatePath("/admin/partners/applications");
+  // Vai direto pro parceiro recém-criado para completar logo/benefício e ativar
+  redirect(`/admin/partners/${partner.id}/edit`);
+}
+
+export async function rejectPartnerApplication(
+  id: string,
+): Promise<ActionResult> {
+  const { user } = await requireAdmin("partners");
+  const sb = createAdminClient();
+  const { error } = await sb
+    .from("partner_applications")
+    .update({
+      status: "rejected",
+      reviewed_by: user.id,
+      reviewed_at: new Date().toISOString(),
+    })
+    .eq("id", id)
+    .eq("status", "pending");
+  if (error) return { ok: false, error: error.message };
+  revalidatePath("/admin/partners/applications");
+  return { ok: true };
+}
+
+export async function deletePartnerApplication(
+  id: string,
+): Promise<ActionResult> {
+  await requireAdmin("partners");
+  const sb = createAdminClient();
+  const { error } = await sb
+    .from("partner_applications")
+    .delete()
+    .eq("id", id);
+  if (error) return { ok: false, error: error.message };
+  revalidatePath("/admin/partners/applications");
+  return { ok: true };
+}

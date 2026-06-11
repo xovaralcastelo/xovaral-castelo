@@ -3,6 +3,7 @@ import { Plus, Pencil } from "lucide-react";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { Table, Td, StatusBadge } from "../_components/Table";
 import { DeleteButton } from "../_components/DeleteButton";
+import { PartnersTabs } from "./_components/PartnersTabs";
 import { deletePartner } from "../_actions";
 import type { Partner } from "@/lib/types";
 
@@ -10,11 +11,17 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminPartnersPage() {
   const sb = createAdminClient();
-  const { data } = await sb
-    .from("partners")
-    .select("*")
-    .order("status", { ascending: true })
-    .order("display_order", { ascending: true });
+  const [{ data }, { count: pendingCount }] = await Promise.all([
+    sb
+      .from("partners")
+      .select("*")
+      .order("status", { ascending: true })
+      .order("display_order", { ascending: true }),
+    sb
+      .from("partner_applications")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "pending"),
+  ]);
 
   const list = (data ?? []) as Partner[];
 
@@ -35,6 +42,8 @@ export default async function AdminPartnersPage() {
           Novo parceiro
         </Link>
       </header>
+
+      <PartnersTabs active="partners" pendingCount={pendingCount ?? 0} />
 
       <Table
         headers={["Negócio", "Categoria", "Benefício", "Ordem", "Status", ""]}

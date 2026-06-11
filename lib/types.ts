@@ -171,3 +171,36 @@ export const ADMIN_SECTION_OPTIONS = [
   { key: "customers", label: "Clientes (Clube)" },
   { key: "redemptions", label: "Resgates" },
 ] as const;
+
+// ============================================================
+// PARTNER APPLICATIONS (solicitações de parceria do site)
+// ============================================================
+export type PartnerApplicationStatus = "pending" | "approved" | "rejected";
+
+export interface PartnerApplication {
+  id: string;
+  business_name: string;
+  contact_name: string;
+  email: string;
+  whatsapp: string;
+  category: PartnerCategory;
+  instagram: string | null;
+  website_url: string | null;
+  message: string | null;
+  status: PartnerApplicationStatus;
+  reviewed_by: string | null;
+  reviewed_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export const PARTNER_CATEGORY_LABELS: Record<PartnerCategory, string> = {
+  academia: "Academia",
+  restaurante: "Restaurante / Bistrô",
+  condominio: "Condomínio",
+  faculdade: "Faculdade",
+  salao: "Salão / Beleza",
+  servico: "Serviço",
+  comercio: "Comércio",
+  outro: "Outro",
+};

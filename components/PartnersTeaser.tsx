@@ -55,10 +55,10 @@ export default function PartnersTeaser() {
                 <ArrowRight size={16} />
               </Link>
               <Link
-                href="/parceiros/entrar"
+                href="/parceiros"
                 className="inline-flex items-center gap-2 rounded-full border-2 border-xv-navy/15 bg-white px-6 py-3 text-sm font-bold text-xv-navy hover:border-xv-navy/40"
               >
-                Acessar painel
+                Conhecer benefícios
               </Link>
             </div>
           </div>
