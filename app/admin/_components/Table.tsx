@@ -17,7 +17,7 @@ export function Table({ headers, children, empty = "Nada por aqui ainda.", hasRo
               {headers.map((h) => (
                 <th
                   key={h}
-                  className="text-left text-xs font-bold uppercase tracking-wider text-xv-gray-700 px-4 py-3"
+                  className="text-left text-xs font-bold uppercase tracking-wider text-xv-gray-700 px-4 py-3 whitespace-nowrap"
                 >
                   {h}
                 </th>

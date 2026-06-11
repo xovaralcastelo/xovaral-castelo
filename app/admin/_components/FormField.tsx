@@ -29,7 +29,7 @@ export function TextInput(props: InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
       {...props}
-      className={`w-full rounded-xl border-2 border-xv-gray-200 px-4 py-2.5 text-sm text-xv-navy outline-none focus:border-xv-orange transition ${props.className ?? ""}`}
+      className={`w-full rounded-xl border-2 border-xv-gray-200 px-4 py-2.5 text-base md:text-sm text-xv-navy outline-none focus:border-xv-orange transition ${props.className ?? ""}`}
     />
   );
 }
@@ -38,7 +38,7 @@ export function Textarea(props: TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return (
     <textarea
       {...props}
-      className={`w-full rounded-xl border-2 border-xv-gray-200 px-4 py-2.5 text-sm text-xv-navy outline-none focus:border-xv-orange transition resize-y min-h-[100px] ${props.className ?? ""}`}
+      className={`w-full rounded-xl border-2 border-xv-gray-200 px-4 py-2.5 text-base md:text-sm text-xv-navy outline-none focus:border-xv-orange transition resize-y min-h-[100px] ${props.className ?? ""}`}
     />
   );
 }
@@ -47,7 +47,7 @@ export function Select(props: SelectHTMLAttributes<HTMLSelectElement>) {
   return (
     <select
       {...props}
-      className={`w-full rounded-xl border-2 border-xv-gray-200 px-4 py-2.5 text-sm text-xv-navy outline-none focus:border-xv-orange transition bg-white ${props.className ?? ""}`}
+      className={`w-full rounded-xl border-2 border-xv-gray-200 px-4 py-2.5 text-base md:text-sm text-xv-navy outline-none focus:border-xv-orange transition bg-white ${props.className ?? ""}`}
     />
   );
 }

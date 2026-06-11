@@ -33,7 +33,7 @@ export default async function EditTestimonialPage({
           <ArrowLeft size={14} />
           Voltar
         </Link>
-        <h1 className="mt-2 font-display text-3xl font-bold text-xv-navy">Editar depoimento</h1>
+        <h1 className="mt-2 font-display text-2xl md:text-3xl font-bold text-xv-navy">Editar depoimento</h1>
       </header>
 
       <TestimonialForm

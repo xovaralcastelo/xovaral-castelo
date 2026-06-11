@@ -20,9 +20,9 @@ export default async function AdminPartnersPage() {
 
   return (
     <div className="space-y-6">
-      <header className="flex items-center justify-between">
+      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h1 className="font-display text-3xl font-bold text-xv-navy">Parceiros</h1>
+          <h1 className="font-display text-2xl md:text-3xl font-bold text-xv-navy">Parceiros</h1>
           <p className="text-sm text-xv-gray-700 mt-1">
             {list.length} parceiro{list.length !== 1 ? "s" : ""} — só os <strong>active</strong> aparecem na página /parceiros.
           </p>

@@ -16,7 +16,7 @@ export default function NewPartnerPage() {
           <ArrowLeft size={14} />
           Voltar
         </Link>
-        <h1 className="mt-2 font-display text-3xl font-bold text-xv-navy">Novo parceiro</h1>
+        <h1 className="mt-2 font-display text-2xl md:text-3xl font-bold text-xv-navy">Novo parceiro</h1>
       </header>
 
       <PartnerForm action={createPartner} submitLabel="Criar parceiro" />

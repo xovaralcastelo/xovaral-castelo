@@ -26,9 +26,9 @@ export default async function AdminSettingsPage() {
 
   return (
     <div className="space-y-8">
-      <header className="flex items-start justify-between gap-4">
+      <header className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
         <div>
-          <h1 className="font-display text-3xl font-bold text-xv-navy">
+          <h1 className="font-display text-2xl md:text-3xl font-bold text-xv-navy">
             Configurações
           </h1>
           <p className="text-sm text-xv-gray-700 mt-1">

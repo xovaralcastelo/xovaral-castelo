@@ -30,7 +30,7 @@ export default async function AdminCustomersPage({ searchParams }: Props) {
   return (
     <div className="space-y-6">
       <header>
-        <h1 className="font-display text-3xl font-bold text-xv-navy">
+        <h1 className="font-display text-2xl md:text-3xl font-bold text-xv-navy">
           Clientes
         </h1>
         <p className="text-sm text-xv-gray-700 mt-1">

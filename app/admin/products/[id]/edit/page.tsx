@@ -39,7 +39,7 @@ export default async function EditProductPage({ params }: Props) {
         </Link>
         <div className="mt-2 flex items-start justify-between gap-4">
           <div>
-            <h1 className="font-display text-3xl font-bold text-xv-navy">
+            <h1 className="font-display text-2xl md:text-3xl font-bold text-xv-navy">
               Editar produto
             </h1>
             <p className="text-sm text-xv-gray-700 mt-1">{data.name}</p>
