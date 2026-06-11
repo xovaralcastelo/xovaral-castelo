@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, Handshake, Store, GraduationCap, Dumbbell, Building, Utensils } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { Mascot } from "@/components/brand/Mascot";
+import { PARTNER_SIGNUP_URL } from "@/lib/constants";
 
 const PARTNER_TYPES = [
   { icon: Dumbbell, label: "Academias" },
@@ -47,13 +48,15 @@ export default function PartnersTeaser() {
             </div>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="/parceiros/cadastro"
+              <a
+                href={PARTNER_SIGNUP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-xv-navy px-6 py-3 text-sm font-bold text-white shadow-md transition hover:bg-xv-navy-light"
               >
                 Quero ser parceiro
                 <ArrowRight size={16} />
-              </Link>
+              </a>
               <Link
                 href="/parceiros"
                 className="inline-flex items-center gap-2 rounded-full border-2 border-xv-navy/15 bg-white px-6 py-3 text-sm font-bold text-xv-navy hover:border-xv-navy/40"

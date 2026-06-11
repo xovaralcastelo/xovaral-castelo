@@ -1,3 +1,7 @@
+/** Plataforma externa de parceiros (cadastro + gestão de leads e banners) */
+export const PARTNER_SIGNUP_URL =
+  'https://midindoor.grupoescalize.com.br/quero-ser-parceiro'
+
 export const UNIT = {
   name:      'Xô Varal Castelo',
   shortName: 'Castelo',

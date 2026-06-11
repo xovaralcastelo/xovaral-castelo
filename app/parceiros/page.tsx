@@ -9,7 +9,7 @@ import {
 import type { LucideIcon } from 'lucide-react'
 import { ExternalLink, MessageCircle } from 'lucide-react'
 import { DecorativeSparkle } from '@/components/ui/DecorativeSparkle'
-import { SITE, whatsappUrl } from '@/lib/constants'
+import { SITE, PARTNER_SIGNUP_URL, whatsappUrl } from '@/lib/constants'
 import { getActivePartners } from '@/lib/data'
 
 export const dynamic = 'force-dynamic'
@@ -90,12 +90,14 @@ export default async function ParceirosPage() {
                 Seu negócio entra no mapa de mais de 470 clientes ativos que frequentam a Xô Varal toda semana. A gente oferece benefícios cruzados — você ganha visibilidade e seus clientes ganham vantagem.
               </p>
               <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/parceiros/cadastro"
+                <a
+                  href={PARTNER_SIGNUP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-full bg-xv-navy px-7 py-3.5 text-sm font-bold text-white shadow-lg transition hover:bg-xv-navy-light"
                 >
                   → Quero ser parceiro
-                </Link>
+                </a>
                 <a
                   href={`${SITE.whatsapp}?text=Olá! Sou parceiro da Xô Varal Castelo e gostaria de acessar o painel.`}
                   target="_blank"
@@ -276,17 +278,19 @@ export default async function ParceirosPage() {
             <p className="mt-3 text-xv-gray-700">Mande uma mensagem — a gente retorna em até 24 horas para alinhar os detalhes da parceria.</p>
           </div>
           <div className="space-y-4">
-            <Link
-              href="/parceiros/cadastro"
+            <a
+              href={PARTNER_SIGNUP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-5 bg-xv-orange/5 border-2 border-xv-orange/30 rounded-3xl p-6 hover:border-xv-orange transition-all hover:-translate-y-0.5 group"
             >
               <div className="w-14 h-14 bg-xv-orange rounded-2xl flex items-center justify-center text-white shrink-0 shadow-lg"><Handshake size={24} /></div>
               <div className="flex-1">
                 <div className="font-black text-xv-navy text-lg">Formulário de parceria</div>
-                <div className="text-xv-gray-700 text-sm">Preencha em 2 minutos — sua solicitação cai direto na nossa avaliação</div>
+                <div className="text-xv-gray-700 text-sm">Cadastre seu negócio na nossa plataforma de parceiros — leads e banners em um só lugar</div>
               </div>
               <div className="text-xv-orange group-hover:translate-x-1 transition-transform text-xl">→</div>
-            </Link>
+            </a>
             <a
               href={`${SITE.whatsapp}?text=Olá! Tenho um negócio no Castelo e gostaria de saber mais sobre como ser parceiro da Xô Varal Castelo.`}
               target="_blank"
