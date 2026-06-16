@@ -106,6 +106,40 @@ curl -X POST https://castelo.xovaral.com/api/lavsync/webhook \
    atualizam sozinhos (o desconto do nível vale no mês seguinte, regra já
    existente do clube).
 
+## ⚠️ `occurred_at` é crítico (nível por mês)
+
+O **nível** (Bronze/Prata/Ouro/Diamante) é calculado pelos **ciclos do mês
+corrente** (fuso America/São_Paulo) e zera todo dia 1º. O site usa o
+`occurred_at` do evento para saber em qual mês contar os ciclos.
+
+- **Sempre envie `occurred_at` com a data real do pagamento.**
+- Se você omitir, o site assume "agora". Num **backfill** isso jogaria todos
+  os ciclos antigos para o mês atual e mostraria um **nível inflado/errado**
+  ao cliente. Os **pontos** (carteira) não têm esse risco — são vitalícios e
+  somam independentemente do mês —, mas o **nível** sim.
+
+## Backfill do histórico de compras
+
+Para trazer o histórico de quem já é cliente: **reenvie cada pagamento
+passado como um evento de webhook**, com:
+
+- `event_id` único e estável por pagamento (ex.: ID do pagamento no LavSync);
+- `occurred_at` = data real daquele pagamento;
+- `amount_cents` = valor real pago (vira pontos: 1 por R$1);
+- `cycles` = ciclos daquele pagamento.
+
+Pode fazer o backfill **mesmo de quem ainda não vinculou o CPF no site**: o
+evento fica armazenado (`status: stored`) e é creditado automaticamente
+quando o cliente vincular. Como é idempotente por `event_id`, dá para
+reprocessar o histórico inteiro quantas vezes precisar sem duplicar.
+
+## Sincronização em tempo real
+
+Para "espelhar" o LavSync de forma simultânea, dispare o webhook **no exato
+momento** em que cada pagamento é confirmado/classificado. O site aplica na
+hora (para CPF já vinculado) — não há polling nem janela de atraso do lado
+do site; a latência é só a do seu disparo.
+
 ## Estornos / correções
 
 A v1 não trata estorno automático (evento com ciclos/pontos negativos).
