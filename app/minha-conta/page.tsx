@@ -80,6 +80,7 @@ export default async function MinhaContaPage() {
 
   const lifetimePoints = customer?.lifetime_points ?? 0;
   const avatarUrl = customer?.avatar_url ?? user.user_metadata?.avatar_url;
+  const isLinked = Boolean(customer?.cpf);
 
   return (
     <div
@@ -116,6 +117,23 @@ export default async function MinhaContaPage() {
             <SignOutButton />
           </div>
         </header>
+
+        {!isLinked ? (
+          <div className="space-y-3">
+            <div className="rounded-2xl bg-amber-50 p-4 ring-1 ring-amber-200">
+              <p className="text-sm font-bold text-amber-900">
+                Falta 1 passo para ver seus dados reais
+              </p>
+              <p className="mt-1 text-xs leading-relaxed text-amber-800">
+                Vincule o CPF que você usa nas compras da loja. Seu nível e seus
+                pontos — <strong>incluindo as compras que você já fez</strong> —
+                aparecem aqui automaticamente. Enquanto não vincular, mostramos
+                zero para não passar nenhuma informação errada.
+              </p>
+            </div>
+            <CpfLinkCard maskedCpf={null} />
+          </div>
+        ) : null}
 
         <section>
           {tier ? (
@@ -165,9 +183,9 @@ export default async function MinhaContaPage() {
 
         <LifetimePointsCard points={lifetimePoints} />
 
-        <CpfLinkCard
-          maskedCpf={customer?.cpf ? maskCpf(customer.cpf) : null}
-        />
+        {isLinked && customer?.cpf ? (
+          <CpfLinkCard maskedCpf={maskCpf(customer.cpf)} />
+        ) : null}
 
         <p className="text-center text-xs text-xv-gray-500">
           {customer?.cpf
