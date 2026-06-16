@@ -136,7 +136,7 @@ export default function RootLayout({
               description:
                 'Lavanderia self-service moderna no Castelo, Belo Horizonte. Máquinas SpeedQueen profissionais, espaço kids, bistrô e Wi-Fi.',
               url: 'https://castelo.xovaral.com',
-              telephone: '+55-31-99332-8775',
+              telephone: '+55-31-99165-8210',
               address: {
                 '@type': 'PostalAddress',
                 streetAddress: 'R. Castelo da Beira, 271',

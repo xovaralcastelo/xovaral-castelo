@@ -8,10 +8,10 @@ export const UNIT = {
   unit:      'Castelo',
   tagline:   'Lavanderia self-service moderna no Castelo',
   url:       'https://castelo.xovaral.com',
-  whatsapp:  '5531993328775',
+  whatsapp:  '5531991658210',
   instagram: 'https://instagram.com/xovaralcastelo',
   facebook:  'https://facebook.com/xovaralcastelo',
-  phone:     '(31) 9 9332-8775',
+  phone:     '(31) 9 9165-8210',
   hours: {
     weekday:  'Aberto 24 horas',
     weekend:  'Aberto 24 horas',
@@ -21,8 +21,8 @@ export const UNIT = {
     short:    '24 horas',
   },
   contact: {
-    whatsapp:        '5531993328775',
-    whatsappDisplay: '(31) 9 9332-8775',
+    whatsapp:        '5531991658210',
+    whatsappDisplay: '(31) 9 9165-8210',
     instagram:       'xovaralcastelo',
     instagramUrl:    'https://instagram.com/xovaralcastelo',
     facebook:        'xovaralcastelo',
