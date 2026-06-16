@@ -189,7 +189,7 @@ export default async function MinhaContaPage() {
 
         <p className="text-center text-xs text-xv-gray-500">
           {customer?.cpf
-            ? "Ciclos e pontos entram automaticamente após cada compra. Dúvidas? Fale com a gente no WhatsApp."
+            ? "Seus ciclos e pontos entram automaticamente e podem levar algumas horas após a compra para aparecer aqui. Dúvidas? Fale com a gente no WhatsApp."
             : "Seus ciclos do mês são creditados pela equipe Xô Varal após cada uso. Dúvidas? Fale com a gente no WhatsApp."}
         </p>
       </div>

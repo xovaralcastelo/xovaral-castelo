@@ -34,7 +34,8 @@ export function CpfLinkCard({ maskedCpf }: Props) {
             CPF vinculado: {maskedCpf}
           </p>
           <p className="text-xs text-xv-gray-500">
-            Seus ciclos e pontos entram automaticamente após cada compra.
+            Seus ciclos e pontos entram sozinhos — podem levar algumas horas
+            após cada compra para aparecer.
           </p>
         </div>
       </div>
@@ -70,8 +71,8 @@ export function CpfLinkCard({ maskedCpf }: Props) {
           </p>
         ) : (
           <p className="mt-1 text-xs text-green-700">
-            A partir de agora seus ciclos e pontos entram sozinhos após cada
-            compra.
+            A partir de agora seus ciclos e pontos entram sozinhos — podem
+            levar algumas horas após cada compra para aparecer.
           </p>
         )}
       </div>
