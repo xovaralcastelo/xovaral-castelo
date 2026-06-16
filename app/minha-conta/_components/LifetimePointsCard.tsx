@@ -9,7 +9,7 @@ export function LifetimePointsCard({ points }: { points: number }) {
           <Gift size={20} />
         </div>
         <p className="text-xs font-bold uppercase tracking-widest text-white/60">
-          Pontos vitalícios
+          Sua carteira de pontos
         </p>
       </div>
 
@@ -17,8 +17,8 @@ export function LifetimePointsCard({ points }: { points: number }) {
         {points.toLocaleString("pt-BR")}
       </p>
       <p className="mt-1 text-sm text-white/80">
-        Acesse a Store Xô Varal e confira por quais produtos seus pontos podem
-        ser trocados.
+        Você ganha <strong>1 ponto a cada R$1</strong> gasto na lavanderia.
+        Troque-os por produtos na Store Xô Varal.
       </p>
 
       <div className="mt-4 flex flex-wrap gap-2">

@@ -3,7 +3,7 @@ import type { Tier } from "@/lib/loyalty";
 
 interface Props {
   current: number;
-  tier: Tier;
+  tier: Tier | null;
   next: Tier | null;
   missing: number;
 }
@@ -15,7 +15,7 @@ export function ProgressToNext({ current, tier, next, missing }: Props) {
         <div className="flex items-center gap-3">
           <div
             className="rounded-full p-2"
-            style={{ background: tier.bg, color: tier.color }}
+            style={{ background: tier?.bg ?? "#F5F5F5", color: tier?.color ?? "#9CA3AF" }}
           >
             <Sparkles size={20} />
           </div>
@@ -34,6 +34,7 @@ export function ProgressToNext({ current, tier, next, missing }: Props) {
   }
 
   const pct = Math.min(100, Math.round((current / next.cyclesMin) * 100));
+  const startColor = tier?.color ?? "#9CA3AF";
 
   return (
     <div className="rounded-3xl bg-white p-6 shadow-card ring-1 ring-xv-gray-200/60">
@@ -51,7 +52,7 @@ export function ProgressToNext({ current, tier, next, missing }: Props) {
           className="h-full rounded-full transition-all"
           style={{
             width: `${pct}%`,
-            background: `linear-gradient(90deg, ${tier.color}, ${next.color})`,
+            background: `linear-gradient(90deg, ${startColor}, ${next.color})`,
           }}
         />
       </div>

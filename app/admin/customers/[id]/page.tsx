@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Mail, Calendar, Award } from "lucide-react";
 import { createAdminClient } from "@/lib/supabase/admin";
 import {
-  getTierFromCycles,
+  getTierOrNull,
   getCurrentMonthRangeSaoPaulo,
 } from "@/lib/loyalty";
 import type { Customer, CycleEvent, Redemption } from "@/lib/types";
@@ -52,7 +52,7 @@ export default async function AdminCustomerDetailPage({ params }: Props) {
     (a, e) => a + (e.cycles ?? 0),
     0,
   );
-  const tier = getTierFromCycles(monthlyCycles);
+  const tier = getTierOrNull(monthlyCycles);
   const eventList = (events ?? []) as CycleEvent[];
   const redemptionList = (redemptions ?? []) as unknown as Array<
     Redemption & { products: { name: string } | null }
@@ -106,8 +106,8 @@ export default async function AdminCustomerDetailPage({ params }: Props) {
         <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-3">
           <Stat
             label="Nível atual"
-            value={tier.name}
-            color={tier.color}
+            value={tier ? tier.name : "Sem nível"}
+            color={tier ? tier.color : "#9CA3AF"}
             icon={<Award size={18} />}
           />
           <Stat

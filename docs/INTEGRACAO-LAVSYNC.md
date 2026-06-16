@@ -44,13 +44,24 @@ usar variável de ambiente).
 |----------------|---------|-------------|---------------------------------------------------------------------------|
 | `event_id`     | string  | sim         | ID único do evento no LavSync (ex.: ID do pagamento). Garante idempotência. |
 | `cpf`          | string  | sim         | CPF do cliente (com ou sem máscara — o site normaliza).                    |
-| `cycles`       | int ≥ 0 | sim*        | Ciclos de lavagem/secagem creditados pela compra.                          |
-| `points`       | int ≥ 0 | sim*        | Pontos atribuídos pelo LavSync.                                            |
-| `amount_cents` | int     | não         | Valor pago em centavos (auditoria).                                        |
+| `cycles`       | int ≥ 0 | sim*        | Ciclos de lavagem/secagem creditados pela compra (definem o nível do mês). |
+| `amount_cents` | int ≥ 0 | sim*        | **Valor pago em centavos.** O site credita **1 ponto por real** na carteira do cliente (`floor(amount_cents/100)`). É a fonte da pontuação. |
+| `points`       | int ≥ 0 | não         | Legado/fallback. Só é usado se `amount_cents` **não** vier. Se mandar `amount_cents`, este campo é ignorado para crédito. |
 | `occurred_at`  | ISO 8601| não         | Data/hora do pagamento. Padrão: momento do recebimento.                    |
 | `type`         | string  | não         | Livre (ex.: `payment.confirmed`). Guardado no log.                         |
 
-\* Pelo menos um entre `cycles` e `points` deve ser > 0.
+\* O evento precisa ter efeito: envie `cycles > 0` (para nível) e/ou
+`amount_cents > 0` (para pontos da carteira). **Recomendado enviar sempre
+`amount_cents`** — é assim que o cliente acumula pontos (1 ponto = R$1) para
+trocar por produtos na Store.
+
+### Regra de pontos (carteira)
+
+A carteira de pontos do cliente reflete o **total gasto**: cada R$1,00 pago
+vira 1 ponto. Ex.: `amount_cents: 6798` (R$ 67,98) credita **67 pontos**.
+Centavos são truncados. Os ciclos (`cycles`) são uma coisa separada — eles
+definem o **nível** do mês (Bronze/Prata/Ouro/Diamante), que zera todo mês;
+os pontos são vitalícios e gastáveis na Store.
 
 ### Respostas
 
@@ -79,7 +90,7 @@ curl -X POST https://castelo.xovaral.com/api/lavsync/webhook \
     "event_id": "teste-001",
     "cpf": "111.444.777-35",
     "cycles": 1,
-    "points": 10
+    "amount_cents": 3399
   }'
 ```
 

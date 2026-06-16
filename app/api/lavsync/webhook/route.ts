@@ -4,6 +4,7 @@ import {
   normalizeCpf,
   isValidCpf,
   applyLavsyncEvent,
+  pointsForEvent,
   type LavsyncEventRow,
 } from "@/lib/lavsync";
 
@@ -57,11 +58,30 @@ export async function POST(req: Request) {
     !Number.isInteger(cycles) ||
     cycles < 0 ||
     !Number.isInteger(points) ||
-    points < 0 ||
-    (cycles === 0 && points === 0)
+    points < 0
   ) {
     return NextResponse.json(
-      { error: "cycles/points devem ser inteiros >= 0 e pelo menos um > 0" },
+      { error: "cycles/points devem ser inteiros >= 0" },
+      { status: 400 },
+    );
+  }
+  if (
+    amount_cents != null &&
+    (!Number.isInteger(amount_cents) || amount_cents < 0)
+  ) {
+    return NextResponse.json(
+      { error: "amount_cents deve ser inteiro >= 0 (valor pago em centavos)" },
+      { status: 400 },
+    );
+  }
+  // Pontos creditados = 1 por real pago (deriva de amount_cents; fallback points).
+  const creditedPoints = pointsForEvent({ amount_cents, points });
+  if (cycles === 0 && creditedPoints === 0) {
+    return NextResponse.json(
+      {
+        error:
+          "evento sem efeito: informe cycles > 0 ou amount_cents/points > 0",
+      },
       { status: 400 },
     );
   }
@@ -86,7 +106,7 @@ export async function POST(req: Request) {
       occurred_at: occurred_at.toISOString(),
       raw: body,
     })
-    .select("id, event_id, cpf, cycles, points, occurred_at")
+    .select("id, event_id, cpf, cycles, points, amount_cents, occurred_at")
     .single();
 
   if (eInsert) {

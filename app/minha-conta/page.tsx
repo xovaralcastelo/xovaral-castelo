@@ -2,12 +2,15 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import {
-  getTierFromCycles,
+  getTierOrNull,
   getNextTier,
   cyclesToNext,
+  cyclesToFirstTier,
   getCurrentMonthRangeSaoPaulo,
 } from "@/lib/loyalty";
+import { CLUB_LEVELS } from "@/lib/constants";
 import { TierCard } from "./_components/TierCard";
+import { NoTierCard } from "./_components/NoTierCard";
 import { ProgressToNext } from "./_components/ProgressToNext";
 import { LifetimePointsCard } from "./_components/LifetimePointsCard";
 import { SignOutButton } from "./_components/SignOutButton";
@@ -61,9 +64,13 @@ export default async function MinhaContaPage() {
     (acc, e) => acc + (e.cycles ?? 0),
     0,
   );
-  const tier = getTierFromCycles(monthlyCycles);
-  const next = getNextTier(tier);
-  const missing = cyclesToNext(monthlyCycles, next);
+  const tier = getTierOrNull(monthlyCycles);
+  const bronze = CLUB_LEVELS[0];
+  // Sem nível ainda: o "próximo" alvo é o Bronze; faltam X ciclos pra lá.
+  const next = tier ? getNextTier(tier) : bronze;
+  const missing = tier
+    ? cyclesToNext(monthlyCycles, next)
+    : cyclesToFirstTier(monthlyCycles);
 
   const firstName =
     customer?.full_name?.split(" ")[0] ??
@@ -111,20 +118,43 @@ export default async function MinhaContaPage() {
         </header>
 
         <section>
-          <h1 className="font-display text-2xl font-bold text-xv-navy">
-            Você alcançou o nível{" "}
-            <span style={{ color: tier.color }}>{tier.name}</span>
-          </h1>
-          <p className="mt-1 text-sm text-xv-gray-700">
-            {next
-              ? `Para alcançar o nível ${next.name}, acumule mais ${missing} ${
-                  missing === 1 ? "ciclo" : "ciclos"
-                } este mês.`
-              : "Você atingiu o nível máximo do Clube. Continue acumulando para multiplicar seus pontos vitalícios."}
-          </p>
+          {tier ? (
+            <>
+              <h1 className="font-display text-2xl font-bold text-xv-navy">
+                Você alcançou o nível{" "}
+                <span style={{ color: tier.color }}>{tier.name}</span>
+              </h1>
+              <p className="mt-1 text-sm text-xv-gray-700">
+                {next
+                  ? `Para alcançar o nível ${next.name}, acumule mais ${missing} ${
+                      missing === 1 ? "ciclo" : "ciclos"
+                    } este mês.`
+                  : "Você atingiu o nível máximo do Clube. Continue acumulando para multiplicar seus pontos vitalícios."}
+              </p>
+            </>
+          ) : (
+            <>
+              <h1 className="font-display text-2xl font-bold text-xv-navy">
+                Você ainda não atingiu um nível este mês
+              </h1>
+              <p className="mt-1 text-sm text-xv-gray-700">
+                {monthlyCycles === 0
+                  ? `Assim que seus ciclos do mês forem registrados, seu nível aparece aqui. Faltam ${missing} para o Bronze.`
+                  : `Você tem ${monthlyCycles} ${
+                      monthlyCycles === 1 ? "ciclo" : "ciclos"
+                    } este mês. Faltam ${missing} ${
+                      missing === 1 ? "ciclo" : "ciclos"
+                    } para o nível Bronze.`}
+              </p>
+            </>
+          )}
         </section>
 
-        <TierCard tier={tier} />
+        {tier ? (
+          <TierCard tier={tier} />
+        ) : (
+          <NoTierCard monthlyCycles={monthlyCycles} missing={missing} />
+        )}
 
         <ProgressToNext
           current={monthlyCycles}

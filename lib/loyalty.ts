@@ -9,6 +9,21 @@ export function getTierFromCycles(cycles: number): Tier {
   );
 }
 
+/**
+ * Nível real do cliente no mês — ou `null` quando ele ainda não atingiu o
+ * mínimo do primeiro nível (Bronze). Use este nos lugares que mostram a
+ * realidade ao cliente; `getTierFromCycles` faz fallback para Bronze e só
+ * deve ser usado onde um nível padrão é aceitável.
+ */
+export function getTierOrNull(cycles: number): Tier | null {
+  return [...CLUB_LEVELS].reverse().find((t) => cycles >= t.cyclesMin) ?? null;
+}
+
+/** Ciclos que faltam para entrar no primeiro nível (Bronze). */
+export function cyclesToFirstTier(cycles: number): number {
+  return Math.max(0, CLUB_LEVELS[0].cyclesMin - cycles);
+}
+
 export function getNextTier(current: Tier): Tier | null {
   const i = CLUB_LEVELS.findIndex((t) => t.key === current.key);
   return i >= 0 && i < CLUB_LEVELS.length - 1 ? CLUB_LEVELS[i + 1] : null;

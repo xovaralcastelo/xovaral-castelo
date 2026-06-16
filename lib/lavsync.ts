@@ -11,7 +11,23 @@ export interface LavsyncEventRow {
   cpf: string;
   cycles: number;
   points: number;
+  amount_cents: number | null;
   occurred_at: string;
+}
+
+/**
+ * Pontos creditados na carteira por um evento: **1 ponto por real pago**.
+ * Deriva de `amount_cents` (valor pago em centavos). Se o evento não trouxer
+ * o valor, cai no campo `points` enviado pelo LavSync (compatibilidade).
+ */
+export function pointsForEvent(e: {
+  amount_cents: number | null;
+  points: number;
+}): number {
+  if (e.amount_cents != null && Number.isFinite(e.amount_cents)) {
+    return Math.max(0, Math.floor(e.amount_cents / 100));
+  }
+  return Math.max(0, e.points ?? 0);
 }
 
 /** Remove máscara e retorna só os 11 dígitos (ou null se inválido). */
@@ -47,18 +63,21 @@ export async function applyLavsyncEvent(
   event: LavsyncEventRow,
   customerId: string,
 ): Promise<string | null> {
+  // 1 ponto por real pago (deriva de amount_cents).
+  const points = pointsForEvent(event);
+
   if (event.cycles > 0) {
     const { error } = await sb.from("cycle_events").insert({
       customer_id: customerId,
       cycles: event.cycles,
-      points_earned: event.points,
+      points_earned: points,
       note: `LavSync (evento ${event.event_id})`,
       occurred_at: event.occurred_at,
     });
     if (error) return error.message;
   }
 
-  if (event.points > 0) {
+  if (points > 0) {
     const { data: cust, error: eFetch } = await sb
       .from("customers")
       .select("lifetime_points")
@@ -67,7 +86,7 @@ export async function applyLavsyncEvent(
     if (eFetch) return eFetch.message;
     const { error: eUpd } = await sb
       .from("customers")
-      .update({ lifetime_points: (cust?.lifetime_points ?? 0) + event.points })
+      .update({ lifetime_points: (cust?.lifetime_points ?? 0) + points })
       .eq("id", customerId);
     if (eUpd) return eUpd.message;
   }
@@ -94,7 +113,7 @@ export async function applyPendingEventsForCpf(
 ): Promise<number> {
   const { data } = await sb
     .from("lavsync_events")
-    .select("id, event_id, cpf, cycles, points, occurred_at")
+    .select("id, event_id, cpf, cycles, points, amount_cents, occurred_at")
     .eq("cpf", cpf)
     .is("applied_at", null)
     .order("occurred_at", { ascending: true });
