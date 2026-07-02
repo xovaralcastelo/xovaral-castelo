@@ -5,16 +5,6 @@ import type { SupabaseClient } from "@supabase/supabase-js";
  * (app/api/lavsync/webhook) e o vínculo de CPF (minha-conta).
  */
 
-export interface LavsyncEventRow {
-  id: string;
-  event_id: string;
-  cpf: string;
-  cycles: number;
-  points: number;
-  amount_cents: number | null;
-  occurred_at: string;
-}
-
 /**
  * Pontos creditados na carteira por um evento: **1 ponto por real pago**.
  * Deriva de `amount_cents` (valor pago em centavos). Se o evento não trouxer
@@ -55,50 +45,22 @@ export function maskCpf(cpf: string): string {
 }
 
 /**
- * Aplica um evento LavSync a um cliente: credita ciclos/pontos e marca
- * o evento como aplicado. Usa o admin client (service role).
+ * Aplica um evento LavSync a um cliente via fn_apply_lavsync_event
+ * (transação única no banco: credita ciclos + pontos + marca aplicado).
+ * Idempotente — se o evento já foi aplicado, sai sem efeito.
+ * Usa o admin client (service role).
  */
 export async function applyLavsyncEvent(
   sb: SupabaseClient,
-  event: LavsyncEventRow,
+  eventId: string,
   customerId: string,
-): Promise<string | null> {
-  // 1 ponto por real pago (deriva de amount_cents).
-  const points = pointsForEvent(event);
-
-  if (event.cycles > 0) {
-    const { error } = await sb.from("cycle_events").insert({
-      customer_id: customerId,
-      cycles: event.cycles,
-      points_earned: points,
-      note: `LavSync (evento ${event.event_id})`,
-      occurred_at: event.occurred_at,
-    });
-    if (error) return error.message;
-  }
-
-  if (points > 0) {
-    const { data: cust, error: eFetch } = await sb
-      .from("customers")
-      .select("lifetime_points")
-      .eq("id", customerId)
-      .single();
-    if (eFetch) return eFetch.message;
-    const { error: eUpd } = await sb
-      .from("customers")
-      .update({ lifetime_points: (cust?.lifetime_points ?? 0) + points })
-      .eq("id", customerId);
-    if (eUpd) return eUpd.message;
-  }
-
-  const { error: eMark } = await sb
-    .from("lavsync_events")
-    .update({ customer_id: customerId, applied_at: new Date().toISOString() })
-    .eq("id", event.id)
-    .is("applied_at", null);
-  if (eMark) return eMark.message;
-
-  return null;
+): Promise<{ error: string | null; applied: boolean }> {
+  const { data, error } = await sb.rpc("fn_apply_lavsync_event", {
+    p_event_id: eventId,
+    p_customer_id: customerId,
+  });
+  if (error) return { error: error.message, applied: false };
+  return { error: null, applied: data === "applied" };
 }
 
 /**
@@ -113,15 +75,15 @@ export async function applyPendingEventsForCpf(
 ): Promise<number> {
   const { data } = await sb
     .from("lavsync_events")
-    .select("id, event_id, cpf, cycles, points, amount_cents, occurred_at")
+    .select("id")
     .eq("cpf", cpf)
     .is("applied_at", null)
     .order("occurred_at", { ascending: true });
 
   let applied = 0;
-  for (const event of (data ?? []) as LavsyncEventRow[]) {
-    const err = await applyLavsyncEvent(sb, event, customerId);
-    if (!err) applied++;
+  for (const event of data ?? []) {
+    const res = await applyLavsyncEvent(sb, event.id, customerId);
+    if (res.applied) applied++;
   }
   return applied;
 }

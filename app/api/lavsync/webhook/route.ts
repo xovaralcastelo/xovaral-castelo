@@ -5,7 +5,6 @@ import {
   isValidCpf,
   applyLavsyncEvent,
   pointsForEvent,
-  type LavsyncEventRow,
 } from "@/lib/lavsync";
 
 export const dynamic = "force-dynamic";
@@ -94,7 +93,7 @@ export async function POST(req: Request) {
 
   const sb = createAdminClient();
 
-  // Grava o evento; conflito de event_id = retry do LavSync → já processado
+  // Grava o evento; conflito de event_id = retry do LavSync
   const { data: inserted, error: eInsert } = await sb
     .from("lavsync_events")
     .insert({
@@ -106,35 +105,58 @@ export async function POST(req: Request) {
       occurred_at: occurred_at.toISOString(),
       raw: body,
     })
-    .select("id, event_id, cpf, cycles, points, amount_cents, occurred_at")
+    .select("id")
     .single();
 
+  let eventRowId: string;
+  let eventCpf = cpf;
+
   if (eInsert) {
-    if (eInsert.code === "23505") {
+    if (eInsert.code !== "23505") {
+      return NextResponse.json({ error: eInsert.message }, { status: 500 });
+    }
+    // Retry: se o evento já foi aplicado, encerra; se ficou gravado sem
+    // aplicar (falha no meio do processamento anterior), tenta aplicar agora.
+    const { data: existing } = await sb
+      .from("lavsync_events")
+      .select("id, cpf, applied_at")
+      .eq("event_id", event_id)
+      .single();
+    if (!existing) {
+      return NextResponse.json({ error: "evento não encontrado" }, { status: 500 });
+    }
+    if (existing.applied_at) {
       return NextResponse.json({ status: "duplicate", event_id });
     }
-    return NextResponse.json({ error: eInsert.message }, { status: 500 });
+    eventRowId = existing.id;
+    eventCpf = existing.cpf;
+  } else {
+    eventRowId = inserted.id;
   }
 
   // CPF já vinculado a uma conta? Aplica na hora.
   const { data: customer } = await sb
     .from("customers")
     .select("id")
-    .eq("cpf", cpf)
+    .eq("cpf", eventCpf)
     .maybeSingle();
 
   if (!customer) {
     return NextResponse.json({ status: "stored", linked: false, event_id });
   }
 
-  const err = await applyLavsyncEvent(
+  const { error: applyErr, applied } = await applyLavsyncEvent(
     sb,
-    inserted as LavsyncEventRow,
+    eventRowId,
     customer.id,
   );
-  if (err) {
-    // Evento ficou gravado; reconciliação/vínculo reaplica depois
-    return NextResponse.json({ error: err }, { status: 500 });
+  if (applyErr) {
+    // Evento ficou gravado; retry do LavSync ou vínculo de CPF reaplica depois
+    return NextResponse.json({ error: applyErr }, { status: 500 });
+  }
+  if (!applied) {
+    // Corrida com outro retry que aplicou primeiro
+    return NextResponse.json({ status: "duplicate", event_id });
   }
 
   return NextResponse.json({ status: "applied", linked: true, event_id });

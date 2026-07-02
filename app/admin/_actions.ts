@@ -171,17 +171,10 @@ export async function creditCycles(formData: FormData): Promise<ActionResult> {
   if (e1) return { ok: false, error: e1.message };
 
   if (points > 0) {
-    const { data: cust, error: eFetch } = await sb
-      .from("customers")
-      .select("lifetime_points")
-      .eq("id", customerId)
-      .single();
-    if (eFetch) return { ok: false, error: eFetch.message };
-    const current = cust?.lifetime_points ?? 0;
-    const { error: eUpd } = await sb
-      .from("customers")
-      .update({ lifetime_points: current + points })
-      .eq("id", customerId);
+    const { error: eUpd } = await sb.rpc("fn_increment_points", {
+      p_customer_id: customerId,
+      p_delta: points,
+    });
     if (eUpd) return { ok: false, error: eUpd.message };
   }
 
@@ -204,29 +197,29 @@ export async function adjustPoints(formData: FormData): Promise<ActionResult> {
   }
 
   const sb = createAdminClient();
-  const { data: cust, error: eFetch } = await sb
-    .from("customers")
-    .select("lifetime_points")
-    .eq("id", customerId)
-    .single();
-  if (eFetch) return { ok: false, error: eFetch.message };
-
-  const current = cust?.lifetime_points ?? 0;
-  const next = current + delta;
-  if (next < 0) {
-    return { ok: false, error: `Operação deixaria o saldo negativo (saldo atual: ${current}).` };
+  const { error: eUpd } = await sb.rpc("fn_increment_points", {
+    p_customer_id: customerId,
+    p_delta: delta,
+  });
+  if (eUpd) {
+    if (eUpd.message.includes("points_update_rejected")) {
+      const { data: cust } = await sb
+        .from("customers")
+        .select("lifetime_points")
+        .eq("id", customerId)
+        .single();
+      return {
+        ok: false,
+        error: `Operação deixaria o saldo negativo (saldo atual: ${cust?.lifetime_points ?? 0}).`,
+      };
+    }
+    return { ok: false, error: eUpd.message };
   }
 
-  const { error: eUpd } = await sb
-    .from("customers")
-    .update({ lifetime_points: next })
-    .eq("id", customerId);
-  if (eUpd) return { ok: false, error: eUpd.message };
-
-  // Loga o ajuste como cycle_event "0 ciclos" pra ter audit trail
+  // Audit trail: cycle_event com 0 ciclos não conta pro nível do mês
   await sb.from("cycle_events").insert({
     customer_id: customerId,
-    cycles: 1, // dummy mínimo (check constraint cycles > 0)
+    cycles: 0,
     points_earned: 0,
     note: `Ajuste manual ${delta >= 0 ? "+" : ""}${delta} pts: ${reason}`,
     created_by: admin.id,
@@ -264,34 +257,19 @@ export async function cancelRedemption(
 ): Promise<ActionResult> {
   await requireAdmin("redemptions");
   const sb = createAdminClient();
-  // refund: devolver pontos ao cliente
-  const { data: r, error: eR } = await sb
-    .from("redemptions")
-    .select("customer_id, points_spent, status")
-    .eq("id", redemptionId)
-    .single();
-  if (eR) return { ok: false, error: eR.message };
-  if (r.status !== "pending") {
-    return { ok: false, error: "Só é possível cancelar resgates pendentes." };
+  // Transação única no banco: reivindica o pending, devolve pontos e estoque.
+  // Cancelamentos simultâneos: só o primeiro passa (o segundo recebe not_pending).
+  const { data: r, error } = await sb
+    .rpc("fn_cancel_redemption", { p_redemption_id: redemptionId })
+    .single<{ customer_id: string }>();
+  if (error) {
+    if (error.message.includes("not_pending")) {
+      return { ok: false, error: "Só é possível cancelar resgates pendentes." };
+    }
+    return { ok: false, error: error.message };
   }
-
-  const { data: cust } = await sb
-    .from("customers")
-    .select("lifetime_points")
-    .eq("id", r.customer_id)
-    .single();
-  await sb
-    .from("customers")
-    .update({ lifetime_points: (cust?.lifetime_points ?? 0) + r.points_spent })
-    .eq("id", r.customer_id);
-
-  const { error } = await sb
-    .from("redemptions")
-    .update({ status: "cancelled" })
-    .eq("id", redemptionId);
-  if (error) return { ok: false, error: error.message };
   revalidatePath("/admin/redemptions");
-  revalidatePath(`/admin/customers/${r.customer_id}`);
+  if (r?.customer_id) revalidatePath(`/admin/customers/${r.customer_id}`);
   return { ok: true };
 }
 
