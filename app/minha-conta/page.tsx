@@ -183,6 +183,16 @@ export default async function MinhaContaPage() {
 
         <LifetimePointsCard points={lifetimePoints} />
 
+        <a
+          href="/minha-conta/pedidos"
+          className="flex items-center justify-between rounded-2xl bg-white px-5 py-4 shadow-card ring-1 ring-xv-gray-200/60 transition hover:ring-xv-orange"
+        >
+          <span className="font-display font-bold text-xv-navy">
+            Meus pedidos da Store
+          </span>
+          <span className="text-sm font-bold text-xv-orange">ver →</span>
+        </a>
+
         {isLinked && customer?.cpf ? (
           <CpfLinkCard maskedCpf={maskCpf(customer.cpf)} />
         ) : null}

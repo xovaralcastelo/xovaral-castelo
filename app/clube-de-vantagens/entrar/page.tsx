@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 interface PageProps {
-  searchParams: { error?: string };
+  searchParams: { error?: string; next?: string };
 }
 
 export default async function EntrarPage({ searchParams }: PageProps) {
@@ -25,8 +25,14 @@ export default async function EntrarPage({ searchParams }: PageProps) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  // Só aceita caminhos internos como destino pós-login (evita open redirect).
+  const next =
+    searchParams.next && searchParams.next.startsWith("/")
+      ? searchParams.next
+      : undefined;
+
   if (user) {
-    redirect("/minha-conta");
+    redirect(next ?? "/minha-conta");
   }
 
   const hasError = searchParams.error === "auth";
@@ -84,7 +90,7 @@ export default async function EntrarPage({ searchParams }: PageProps) {
           </p>
         ) : null}
 
-        <GoogleSignInButton />
+        <GoogleSignInButton next={next} />
 
         <p className="text-center text-xs text-xv-gray-500 mt-6">
           Ao continuar, você concorda com os termos de uso do Clube de

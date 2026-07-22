@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import {
   DEFAULT_STORE_SETTINGS,
   type Order,
+  type OrderItem,
+  type OrderWithItems,
   type Product,
   type ProductCategoryRow,
   type ProductImage,
@@ -210,4 +212,19 @@ export async function getMyOrders(): Promise<Order[]> {
     .select("*")
     .order("created_at", { ascending: false });
   return (data ?? []) as Order[];
+}
+
+/** Pedido do cliente logado pelo código (RLS já restringe aos próprios). */
+export async function getMyOrderByCode(
+  code: string,
+): Promise<OrderWithItems | null> {
+  const supabase = createClient();
+  const { data } = await supabase
+    .from("orders")
+    .select("*, items:order_items(*)")
+    .eq("code", code)
+    .maybeSingle();
+  if (!data) return null;
+  const items = ((data as any).items ?? []) as OrderItem[];
+  return { ...(data as Order), items } as OrderWithItems;
 }
