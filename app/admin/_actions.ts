@@ -13,9 +13,6 @@ import type {
   StaffRole,
   StaffStatus,
   PartnerPromoStatus,
-  ProductCategory,
-  ProductFulfillmentType,
-  ProductStatus,
   PartnerCategory,
   PartnerStatus,
   TestimonialStatus,
@@ -31,116 +28,6 @@ import {
 import { ALL_SCHEMA_KEYS } from "@/lib/content-schema";
 
 type ActionResult = { ok: true } | { ok: false; error: string };
-
-// ============================================================
-// PRODUCTS
-// ============================================================
-
-function parseProductInput(formData: FormData) {
-  const slug = String(formData.get("slug") ?? "").trim().toLowerCase();
-  const name = String(formData.get("name") ?? "").trim();
-  const description = String(formData.get("description") ?? "").trim() || null;
-  const image_url = String(formData.get("image_url") ?? "").trim() || null;
-  const category = String(formData.get("category") ?? "brinde") as ProductCategory;
-  const fulfillment_type = String(
-    formData.get("fulfillment_type") ?? "pickup",
-  ) as ProductFulfillmentType;
-  const status = String(formData.get("status") ?? "draft") as ProductStatus;
-
-  const pointsRaw = formData.get("points_cost");
-  const points_cost =
-    pointsRaw && String(pointsRaw).trim() !== "" ? Number(pointsRaw) : null;
-
-  const moneyRaw = formData.get("money_price_cents");
-  const money_price_cents =
-    moneyRaw && String(moneyRaw).trim() !== "" ? Number(moneyRaw) : null;
-
-  const stockRaw = formData.get("stock");
-  const stock =
-    stockRaw && String(stockRaw).trim() !== "" ? Number(stockRaw) : null;
-
-  const display_order = Number(formData.get("display_order") ?? 0) || 0;
-
-  return {
-    slug,
-    name,
-    description,
-    image_url,
-    category,
-    fulfillment_type,
-    status,
-    points_cost,
-    money_price_cents,
-    stock,
-    display_order,
-  };
-}
-
-function validateProduct(p: ReturnType<typeof parseProductInput>): string | null {
-  if (!p.slug || !/^[a-z0-9-]+$/.test(p.slug))
-    return "Slug deve conter apenas letras minúsculas, números e hífens.";
-  if (!p.name) return "Nome é obrigatório.";
-  if (p.points_cost == null && p.money_price_cents == null)
-    return "Defina pelo menos um: custo em pontos ou preço em dinheiro.";
-  if (p.points_cost != null && (!Number.isInteger(p.points_cost) || p.points_cost <= 0))
-    return "Custo em pontos deve ser inteiro positivo.";
-  if (
-    p.money_price_cents != null &&
-    (!Number.isInteger(p.money_price_cents) || p.money_price_cents <= 0)
-  )
-    return "Preço em centavos deve ser inteiro positivo.";
-  if (p.stock != null && (!Number.isInteger(p.stock) || p.stock < 0))
-    return "Estoque deve ser inteiro >= 0.";
-  return null;
-}
-
-export async function createProduct(formData: FormData): Promise<ActionResult> {
-  await requireAdmin("products");
-  const data = parseProductInput(formData);
-  const err = validateProduct(data);
-  if (err) return { ok: false, error: err };
-
-  const sb = createAdminClient();
-  const { error } = await sb.from("products").insert(data);
-  if (error) return { ok: false, error: error.message };
-
-  revalidatePath("/admin/products");
-  revalidatePath("/store");
-  redirect("/admin/products");
-}
-
-export async function updateProduct(
-  id: string,
-  formData: FormData,
-): Promise<ActionResult> {
-  await requireAdmin("products");
-  const data = parseProductInput(formData);
-  const err = validateProduct(data);
-  if (err) return { ok: false, error: err };
-
-  const sb = createAdminClient();
-  const { error } = await sb.from("products").update(data).eq("id", id);
-  if (error) return { ok: false, error: error.message };
-
-  revalidatePath("/admin/products");
-  revalidatePath(`/admin/products/${id}/edit`);
-  revalidatePath("/store");
-  revalidatePath(`/store/${data.slug}`);
-  return { ok: true };
-}
-
-export async function archiveProduct(id: string): Promise<ActionResult> {
-  await requireAdmin("products");
-  const sb = createAdminClient();
-  const { error } = await sb
-    .from("products")
-    .update({ status: "archived" })
-    .eq("id", id);
-  if (error) return { ok: false, error: error.message };
-  revalidatePath("/admin/products");
-  revalidatePath("/store");
-  return { ok: true };
-}
 
 // ============================================================
 // CUSTOMERS — creditCycles + adjustPoints
