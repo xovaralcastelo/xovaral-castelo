@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import FloatingButtons from '@/components/FloatingButtons'
 import { HeaderAuthSlot } from '@/components/HeaderAuthSlot'
+import { CartProvider } from '@/app/store/_cart/CartContext'
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -170,13 +171,15 @@ export default function RootLayout({
         />
       </head>
       <body className="overflow-x-hidden">
-        <Header
-          authSlotDesktop={<HeaderAuthSlot variant="desktop" />}
-          authSlotMobile={<HeaderAuthSlot variant="mobile" />}
-        />
-        <main>{children}</main>
-        <Footer />
-        <FloatingButtons />
+        <CartProvider>
+          <Header
+            authSlotDesktop={<HeaderAuthSlot variant="desktop" />}
+            authSlotMobile={<HeaderAuthSlot variant="mobile" />}
+          />
+          <main>{children}</main>
+          <Footer />
+          <FloatingButtons />
+        </CartProvider>
       </body>
     </html>
   )

@@ -3,10 +3,10 @@
 import { useState, useEffect, type ReactNode } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ShoppingBag } from "lucide-react";
+import { Menu, X, ShoppingBag, ShoppingCart } from "lucide-react";
 import { Container } from "@/components/layout/Container";
-import { whatsappUrl } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { useCart } from "@/app/store/_cart/CartContext";
 
 const NAV_ITEMS = [
   { href: "/como-funciona", label: "Como funciona" },
@@ -19,6 +19,27 @@ const NAV_ITEMS = [
 interface HeaderProps {
   authSlotDesktop?: ReactNode;
   authSlotMobile?: ReactNode;
+}
+
+/** Ícone do carrinho com contador. O badge só aparece após montar (o count
+ *  vem do localStorage) para não divergir na hidratação. */
+function CartLink({ onNavigate }: { onNavigate?: () => void }) {
+  const { count, ready } = useCart();
+  return (
+    <Link
+      href="/store/carrinho"
+      onClick={onNavigate}
+      aria-label={`Carrinho${ready && count > 0 ? ` (${count})` : ""}`}
+      className="relative inline-flex h-11 w-11 items-center justify-center rounded-full text-xv-navy transition hover:bg-xv-orange-bg"
+    >
+      <ShoppingCart size={20} />
+      {ready && count > 0 ? (
+        <span className="absolute -right-0.5 -top-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-xv-orange px-1 text-[11px] font-bold text-white">
+          {count > 9 ? "9+" : count}
+        </span>
+      ) : null}
+    </Link>
+  );
 }
 
 export default function Header({ authSlotDesktop, authSlotMobile }: HeaderProps = {}) {
@@ -74,17 +95,21 @@ export default function Header({ authSlotDesktop, authSlotMobile }: HeaderProps 
               <ShoppingBag size={15} />
               Store Xô Varal
             </Link>
+            <CartLink />
             {authSlotDesktop}
           </div>
 
-          <button
-            onClick={() => setMobileOpen((v) => !v)}
-            className="rounded-full p-2 text-xv-navy lg:hidden"
-            aria-label="Abrir menu"
-            aria-expanded={mobileOpen}
-          >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="flex items-center gap-1 lg:hidden">
+            <CartLink onNavigate={() => setMobileOpen(false)} />
+            <button
+              onClick={() => setMobileOpen((v) => !v)}
+              className="rounded-full p-2 text-xv-navy"
+              aria-label="Abrir menu"
+              aria-expanded={mobileOpen}
+            >
+              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
 
         {mobileOpen && (

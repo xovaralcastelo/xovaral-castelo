@@ -1,9 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Minus, MessageCircle, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Check, Minus, MessageCircle, Plus, ShoppingCart } from "lucide-react";
 import type { ProductWithRelations, StoreSettings } from "@/lib/types";
 import { formatBRL, formatPoints, pointsFromCents } from "@/lib/store-pricing";
+import { useCart } from "@/app/store/_cart/CartContext";
 
 interface Props {
   product: ProductWithRelations;
@@ -15,6 +17,10 @@ interface Props {
 const MAX_QTY = 10;
 
 export function BuyBox({ product, settings, whatsapp, productUrl }: Props) {
+  const router = useRouter();
+  const { addItem } = useCart();
+  const [added, setAdded] = useState(false);
+
   const variants = product.variants;
   const usesVariants = product.has_variants && variants.length > 0;
 
@@ -25,6 +31,33 @@ export function BuyBox({ product, settings, whatsapp, productUrl }: Props) {
     firstAvailable >= 0 ? firstAvailable : 0,
   );
   const [qty, setQty] = useState(1);
+
+  const cover = product.images[0]?.url ?? product.image_url;
+
+  function handleAddToCart(qtyToAdd: number, goToCart: boolean) {
+    if (unitCents == null) return;
+    addItem(
+      {
+        productId: product.id,
+        slug: product.slug,
+        name: product.name,
+        image: cover,
+        variantId: variant?.id ?? null,
+        variantLabel: variant?.label ?? null,
+        unitPriceCents: unitCents,
+        maxStock: stock,
+        allowPickup: product.allow_pickup,
+        allowDelivery: product.allow_delivery,
+      },
+      qtyToAdd,
+    );
+    if (goToCart) {
+      router.push("/store/carrinho");
+    } else {
+      setAdded(true);
+      setTimeout(() => setAdded(false), 2000);
+    }
+  }
 
   const variant = usesVariants ? variants[variantIdx] : null;
 
@@ -177,19 +210,42 @@ export function BuyBox({ product, settings, whatsapp, productUrl }: Props) {
             </p>
           ) : null}
 
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-4 text-sm font-bold text-white shadow-md transition hover:brightness-110"
-          >
-            <MessageCircle size={16} />
-            Tenho interesse — chamar no WhatsApp
-          </a>
-          <p className="mt-3 text-xs text-xv-gray-500">
-            O carrinho com pagamento em pontos + cartão está a caminho. Por
-            enquanto, a equipe fecha o pedido com você pelo WhatsApp.
-          </p>
+          <div className="mt-6 space-y-3">
+            <button
+              type="button"
+              onClick={() => handleAddToCart(safeQty, true)}
+              className="flex w-full items-center justify-center gap-2 rounded-full bg-xv-orange px-6 py-4 text-sm font-bold text-white shadow-md transition hover:bg-xv-orange-light"
+            >
+              <ShoppingCart size={16} />
+              Comprar agora
+            </button>
+            <button
+              type="button"
+              onClick={() => handleAddToCart(safeQty, false)}
+              className="flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-bold text-xv-navy ring-1 ring-xv-gray-200/60 transition hover:ring-xv-orange"
+            >
+              {added ? (
+                <>
+                  <Check size={16} className="text-green-600" />
+                  Adicionado ao carrinho
+                </>
+              ) : (
+                <>
+                  <Plus size={16} />
+                  Adicionar ao carrinho
+                </>
+              )}
+            </button>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex w-full items-center justify-center gap-2 text-xs font-bold text-[#128C4A] transition hover:underline"
+            >
+              <MessageCircle size={14} />
+              Prefere combinar pelo WhatsApp?
+            </a>
+          </div>
         </>
       )}
 
