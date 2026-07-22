@@ -1,46 +1,54 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Package, MapPin, MessageCircle } from "lucide-react";
-import { createClient } from "@/lib/supabase/server";
+import { ArrowLeft, Check, MapPin, Truck } from "lucide-react";
 import { UNIT } from "@/lib/constants";
-import type { Product } from "@/lib/types";
+import {
+  getProductBySlug,
+  getRelatedProducts,
+  getStoreSettings,
+} from "@/lib/store";
+import { ProductCard } from "../_components/ProductCard";
+import { Gallery } from "./_components/Gallery";
+import { BuyBox } from "./_components/BuyBox";
 
 export const dynamic = "force-dynamic";
+
+const SITE_URL = "https://castelo.xovaral.com";
 
 interface Props {
   params: { slug: string };
 }
 
 export async function generateMetadata({ params }: Props) {
-  const supabase = createClient();
-  const { data } = await supabase
-    .from("products")
-    .select("name, description")
-    .eq("slug", params.slug)
-    .eq("status", "active")
-    .single();
-  if (!data) return { title: "Produto não encontrado" };
+  const product = await getProductBySlug(params.slug);
+  if (!product) return { title: "Produto não encontrado" };
+
+  const description =
+    product.short_description ??
+    product.subtitle ??
+    product.description ??
+    "Disponível na Store Xô Varal Castelo.";
+  const image = product.images[0]?.url ?? product.image_url;
+
   return {
-    title: `${data.name} — Store Xô Varal`,
-    description: data.description ?? `Disponível na Store Xô Varal Castelo.`,
+    title: `${product.name} — Store Xô Varal`,
+    description,
+    openGraph: {
+      title: product.name,
+      description,
+      images: image ? [image] : undefined,
+    },
   };
 }
 
 export default async function ProductDetailPage({ params }: Props) {
-  const supabase = createClient();
+  const product = await getProductBySlug(params.slug);
+  if (!product) notFound();
 
-  const { data: product, error } = await supabase
-    .from("products")
-    .select("*")
-    .eq("slug", params.slug)
-    .eq("status", "active")
-    .single<Product>();
-  if (error || !product) notFound();
-
-  const outOfStock = product.stock != null && product.stock <= 0;
-
-  const whatsappText = `Olá! Vim pela Store Xô Varal e tenho interesse em:\n\n• ${product.name}\n• Link: https://castelo.xovaral.com/store/${product.slug}\n\nPodem me passar mais informações?`;
-  const whatsappUrl = `https://wa.me/${UNIT.contact.whatsapp}?text=${encodeURIComponent(whatsappText)}`;
+  const [settings, related] = await Promise.all([
+    getStoreSettings(),
+    getRelatedProducts(product),
+  ]);
 
   return (
     <div
@@ -50,83 +58,149 @@ export default async function ProductDetailPage({ params }: Props) {
           "linear-gradient(135deg, #f0fafe 0%, #fff8f2 50%, #fff3ea 100%)",
       }}
     >
-      <div className="mx-auto max-w-4xl px-4 py-8 md:py-12">
-        <Link
-          href="/store"
-          className="inline-flex items-center gap-2 text-sm font-bold text-xv-gray-700 hover:text-xv-navy"
-        >
-          <ArrowLeft size={14} />
-          Voltar à Store
-        </Link>
+      <div className="mx-auto max-w-5xl px-4 py-8 md:py-12">
+        <nav className="flex flex-wrap items-center gap-2 text-sm text-xv-gray-700">
+          <Link
+            href="/store"
+            className="inline-flex items-center gap-2 font-bold hover:text-xv-navy"
+          >
+            <ArrowLeft size={14} />
+            Store
+          </Link>
+          {product.category_ref ? (
+            <>
+              <span className="text-xv-gray-300">/</span>
+              <Link
+                href={`/store?cat=${product.category_ref.slug}`}
+                className="font-bold hover:text-xv-navy"
+              >
+                {product.category_ref.name}
+              </Link>
+            </>
+          ) : null}
+        </nav>
 
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-          {/* Imagem */}
-          <div className="aspect-square rounded-3xl bg-white shadow-card ring-1 ring-xv-gray-200/60 overflow-hidden">
-            {product.image_url ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={product.image_url}
-                alt={product.name}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="h-full w-full flex items-center justify-center text-xv-gray-300">
-                <Package size={96} />
-              </div>
-            )}
-          </div>
+        <div className="mt-6 grid grid-cols-1 items-start gap-8 md:grid-cols-2">
+          <Gallery images={product.images} productName={product.name} />
 
-          {/* Detalhes */}
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-xv-orange">
-              {product.category}
-            </p>
-            <h1 className="mt-1 font-display text-3xl md:text-4xl font-black text-xv-navy">
-              {product.name}
-            </h1>
-
-            {product.description ? (
-              <p className="mt-4 text-sm md:text-base text-xv-gray-700 whitespace-pre-line">
-                {product.description}
+            {product.brand ? (
+              <p className="text-xs font-bold uppercase tracking-widest text-xv-gray-500">
+                {product.brand}
               </p>
             ) : null}
 
-            <div className="mt-6 flex items-center gap-2 text-xs text-xv-gray-700">
+            <div className="flex flex-wrap items-center gap-2">
+              <h1 className="font-display text-3xl font-black text-xv-navy md:text-4xl">
+                {product.name}
+              </h1>
+              {product.badge ? (
+                <span className="rounded-full bg-xv-navy px-3 py-1 text-[11px] font-bold text-white">
+                  {product.badge}
+                </span>
+              ) : null}
+            </div>
+
+            {product.subtitle ? (
+              <p className="mt-2 text-base text-xv-gray-700">{product.subtitle}</p>
+            ) : null}
+
+            {product.sku ? (
+              <p className="mt-2 text-xs text-xv-gray-500">
+                Código: {product.sku}
+              </p>
+            ) : null}
+
+            <div className="mt-4 flex flex-wrap gap-2 text-xs">
               {product.fulfillment_type === "voucher" ? (
-                <span className="rounded-full bg-xv-cyan/10 text-xv-cyan px-3 py-1 font-bold">
+                <span className="rounded-full bg-xv-cyan/10 px-3 py-1 font-bold text-xv-cyan">
                   Voucher digital
                 </span>
-              ) : (
-                <span className="inline-flex items-center gap-1 rounded-full bg-xv-orange-bg text-xv-orange px-3 py-1 font-bold">
+              ) : null}
+              {product.allow_pickup && settings.pickup_enabled ? (
+                <span className="inline-flex items-center gap-1 rounded-full bg-xv-orange-bg px-3 py-1 font-bold text-xv-orange">
                   <MapPin size={12} />
                   Retirar na loja
                 </span>
-              )}
+              ) : null}
+              {product.allow_delivery && settings.delivery_enabled ? (
+                <span className="inline-flex items-center gap-1 rounded-full bg-xv-gray-100 px-3 py-1 font-bold text-xv-gray-700">
+                  <Truck size={12} />
+                  Entrega
+                </span>
+              ) : null}
             </div>
 
-            {outOfStock ? (
-              <div className="mt-6 rounded-2xl bg-red-50 px-5 py-4 ring-1 ring-red-200 text-red-800 text-sm">
-                Esse produto está temporariamente esgotado. Volte em breve!
-              </div>
-            ) : (
-              <div className="mt-8 space-y-3">
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 text-sm font-bold text-white shadow-md hover:brightness-110 transition w-full sm:w-auto"
-                >
-                  <MessageCircle size={16} />
-                  Tenho interesse — chamar no WhatsApp
-                </a>
-                <p className="text-xs text-xv-gray-500">
-                  Em breve você poderá trocar pontos ou comprar direto aqui.
-                  Por enquanto, fale com a equipe pra alinhar condições.
-                </p>
-              </div>
-            )}
+            <BuyBox
+              product={product}
+              settings={settings}
+              whatsapp={UNIT.contact.whatsapp}
+              productUrl={`${SITE_URL}/store/${product.slug}`}
+            />
           </div>
         </div>
+
+        {product.highlights.length > 0 ? (
+          <section className="mt-10 rounded-3xl bg-white p-6 shadow-card ring-1 ring-xv-gray-200/60">
+            <h2 className="font-display text-xl font-bold text-xv-navy">
+              Destaques
+            </h2>
+            <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {product.highlights.map((h, i) => (
+                <li key={i} className="flex items-start gap-2 text-sm text-xv-gray-700">
+                  <Check size={16} className="mt-0.5 shrink-0 text-xv-orange" />
+                  {h}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
+        {product.description ? (
+          <section className="mt-6 rounded-3xl bg-white p-6 shadow-card ring-1 ring-xv-gray-200/60">
+            <h2 className="font-display text-xl font-bold text-xv-navy">
+              Sobre o produto
+            </h2>
+            <p className="mt-3 whitespace-pre-line text-sm text-xv-gray-700 md:text-base">
+              {product.description}
+            </p>
+          </section>
+        ) : null}
+
+        {product.specs.length > 0 ? (
+          <section className="mt-6 rounded-3xl bg-white p-6 shadow-card ring-1 ring-xv-gray-200/60">
+            <h2 className="font-display text-xl font-bold text-xv-navy">
+              Ficha técnica
+            </h2>
+            <dl className="mt-4 divide-y divide-xv-gray-200/70 text-sm">
+              {product.specs.map((s, i) => (
+                <div key={i} className="flex flex-wrap gap-2 py-2.5">
+                  <dt className="w-40 shrink-0 font-bold text-xv-gray-500">
+                    {s.label}
+                  </dt>
+                  <dd className="text-xv-navy">{s.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        ) : null}
+
+        {related.length > 0 ? (
+          <section className="mt-12">
+            <h2 className="font-display text-2xl font-bold text-xv-navy">
+              Você também pode gostar
+            </h2>
+            <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {related.map((p) => (
+                <ProductCard
+                  key={p.id}
+                  product={p}
+                  pointValueCents={settings.point_value_cents}
+                />
+              ))}
+            </div>
+          </section>
+        ) : null}
       </div>
     </div>
   );
